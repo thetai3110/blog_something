@@ -1,8 +1,8 @@
 import './hearder.component.css';
 import logo from '../../../logo.svg';
-import flag_vi from '../../../Assests/flag_vi.png';
-import flag_en from '../../../Assests/flag_en.png';
-import user from '../../../Assests/user.png';
+import flag_vi from '../../../assests/flag_vi.png';
+import flag_en from '../../../assests/flag_en.png';
+import user from '../../../assests/user.png';
 import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
