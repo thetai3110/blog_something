@@ -1,0 +1,96 @@
+.footer-left{
+	overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+.footer-left a{
+	width: 100px;
+    height: 80px;
+    display: block;
+    background: #3b3c54;
+    float: left;
+    padding: 0 5px;
+    border-radius: 4px;
+    line-height: 80px;
+    margin: 0 7px 7px 0;
+}
+.footer-left p{
+	font-size: 14px;
+    color: #3b3c54;
+    line-height: 22px;
+}
+.footer-left ul{
+    list-style: none;
+	margin-top: 15px;
+	width: 100%;
+    overflow: hidden;
+}
+.footer-left li{
+	float: left;
+	line-height: 30px;
+	border: 1px solid #3b3c54;
+	margin-right: 5px;
+}
+.footer-left li a{
+	width: auto;
+	height: auto;
+	padding: 0 10px;
+	margin: 0;
+	background: 0;
+	display: block;
+	text-align: center;
+	line-height: 30px;
+	color: #fff;
+	border-radius: 0;
+}
+.footer-left ul .fb a{
+	background: #3b5998;
+}
+.footer-left ul .tw a{
+	padding: 0 8px;
+	background: #55acee;
+}
+.footer-left ul .gl a{
+	padding: 0 6px;
+	background: #e02f2f;
+}
+.footer-left ul .ytb a{
+	background: #cf2200;
+}
+.footer-center{
+	overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+.footer-center .heading h2{
+	margin: 0;
+	color: #2c31cf;
+	font-size: 18px;
+    text-transform: uppercase;
+}
+.footer-center .content{
+	margin: 15px 0;
+    color: #3b3c54;
+}
+.footer-center .content ul{
+	list-style: none;
+}
+.footer-center .content li{
+	margin-bottom: 10px;
+}
+.footer-center .content li i{
+	float: left;
+    color: #3b3c54;
+    margin-right: 10px;
+}
+.footer-center .content li a{
+	color: #3b3c54;
+}
+.footer-center .content li p{
+	margin: 0;
+	color: #3b3c54;
+	line-height: 1;
+}
+footer{
+	padding-top: 30px;
+}
