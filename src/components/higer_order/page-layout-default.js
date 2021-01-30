@@ -6,8 +6,8 @@ export const pageLayoutDefault = (PageComponent) => {
         return (
             <>
                 <HeaderComponent />
-                <div style={{backgroundColor: '#f8f9fb'}}>
-                    <div style={{ paddingRight: '10%', paddingLeft: '10%', paddingTop: '25px' }}>
+                <div style={{ backgroundColor: '#f8f9fb' }}>
+                    <div style={{ paddingRight: '10%', paddingLeft: '10%', paddingTop: '25px', paddingBottom: '25px' }}>
                         <PageComponent />
                     </div>
                 </div>
