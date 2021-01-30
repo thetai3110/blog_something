@@ -1,0 +1,69 @@
+.topic{
+    background-color: #ffff;
+    width: 100%;
+    height: 220px;
+    border-bottom: 2px solid rgb(226, 221, 221);
+    display: table;
+}
+.topic > div{
+    display: table-cell;
+}
+.topic .user{
+    text-align: center;
+    width: 10%;
+}
+.topic .user img{
+    width: 100px;
+    padding: 25px 25px 10px 25px;
+}
+.topic .user button{
+    border: none;
+    background-color: #ffff;
+    color: gray;
+}
+.topic .user button:focus{
+    outline: 0;
+}
+.topic .user span{
+    color: gray;
+}
+.topic .content{
+    width: 83%;
+    padding: 25px 0px 15px 0px;
+}
+.topic .content h5 .title-topic{
+    color: black;
+    font-size: 0.9em;
+}
+.topic .content .question{
+    max-height: 75px;
+    text-align: justify;
+}
+.topic .content p{
+    font-size: 0.91em;
+    overflow: hidden;
+    line-height: 18px;
+    word-spacing: 0.125em;
+}
+.topic .content .tag div{
+    background-color: rgb(216, 216, 216);
+    border: 1px solid  rgb(216, 216, 216);
+    padding: 1px 10px;
+    border-radius: 4px;
+    color: gray;
+    display: inline-block;
+    margin-right: 5px;
+}
+.topic .content p span:first-child{
+    margin-right: 30px;
+    margin-left: 5px;
+}
+.topic .chat{
+    width: 7%;
+    text-align: center;
+    padding: 25px 25px 10px 25px;
+    color: gray;
+}
+.topic .chat .chat-link{
+    color: gray;
+}

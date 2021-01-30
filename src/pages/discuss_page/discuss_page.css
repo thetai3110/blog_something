@@ -1,0 +1,36 @@
+.discuss-page .direct{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 0.9em;
+}
+.discuss-page .direct .link{
+    color:  #3031be;
+}
+.discuss-page .col-xl-6, .col-lg-6, .col-md-6, .col-sm-6, .col-xs-12, .col-12{
+    padding: 0px;
+}
+.discuss-page .top{
+    margin: 17px 0px;
+}
+.discuss-page .top .create-topic button{
+    float: right;
+    padding: 7px 15px;
+    background-color: #3031be;
+    border: none;
+    border-radius: 4px;
+    color: #ffff;
+}
+
+.discuss-page .top .create-topic button:hover{
+    background-color: #1e2955;
+}
+.discuss-page .top .create-topic button:focus{
+    outline: 0;
+}
+.discuss-page .list-topic{
+    margin-bottom: 10px;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+}
