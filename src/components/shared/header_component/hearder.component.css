@@ -9,11 +9,3 @@
     list-style-type: none;
     display: inline;
 }
-.header{
-    box-shadow: 0px 2px 5px 3px #e2dfdf;
-    -moz-box-shadow: 0px 2px 5px 3px #e2dfdf;
-    -webkit-box-shadow: 0px 2px 5px 3px #e2dfdf;
-    -o-box-shadow: 0px 2px 5px 3px #e2dfdf;
-    -ms-box-shadow: 0px 2px 5px 3px #e2dfdf;
-}
-

@@ -1,0 +1,85 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.item {
+    margin: 25px 0px;
+    border: 1px solid #e2dfdf;
+    height: auto;
+    box-shadow: 0px 0px 5px 3px #e2dfdf;
+    -webkit-transition: transformY ease-in 5s;
+    transition: transformY ease-in 5s;
+}
+
+.item .hoverimg {
+    height: 250px;
+    width: 100%;
+}
+
+.item .hoverimg img {
+    height: 100%;
+    max-height: 245px;
+    width: 100%;
+}
+
+.title {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    padding: 0px 10px;
+}
+
+.title h2 {
+    margin: 0;
+}
+
+.title a {
+    color: #004283;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+
+.detail {
+    max-height: 66px;
+    height: 70px;
+    color: #000;
+    font-size: 14px;
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px 15px;
+    margin-bottom: 15px;
+}
+
+.detail p {
+    height: 70px;
+    max-height: 66px;
+    text-align: justify;
+}
+
+.footer {
+    border-top: 1px solid #e2dfdf;
+    width: 100%;
+    padding: 15px;
+}
+.footer table{
+    width: 100%;
+}
+.footer table tr td{
+    text-align: left;
+    font-size: 0.8em;
+}
+.footer table tr td:last-child{
+    text-align: right;
+    width: 100%;
+    float: right;
+}
+.item:hover{
+    transform: translateY(-15px);
+}

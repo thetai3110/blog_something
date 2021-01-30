@@ -10,13 +10,13 @@ const FooterComponent = () => {
                 <div className="row">
                     <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
                         <div className="footer-left">
-                            <a href=""><img src={logo}></img></a>
+                            <Link to="/"><img src={logo} alt=""></img></Link>
                             <p>Đây là một trang web mà ở đó mọi người có tự học rất nhiều ngôn ngữ khác nhau và trao đổi kiến thức với nhau về lập trình.</p>
                             <ul>
-                                <li className="fb"><a href=""><FontAwesomeIcon icon={faFacebook} /></a></li>
-                                <li className="tw"><a href=""><FontAwesomeIcon icon={faTwitter} /></a></li>
-                                <li className="gl"><a href=""><FontAwesomeIcon icon={faGooglePlus} /></a></li>
-                                <li className="ytb"><a href=""><FontAwesomeIcon icon={faYoutube} /></a></li>
+                                <li className="fb"><Link to="/"><FontAwesomeIcon icon={faFacebook} /></Link></li>
+                                <li className="tw"><Link to="/"><FontAwesomeIcon icon={faTwitter} /></Link></li>
+                                <li className="gl"><Link to="/"><FontAwesomeIcon icon={faGooglePlus} /></Link></li>
+                                <li className="ytb"><Link to="/"><FontAwesomeIcon icon={faYoutube} /></Link></li>
                             </ul>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 import './hearder.component.css';
 import logo from '../../../logo.svg';
 import flag_vi from '../../../assests/flag_vi.png';
-import flag_en from '../../../assests/flag_en.png';
-import user from '../../../assests/user.png';
+// import flag_en from '../../../assests/flag_en.png'
+// import user from '../../../assests/user.png';
 import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
@@ -15,8 +15,8 @@ const HeaderComponent = () => {
         { id: '6', title: 'code online', title_en: 'code-online' },
     ]
     return (
-        <nav className={window.location.pathname === "/" ? "navbar navbar-expand-lg navbar-light" : "navbar navbar-expand-lg navbar-light header"}>
-            <img className="image" src={logo}></img>
+        <nav className="navbar navbar-expand-lg navbar-light header">
+            <img className="image" src={logo} alt=""></img>
             <Link to="/" className="navbar-brand menu-item">Online learning</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -32,26 +32,26 @@ const HeaderComponent = () => {
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="navbar-brand menu-item">
-                                <img className="image" src={flag_vi}></img>
+                                <img className="image" src={flag_vi} alt=""></img>
                             </Link>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <Link to="/" className="dropdown-item">Tiếng việt</Link>
                                 <Link to="/" className="dropdown-item">Tiếng anh</Link>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Something else here</a>
+                                <Link className="dropdown-item" to="/">Something else here</Link>
                             </div>
                         </li>
-                        <li className="nav-item dropdown">
+                        {/* <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="navbar-brand menu-item">
-                                <img className="image" src={user}></img>
+                                <img className="image" src={user} alt=""></img>
                             </Link>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <Link to="/" className="dropdown-item">Tiếng việt</Link>
                                 <Link to="/" className="dropdown-item">Tiếng anh</Link>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="#">Something else here</a>
+                                <Link className="dropdown-item" to="/">Something else here</Link>
                             </div>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
                 <form className="form-inline my-2 my-lg-0">
