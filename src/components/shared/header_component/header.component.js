@@ -13,6 +13,7 @@ const HeaderComponent = () => {
         // { id: '4', title: 'đánh giá', title_en: 'evaluate' },
         { id: '5', title: 'blog', title_en: 'blog' },
         { id: '6', title: 'code online', title_en: 'code-online' },
+        { id: '7', title: 'admin', title_en: 'admin' }
     ]
     return (
         <nav className="navbar navbar-expand-lg navbar-light header">
