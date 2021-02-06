@@ -20,8 +20,8 @@ export const BlogEditor = () => {
         <>
             <div>
                 <CKEditor
+                    data={`<img src='http://localhost:3030/upload-1612589115304.jpg' alt=''></img>`}
                     editor={Editor}
-                    data={`<img src=${banner} alt=''></img>`}
                     config={{
                         toolbar: {
                             items: [
@@ -52,11 +52,7 @@ export const BlogEditor = () => {
                         },
                         language: 'en',
                         image: {
-                            toolbar: [
-                                'imageTextAlternative',
-                                'imageStyle:full',
-                                'imageStyle:side'
-                            ]
+                            styles: ['full', 'side']
                         },
                         table: {
                             contentToolbar: [
@@ -66,6 +62,9 @@ export const BlogEditor = () => {
                             ]
                         },
                         licenseKey: '',
+                        ckfinder: {
+                            uploadUrl: 'http://localhost:3030/uploads'
+                        }
                     }}
                     onReady={editor => {
                         // You can store the "editor" and use when it is needed.
