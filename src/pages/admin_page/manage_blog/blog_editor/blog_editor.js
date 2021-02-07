@@ -2,23 +2,16 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
 import './blog_editor.css';
 import { useEffect, useState } from 'react';
-import banner from '../../../assests/banner.png';
 
 export const BlogEditor = () => {
     const [content, setContent] = useState('');
 
-    // const handleChange = (evt) => {
-    //     var iframe = document.getElementById('targetCode');
-    //     iframe = (iframe.contentWindow) ? iframe.contentWindow : (iframe.contentDocument) ? iframe.contentDocument.document :
-    //         iframe.contentDocument;
-    //     iframe.document.open();
-    //     iframe.document.write(evt.editor.getData());
-    //     iframe.document.close();
-    // }
-
     return (
-        <>
+        <div style={{height: '100%'}}>
             <div>
+                
+            </div>
+            <div style={{height: '100%'}}>
                 <CKEditor
                     data={`<img src='http://localhost:3030/upload-1612589115304.jpg' alt=''></img>`}
                     editor={Editor}
@@ -84,6 +77,6 @@ export const BlogEditor = () => {
                 <div></div>
             </div>
             {/* <iframe name="targetCode" id="targetCode"> </iframe> */}
-        </>
+        </div>
     );
 }
