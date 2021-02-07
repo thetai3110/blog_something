@@ -1,6 +1,6 @@
 import './hearder.component.css';
 import logo from '../../../logo.svg';
-import flag_vi from '../../../assests/flag_vi.png';
+// import flag_vi from '../../../assests/flag_vi.png';
 // import flag_en from '../../../assests/flag_en.png'
 // import user from '../../../assests/user.png';
 import { Link } from "react-router-dom";
@@ -32,9 +32,9 @@ const HeaderComponent = () => {
                 <div className="right">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item dropdown">
-                            <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="navbar-brand menu-item">
+                            {/* <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="navbar-brand menu-item">
                                 <img className="image" src={flag_vi} alt=""></img>
-                            </Link>
+                            </Link> */}
                             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <Link to="/" className="dropdown-item">Tiếng việt</Link>
                                 <Link to="/" className="dropdown-item">Tiếng anh</Link>
