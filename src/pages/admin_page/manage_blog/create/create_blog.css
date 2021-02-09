@@ -10,14 +10,14 @@
 }
 @media (min-width: 350px) { 
     .editor-blog{
-        height: 50%;
+        height: 80%;
         max-height: 400px;
         transition: all linear 0.5;
     } 
 }
 @media (min-width: 576px) { 
     .editor-blog{
-        height: 50%;
+        height: 80%;
         max-height: 400px;
         transition: all linear 0.5;
     } 
@@ -25,21 +25,21 @@
 @media (min-width: 768px) { 
     .editor-blog{
         height: 100%;
-        max-height: 1000px;
+        max-height: 700px;
         transition: all linear 0.5;
     } 
 }
 @media (min-width: 992px) { 
     .editor-blog{
         height: 100%;
-        max-height: 1000px;
+        max-height: 700px;
         transition: all linear 0.5;
     } 
 }
 @media (min-width: 1200px) { 
     .editor-blog{
         height: 100%;
-        max-height: 1000px;
+        max-height: 700px;
         transition: all linear 0.5;
     } 
 }

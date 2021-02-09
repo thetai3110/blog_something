@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button, Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select } from '@material-ui/core';
+import { Button, Chip, FormControl, Input, InputLabel, ListItemText, MenuItem, Select } from '@material-ui/core';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
 import './create_blog.css';
@@ -15,22 +15,40 @@ const MenuProps = {
     PaperProps: {
         style: {
             maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            maxWidth: 200,
+            width: 250,
         },
     },
 };
+
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+        width: '98.5%',
+    },
+    chips: {
         display: 'flex',
-        marginTop: '25px',
-        height: '80%'
+        flexWrap: 'wrap',
+    },
+    chip: {
+        margin: 2,
+    },
+    noLabel: {
+        marginTop: theme.spacing(3),
     },
 }));
+
+function getStyles(name, tag, theme) {
+    return {
+        fontWeight:
+            tag.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
 export const CreateBlog = () => {
     const classes = useStyles();
+    const theme = useTheme();
     const [tags, setTags] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -47,7 +65,6 @@ export const CreateBlog = () => {
     }, [])
     const handleChange = (event) => {
         setTags(event.target.value);
-        console.log(event.target.value)
     };
     const handleChangeTitle = (event) => {
         setTitle(event.target.value)
@@ -79,10 +96,10 @@ export const CreateBlog = () => {
         })();
     }
     return (
-        <div style={{ height: '100%' }}>
-            <h3 style={{ textAlign: 'center', marginTop: '25px', color: '#4E73DF' }}>Create blog</h3>
-            <div className={classes.root}>
-                <div className="row" style={{width: '100%'}}>
+        <div style={{ height: '100%', marginTop: '25px' }}>
+            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Create new a blog'}</h5>
+            <div style={{ height: '100%' }}>
+                <div className="row" style={{ width: '100%', height: '100%' }}>
                     <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
                         <div className="editor-blog">
                             <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Typing title..." onChange={handleChangeTitle} /><br></br>
@@ -126,25 +143,27 @@ export const CreateBlog = () => {
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 col-12">
                         <form noValidate autoComplete="off">
                             {tagsFounded.length > 0 ?
-                                <FormControl style={{ width: "100%" }}>
-                                    <InputLabel id="demo-mutiple-checkbox-label">Tag</InputLabel>
-                                    <Select style={{ padding: "0px 10px" }}
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel id="mutiple-chip-label">Tags</InputLabel>
+                                    <Select
+                                        labelId="mutiple-chip-label"
+                                        id="mutiple-chip"
                                         multiple
                                         value={tags}
                                         onChange={handleChange}
-                                        renderValue={(selected) => {
-                                            let arr = [];
-                                            selected.forEach(el => {
-                                                arr.push(el.tagName);
-                                            })
-                                            return arr.join(',')
-                                        }}
+                                        input={<Input id="select-multiple-chip" />}
+                                        renderValue={(selected) => (
+                                            <div className={classes.chips}>
+                                                {selected.map((value) => (
+                                                    <Chip key={value._id} label={value.tagName} className={classes.chip} />
+                                                ))}
+                                            </div>
+                                        )}
                                         MenuProps={MenuProps}
                                     >
                                         {tagsFounded.map((elm) => (
-                                            <MenuItem key={elm._id} value={elm}>
-                                                <Checkbox checked={tags.indexOf(elm) > -1} />
-                                                <ListItemText primary={elm.tagName} />
+                                            <MenuItem key={elm._id} value={elm} style={getStyles(elm, tags, theme)}>
+                                                {elm.tagName}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -152,7 +171,17 @@ export const CreateBlog = () => {
                                 <div>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
                             }
                             <br></br>
-                            <Button style={{ marginTop: "25px" }} variant="outlined" onClick={handleSubmit}>Submit</Button>
+                            <TextField
+                                style={{ width: '100%', margin: '25px 0px' }}
+                                id="outlined-multiline-static"
+                                label="Summary"
+                                multiline
+                                rows={7}
+                                defaultValue=""
+                                variant="outlined"
+                            />
+                            <br></br>
+                            <div style={{ textAlign: 'right' }}><Button variant="outlined" onClick={handleSubmit}>Submit</Button></div>
                         </form>
                     </div>
                 </div>

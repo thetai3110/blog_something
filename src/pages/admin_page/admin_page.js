@@ -1,13 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
 import './admin_page.css';
 import { CreateBlog } from './manage_blog/create/create_blog';
+import { TableBlog } from './manage_blog/table/table_blog';
 
 export const AdminPage = () => {
-    const btnRef = useRef(null);
-    const menuRef = useRef(null);
-    const tempRef = useRef(null);
-    const overlapRef = useRef(null);
 
     useEffect(() => {
         const $$ = document.querySelectorAll.bind(document);
@@ -21,27 +18,15 @@ export const AdminPage = () => {
         });
     })
 
-    const handleClick = () => {
-        if (menuRef.current.style.transform === 'translateX(0%)') {
-        console.log("a")
-
-            menuRef.current.style.transform = 'translateX(-100%)';
-            tempRef.current.style.width = '0';
-        } else {
-        console.log("a")
-            menuRef.current.style.transform = 'translateX(0%)';
-            tempRef.current.style.width = '230px';
-        }
-    }
-
     return (
         <div className="admin">
+            <input type="checkbox" id="nav-admin-checked" name="nav-admin-checked" hidden></input>
             <div className="nav-admin-top">
                 <div className="nav-admin-search">
                     <div className="nav-admin-logo-show">
                         <h4><Link to="/admin">Admin</Link></h4>
                     </div>
-                    <div ref={btnRef} onClick={handleClick} className="nav-admin-btn-menu"><i className="fa fa-bars"></i></div>
+                    <label htmlFor="nav-admin-checked" className="nav-admin-btn-menu"><i className="fa fa-bars"></i></label>
                     <form>
                         <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
                         <button><i className="fa fa-search"></i></button>
@@ -52,7 +37,7 @@ export const AdminPage = () => {
                     <div><i className="fa fa-bell"></i></div>
                 </div>
             </div>
-            <div ref={menuRef} className="nav-admin-left">
+            <div className="nav-admin-left">
                 <div className="nav-admin-logo">
                     <h4><Link to="/admin">Admin</Link></h4>
                 </div>
@@ -69,12 +54,16 @@ export const AdminPage = () => {
                 </ul>
             </div>
             <div className="admin-content">
-                <div ref={tempRef} className="admin-content-temp"></div>
+                <div className="admin-content-temp"></div>
                 <div className="admin-content-main">
-                    <Route path="/admin/blog" render={() => <CreateBlog />} />
+                    <Switch>
+                        <Route path="/admin/blog" render={() => <TableBlog />} exact/>
+                        <Route path="/admin/blog/create" render={() => <CreateBlog />} exact/>
+                    </Switch>
                 </div>
             </div>
-            <div ref={overlapRef} className="nav-admin-overlap"></div>
+            <div className="nav-admin-background"></div>
+            <label htmlFor="nav-admin-checked" className="nav-admin-overlap"></label>
         </div>
     );
 }

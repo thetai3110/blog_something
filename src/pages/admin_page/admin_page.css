@@ -13,6 +13,7 @@
     top: 0;
     right: 0;
     left: 0;
+    z-index: 998;
 }
 .nav-admin-notify{
     display: flex;
@@ -76,7 +77,6 @@
     width: 230px;
     max-width: 230px;
     min-width: 230px;
-    transform: translateX(0%);
     transition: all linear 0.3s;
     z-index: 998;
 }
@@ -136,7 +136,7 @@
     opacity: 1; 
     font-weight: 500;  
 }
-.nav-admin-overlap{
+.nav-admin-background{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -144,6 +144,15 @@
     left: 0;
     background-color: #F8F9FC;
     z-index: -9999;
+}
+.nav-admin-overlap{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .2);
+    display: none;
 }
 @media (min-width: 350px) { 
     .nav-admin-search form{
@@ -154,6 +163,12 @@
     }
     .admin-content-temp{
         width: 0;
+    }
+    #nav-admin-checked:checked ~ .nav-admin-overlap{
+        display: block;
+    }
+    #nav-admin-checked:checked ~ .nav-admin-left{
+        transform: translateX(0);
     }
 }
 @media (min-width: 576px) { 
@@ -166,6 +181,12 @@
     .admin-content-temp{
         width: 0;
     }
+    #nav-admin-checked:checked ~ .nav-admin-overlap{
+        display: block;
+    }
+    #nav-admin-checked:checked ~ .nav-admin-left{
+        transform: translateX(0);
+    }
 }
 @media (min-width: 768px) { 
     .nav-admin-search form{
@@ -177,6 +198,12 @@
     .admin-content-temp{
         width: 0;
     }
+    #nav-admin-checked:checked ~ .nav-admin-overlap{
+        display: block;
+    }
+    #nav-admin-checked:checked ~ .nav-admin-left{
+        transform: translateX(0);
+    }
 }
 @media (min-width: 992px) { 
     .nav-admin-search form{
@@ -186,8 +213,13 @@
         transform: translateX(0);
     }
     .admin-content-temp{
-        width: 230px;
+        width: 240px;
+        min-width: 240px;
     }
+    #nav-admin-checked:checked ~ .nav-admin-overlap, .nav-admin-btn-menu{
+        display: none;
+    }
+
 }
 @media (min-width: 1200px) { 
     .nav-admin-search form{
@@ -197,6 +229,10 @@
         transform: translateX(0);
     }
     .admin-content-temp{
-        width: 230px;
+        width: 240px;
+        min-width: 240px;
+    }
+    #nav-admin-checked:checked ~ .nav-admin-overlap, .nav-admin-btn-menu{
+        display: none;
     }
 }
