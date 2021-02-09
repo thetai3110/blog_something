@@ -5,21 +5,24 @@ export const TagsService = {
         return fetch(`${CommonConstants.server}/tag`)
             .then(res => res.json())
             .then(data => { return data })
-            .catch(err => { return null })
+            .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
     findById: function (id) {
-        fetch(`${CommonConstants.server}/tag/${id}`)
+        return fetch(`${CommonConstants.server}/tag/${id}`)
             .then(res => res.json())
             .then(data => { return data })
-            .catch(err => { return null })
+            .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
     create: function (data) {
-        return fetch(`${CommonConstants.server}/tag/create`, {
+        return fetch(`${CommonConstants.server}/blog/create`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
         })
+            .then(res => res.json())
+            .then(data => { return data })
+            .catch(err => { return { msg: `fetch failed because: ${err}` } })
     }
 }

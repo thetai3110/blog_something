@@ -7,6 +7,7 @@ import Editor from 'ckeditor5-build-custom';
 import './create_blog.css';
 import { useState } from 'react';
 import { TagsService } from '../../../../services/tag.service';
+import { Link } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,23 +34,49 @@ export const CreateBlog = () => {
     const [tags, setTags] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [tagsExists, setTagsExists] = useState([]);
-    useEffect(async () => {
-        let rs = await TagsService.find();
-        if (rs !== null) {
-            setTagsExists(rs.data);
-        }
+    const [tagsFounded, setTagsFounded] = useState([]);
+    useEffect(() => {
+        (async function () {
+            let rs = await TagsService.find();
+            if (typeof rs.msg === 'undefined') {
+                setTagsFounded(rs.data);
+            } else {
+                console.log(rs.msg);
+            }
+        })();
     }, [])
     const handleChange = (event) => {
         setTags(event.target.value);
+        console.log(event.target.value)
     };
     const handleChangeTitle = (event) => {
         setTitle(event.target.value)
     }
     const handleSubmit = () => {
-        console.log(tags);
-        console.log(title);
-        console.log(content);
+        (async function () {
+            let arr = [];
+            tags.forEach(el => {
+                arr.push(el._id);
+            })
+            const data = {
+                athourId: '601f7928c0bb930b9cee5a9b',
+                title: title,
+                summary: 'a',
+                content: content,
+                publishedBy: '601f7928c0bb930b9cee5a9b',
+                tag: arr
+            }
+            let rs = await TagsService.create(data);
+            if (typeof rs.msg === 'undefined') {
+                if (rs.result === 'ok') {
+                    console.log(`${rs.message} and new tag is: ${JSON.stringify(rs.data)}`);
+                } else {
+                    console.log(`${rs.message}`);
+                }
+            } else {
+                console.log(rs.msg);
+            }
+        })();
     }
     return (
         <div style={{ height: '100%' }}>
@@ -79,9 +106,9 @@ export const CreateBlog = () => {
                                 uploadUrl: 'http://localhost:3030/uploads'
                             }
                         }}
-                        onReady={editor => {
-                            console.log('Editor is ready to use!', editor);
-                        }}
+                        // onReady={editor => {
+                        //     console.log('Editor is ready to use!', editor);
+                        // }}
                         onChange={(event, editor) => {
                             setContent(editor.getData());
                         }}
@@ -93,28 +120,34 @@ export const CreateBlog = () => {
                     // }}
                     />
                 </div>
-                <div>
+                <div style={{ width: "200px" }}>
                     <form noValidate autoComplete="off">
-                        <FormControl className={classes.formControl} style={{ width: "200px" }}>
-                            <InputLabel id="demo-mutiple-checkbox-label">Tag</InputLabel>
-                            <Select style={{ padding: "0px 10px" }}
-                                multiple
-                                value={tags}
-                                onChange={handleChange}
-                                renderValue={(selected) => {
-                                    let arr = selected.join(',')
-                                    return arr
-                                }}
-                                MenuProps={MenuProps}
-                            >
-                                {tagsExists.map((elm) => (
-                                    <MenuItem key={elm._id} value={elm.tagName}>
-                                        <Checkbox checked={tags.indexOf(elm.tagName) > -1} />
-                                        <ListItemText primary={elm.tagName} />
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        {tagsFounded.length > 0 ?
+                            <FormControl className={classes.formControl} style={{ width: "100%" }}>
+                                <InputLabel id="demo-mutiple-checkbox-label">Tag</InputLabel>
+                                <Select style={{ padding: "0px 10px" }}
+                                    multiple
+                                    value={tags}
+                                    onChange={handleChange}
+                                    renderValue={(selected) => {
+                                        let arr = [];
+                                        selected.forEach(el => {
+                                            arr.push(el.tagName);
+                                        })
+                                        return arr.join(',')
+                                    }}
+                                    MenuProps={MenuProps}
+                                >
+                                    {tagsFounded.map((elm) => (
+                                        <MenuItem key={elm._id} value={elm}>
+                                            <Checkbox checked={tags.indexOf(elm) > -1} />
+                                            <ListItemText primary={elm.tagName} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl> :
+                            <div>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
+                        }
                         <br></br>
                         <Button style={{ marginTop: "25px" }} variant="outlined" onClick={handleSubmit}>Submit</Button>
                     </form>
