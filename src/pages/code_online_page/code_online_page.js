@@ -1,12 +1,10 @@
 import './code_online_page.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExpandAlt, faCompressAlt, faSyncAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const CodeOnlinePage = () => {
     const [expand, setExpand] = useState(true);
-    const btnExpandElm = expand ? <FontAwesomeIcon icon={faCompressAlt} /> : <FontAwesomeIcon icon={faExpandAlt} />
+   // const btnExpandElm = expand ? <FontAwesomeIcon icon={faCompressAlt} /> : <FontAwesomeIcon icon={faExpandAlt} />
     const valueDefault = "<!DOCTYPE html>\n"
         + "<html>\n"
         + "<head>\n"
@@ -32,12 +30,12 @@ const CodeOnlinePage = () => {
     return (
         <div className="full-layout-code" >
             <div className="top-layout-code">
-                <button className="expand">{btnExpandElm}</button>
+                {/* <button className="expand">{btnExpandElm}</button> */}
                 <select>
                     <option>HTML &amp; CSS</option>
                     <option>C++</option>
                 </select>
-                <button className="reload" ><FontAwesomeIcon icon={faSyncAlt} /> Làm mới</button>
+                <button className="reload" ><i className="fa fa-sync-alt"></i> Làm mới</button>
             </div>
             <div className="body-layout-code">
                 <div className="row">
@@ -49,7 +47,7 @@ const CodeOnlinePage = () => {
                         <iframe name="targetCode" id="targetCode"> </iframe>
                     </div>
                 </div>
-                <Link to="/" className="back-to-home"><FontAwesomeIcon icon={faHome}/></Link>
+                <Link to="/" className="back-to-home"><i className="fa fa-home"></i></Link>
                 <input onClick={() => runCode()} type="button" value="Chạy >>" className="btn btn-success run-code"></input>
             </div>
         </div>

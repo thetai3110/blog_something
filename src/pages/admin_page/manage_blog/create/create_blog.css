@@ -4,3 +4,42 @@
 .ck-content{
     height: 90%;
 }
+.editor-blog{
+    height: 100%;
+    transition: all linear 0.5;
+}
+@media (min-width: 350px) { 
+    .editor-blog{
+        height: 50%;
+        max-height: 400px;
+        transition: all linear 0.5;
+    } 
+}
+@media (min-width: 576px) { 
+    .editor-blog{
+        height: 50%;
+        max-height: 400px;
+        transition: all linear 0.5;
+    } 
+}
+@media (min-width: 768px) { 
+    .editor-blog{
+        height: 100%;
+        max-height: 1000px;
+        transition: all linear 0.5;
+    } 
+}
+@media (min-width: 992px) { 
+    .editor-blog{
+        height: 100%;
+        max-height: 1000px;
+        transition: all linear 0.5;
+    } 
+}
+@media (min-width: 1200px) { 
+    .editor-blog{
+        height: 100%;
+        max-height: 1000px;
+        transition: all linear 0.5;
+    } 
+}

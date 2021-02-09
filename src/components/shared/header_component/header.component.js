@@ -1,64 +1,60 @@
 import './hearder.component.css';
 import logo from '../../../logo.svg';
-// import flag_vi from '../../../assests/flag_vi.png';
-// import flag_en from '../../../assests/flag_en.png'
-// import user from '../../../assests/user.png';
 import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
     const menus = [
         { id: '1', title: 'học tập', title_en: 'learn' },
-        // { id: '2', title: 'luyện tập', title_en: 'practive' },
-        { id: '3', title: 'thảo luận', title_en: 'discuss' },
-        // { id: '4', title: 'đánh giá', title_en: 'evaluate' },
-        { id: '5', title: 'blog', title_en: 'blog' },
-        { id: '6', title: 'code online', title_en: 'code-online' },
-        { id: '7', title: 'admin', title_en: 'admin' }
+        { id: '2', title: 'thảo luận', title_en: 'discuss' },
+        { id: '3', title: 'blog', title_en: 'blog' },
+        { id: '4', title: 'code online', title_en: 'code-online' },
+        { id: '5', title: 'admin', title_en: 'admin' }
     ]
     return (
-        <nav className="navbar navbar-expand-lg navbar-light header">
-            <img className="image" src={logo} alt=""></img>
-            <Link to="/" className="navbar-brand menu-item">Online learning</Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
+        <nav className="navbar">
+            <label htmlFor="navbar-checked" className="navbar-btn-menu"><i className="fa fa-bars"></i></label>
+            <div className="navbar-pc">
+                <div className="navbar-logo">
+                    <Link to="/"><img src={logo} alt="log"></img></Link>
+                    <Link to="/">Blog</Link>
+                </div>
+                <ul className="navbar-list">
                     {menus.map((item) => {
-                        return <Link to={"/" + item.title_en} className="nav-link" key={item.id}><li>{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</li></Link>
+                        return <li key={item.id}><Link to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                     })}
                 </ul>
-                <div className="right">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item dropdown">
-                            {/* <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="navbar-brand menu-item">
-                                <img className="image" src={flag_vi} alt=""></img>
-                            </Link> */}
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link to="/" className="dropdown-item">Tiếng việt</Link>
-                                <Link to="/" className="dropdown-item">Tiếng anh</Link>
-                                <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/">Something else here</Link>
-                            </div>
-                        </li>
-                        {/* <li className="nav-item dropdown">
-                            <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="navbar-brand menu-item">
-                                <img className="image" src={user} alt=""></img>
-                            </Link>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <Link to="/" className="dropdown-item">Tiếng việt</Link>
-                                <Link to="/" className="dropdown-item">Tiếng anh</Link>
-                                <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/">Something else here</Link>
-                            </div>
-                        </li> */}
-                    </ul>
+                <div className="navbar-items">
+                    <form className="navbar-search">
+                        <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
+                        <button><i className="fa fa-search"></i></button>
+                    </form>
+                    <div><i className="fa fa-facebook-square"></i></div>
+                    <div><i className="fa fa-twitter-square"></i></div>
                 </div>
-                <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"></input>
-                    <button className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+            </div>
+            <input className="navbar-checked" type="checkbox" hidden id="navbar-checked" name="navbar-checked"></input>
+            <label className="navbar-overlap" htmlFor="navbar-checked"></label>
+            <div className="navbar-mb">
+                <label htmlFor="navbar-checked" className="navbar-mb-btn-close">
+                    <i className="fa fa-close"></i>
+                </label>
+                <div className="navbar-mb-logo">
+                    <Link to="/"><img src={logo} alt="log"></img></Link>
+                    <Link to="/">Blog</Link>
+                </div>
+                <form className="navbar-mb-search">
+                    <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
+                    <button><i className="fa fa-search"></i></button>
                 </form>
+                <ul className="navbar-mb-list">
+                    {menus.map((item) => {
+                        return <li key={item.id}><Link to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                    })}
+                </ul>
+                <div className="navbar-mb-items">
+                    <div><i className="fa fa-facebook-square"></i></div>
+                    <div><i className="fa fa-twitter-square"></i></div>
+                </div>
             </div>
         </nav>
     )

@@ -1,7 +1,5 @@
 import './footer.component.css';
 import logo from '../../../logo.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faGooglePlus, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { Link } from "react-router-dom";
 const FooterComponent = () => {
     return (
@@ -13,10 +11,10 @@ const FooterComponent = () => {
                             <Link to="/"><img src={logo} alt=""></img></Link>
                             <p>Đây là một trang web mà ở đó mọi người có tự học rất nhiều ngôn ngữ khác nhau và trao đổi kiến thức với nhau về lập trình.</p>
                             <ul>
-                                <li className="fb"><Link to="/"><FontAwesomeIcon icon={faFacebook} /></Link></li>
-                                <li className="tw"><Link to="/"><FontAwesomeIcon icon={faTwitter} /></Link></li>
-                                <li className="gl"><Link to="/"><FontAwesomeIcon icon={faGooglePlus} /></Link></li>
-                                <li className="ytb"><Link to="/"><FontAwesomeIcon icon={faYoutube} /></Link></li>
+                                <li className="fb"><Link to="/"><i className="fa fa-facebook-square"></i></Link></li>
+                                <li className="tw"><Link to="/"><i className="fa fa-twitter-square"></i></Link></li>
+                                <li className="gl"><Link to="/"><i className="fa fa-google"></i></Link></li>
+                                <li className="ytb"><Link to="/"><i className="fa fa-youtube-square"></i></Link></li>
                             </ul>
                         </div>
                     </div>

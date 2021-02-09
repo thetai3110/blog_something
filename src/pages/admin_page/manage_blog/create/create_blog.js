@@ -15,7 +15,7 @@ const MenuProps = {
     PaperProps: {
         style: {
             maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 200,
+            maxWidth: 200,
         },
     },
 };
@@ -80,77 +80,81 @@ export const CreateBlog = () => {
     }
     return (
         <div style={{ height: '100%' }}>
-            <h1 style={{ textAlign: 'center' }}>Create blog</h1>
+            <h3 style={{ textAlign: 'center', marginTop: '25px', color: '#4E73DF' }}>Create blog</h3>
             <div className={classes.root}>
-                <div style={{ flexGrow: 2, height: '100%' }}>
-                    <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Typing title..." onChange={handleChangeTitle} /><br></br>
-                    <CKEditor
-                        editor={Editor}
-                        config={{
-                            toolbar: {
-                                items: [
-                                    'heading', '|', 'bold', 'underline', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                                    'indent', 'outdent', 'alignment', '|', 'imageUpload', 'blockQuote', 'insertTable',
-                                    'mediaEmbed', 'undo', 'redo', 'highlight', 'CKFinder', 'MathType', 'ChemType'
-                                ]
-                            },
-                            language: 'en',
-                            image: {
-                                styles: ['full', 'side']
-                            },
-                            table: {
-                                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
-                            },
-                            licenseKey: '',
-                            ckfinder: {
-                                uploadUrl: 'http://localhost:3030/uploads'
+                <div className="row" style={{width: '100%'}}>
+                    <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
+                        <div className="editor-blog">
+                            <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Typing title..." onChange={handleChangeTitle} /><br></br>
+                            <CKEditor
+                                editor={Editor}
+                                config={{
+                                    toolbar: {
+                                        items: [
+                                            'heading', '|', 'bold', 'underline', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                                            'indent', 'outdent', 'alignment', '|', 'imageUpload', 'blockQuote', 'insertTable',
+                                            'mediaEmbed', 'undo', 'redo', 'highlight', 'CKFinder', 'MathType', 'ChemType'
+                                        ]
+                                    },
+                                    language: 'en',
+                                    image: {
+                                        styles: ['full', 'side']
+                                    },
+                                    table: {
+                                        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                                    },
+                                    licenseKey: '',
+                                    ckfinder: {
+                                        uploadUrl: 'http://localhost:3030/uploads'
+                                    }
+                                }}
+                                // onReady={editor => {
+                                //     console.log('Editor is ready to use!', editor);
+                                // }}
+                                onChange={(event, editor) => {
+                                    setContent(editor.getData());
+                                }}
+                            // onBlur={(event, editor) => {
+                            //     console.log('Blur.', editor);
+                            // }}
+                            // onFocus={(event, editor) => {
+                            //     console.log('Focus.', editor);
+                            // }}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 col-12">
+                        <form noValidate autoComplete="off">
+                            {tagsFounded.length > 0 ?
+                                <FormControl style={{ width: "100%" }}>
+                                    <InputLabel id="demo-mutiple-checkbox-label">Tag</InputLabel>
+                                    <Select style={{ padding: "0px 10px" }}
+                                        multiple
+                                        value={tags}
+                                        onChange={handleChange}
+                                        renderValue={(selected) => {
+                                            let arr = [];
+                                            selected.forEach(el => {
+                                                arr.push(el.tagName);
+                                            })
+                                            return arr.join(',')
+                                        }}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {tagsFounded.map((elm) => (
+                                            <MenuItem key={elm._id} value={elm}>
+                                                <Checkbox checked={tags.indexOf(elm) > -1} />
+                                                <ListItemText primary={elm.tagName} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl> :
+                                <div>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
                             }
-                        }}
-                        // onReady={editor => {
-                        //     console.log('Editor is ready to use!', editor);
-                        // }}
-                        onChange={(event, editor) => {
-                            setContent(editor.getData());
-                        }}
-                    // onBlur={(event, editor) => {
-                    //     console.log('Blur.', editor);
-                    // }}
-                    // onFocus={(event, editor) => {
-                    //     console.log('Focus.', editor);
-                    // }}
-                    />
-                </div>
-                <div style={{ width: "200px" }}>
-                    <form noValidate autoComplete="off">
-                        {tagsFounded.length > 0 ?
-                            <FormControl className={classes.formControl} style={{ width: "100%" }}>
-                                <InputLabel id="demo-mutiple-checkbox-label">Tag</InputLabel>
-                                <Select style={{ padding: "0px 10px" }}
-                                    multiple
-                                    value={tags}
-                                    onChange={handleChange}
-                                    renderValue={(selected) => {
-                                        let arr = [];
-                                        selected.forEach(el => {
-                                            arr.push(el.tagName);
-                                        })
-                                        return arr.join(',')
-                                    }}
-                                    MenuProps={MenuProps}
-                                >
-                                    {tagsFounded.map((elm) => (
-                                        <MenuItem key={elm._id} value={elm}>
-                                            <Checkbox checked={tags.indexOf(elm) > -1} />
-                                            <ListItemText primary={elm.tagName} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl> :
-                            <div>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
-                        }
-                        <br></br>
-                        <Button style={{ marginTop: "25px" }} variant="outlined" onClick={handleSubmit}>Submit</Button>
-                    </form>
+                            <br></br>
+                            <Button style={{ marginTop: "25px" }} variant="outlined" onClick={handleSubmit}>Submit</Button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

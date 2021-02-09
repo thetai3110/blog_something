@@ -1,7 +1,5 @@
 import './topic.component.css';
 import user from '../../../assests/user.png';
-import { faChevronCircleDown, faChevronCircleUp, faCommentDots } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from 'react-router-dom';
 
 const Topic = () => {
@@ -9,8 +7,8 @@ const Topic = () => {
         <div className="topic">
             <div className="user">
                 <Link to="/"><img src={user} alt=""></img></Link><br></br>
-                <button><FontAwesomeIcon icon={faChevronCircleUp} /></button> <span>0</span> <br></br>
-                <button><FontAwesomeIcon icon={faChevronCircleDown} /></button> <span>0</span>
+                <button><i className="fa fa-sort-up"></i></button> <span>0</span> <br></br>
+                <button><i className="fa fa-sort-down"></i></button> <span>0</span>
             </div>
             <div className="content">
                 <h5><Link className="title-topic" to="/">Cách tìm bảng mã asciil</Link></h5>
@@ -25,7 +23,7 @@ const Topic = () => {
                 </div>
             </div>
             <div className="chat">
-                <Link className="chat-link" to="/"><FontAwesomeIcon icon={faCommentDots} /></Link>
+                <Link className="chat-link" to="/"><i className="fa fa-comment-dots"></i></Link>
                 <span> 0</span>
             </div>
         </div>

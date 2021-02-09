@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import java from '../../../assests/java.png';
 import './course-item.component.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faClock } from '@fortawesome/free-regular-svg-icons';
 
 const CourseItemComponent = () => {
 
@@ -15,8 +13,8 @@ const CourseItemComponent = () => {
                 <table>
                     <tbody>
                         <tr>
-                            <td><FontAwesomeIcon icon={faEye} /> 100</td>
-                            <td className="center"><FontAwesomeIcon icon={faClock} /> 40:00</td>
+                            <td><i className="fa fa-eye"></i> 100</td>
+                            <td className="center"><i className="far fa-clock"></i> 40:00</td>
                             <td><Link className="btn btn-outline-info link" to="/">Học ngay</Link></td>
                         </tr>
                     </tbody>

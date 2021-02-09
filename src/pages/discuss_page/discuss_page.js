@@ -1,6 +1,4 @@
 import './discuss_page.css';
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { pageLayoutDefault } from "../../components/higer_order/page-layout-default";
 import Search from "../../components/shared/search_conponent/search.component";
 import { Link } from 'react-router-dom';
@@ -16,7 +14,7 @@ const DiscussComponent = () => {
                     <Search />
                 </div>
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 col-12 create-topic">
-                    <button><FontAwesomeIcon icon={faPlus} /> Tạo chủ đề mới</button>
+                    <button><i className="fa fa-plus"></i> Tạo chủ đề mới</button>
                 </div>
             </div>
             <div className="list-topic">
