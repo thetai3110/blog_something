@@ -23,10 +23,10 @@ export const AdminPage = () => {
             <input type="checkbox" id="nav-admin-checked" name="nav-admin-checked" hidden></input>
             <div className="nav-admin-top">
                 <div className="nav-admin-search">
+                    <label htmlFor="nav-admin-checked" className="nav-admin-btn-menu"><i className="fa fa-bars"></i></label>
                     <div className="nav-admin-logo-show">
                         <h4><Link to="/admin">Admin</Link></h4>
                     </div>
-                    <label htmlFor="nav-admin-checked" className="nav-admin-btn-menu"><i className="fa fa-bars"></i></label>
                     <form>
                         <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
                         <button><i className="fa fa-search"></i></button>
@@ -57,8 +57,8 @@ export const AdminPage = () => {
                 <div className="admin-content-temp"></div>
                 <div className="admin-content-main">
                     <Switch>
-                        <Route path="/admin/blog" render={() => <TableBlog />} exact/>
-                        <Route path="/admin/blog/create" render={() => <CreateBlog />} exact/>
+                        <Route path="/admin/blog" render={() => <TableBlog />} exact />
+                        <Route path="/admin/blog/create" render={() => <CreateBlog />} exact />
                     </Switch>
                 </div>
             </div>

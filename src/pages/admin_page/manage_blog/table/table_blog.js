@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 export const TableBlog = () => {
     return (
         <div style={{ marginTop: "25px" }}>
-            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Blog'}</h5>
-            <table class="table">
+            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Quản lý blog'}</h5>
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

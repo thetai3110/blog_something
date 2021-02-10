@@ -27,8 +27,7 @@
 .nav-admin-logo-show{
     width: 230px;
     max-width: 230px;
-    text-align: center;
-    padding: 15px 0px;
+    padding: 15px;
 }
 .nav-admin-logo-show h4 a{
     color: #4E73DF;
@@ -128,9 +127,8 @@
 .admin-content-main{
     flex-grow: 1;
     transition: all linear .3s;
-    margin: 0 1%;
-    width: 100%;
     height: 100%;
+    margin: 0px 1%;
 }
 .nav-admin-list li.active{
     opacity: 1; 
@@ -210,16 +208,17 @@
         display: block;
     }
     .nav-admin-left{
-        transform: translateX(0);
+        transform: translateX(-100%);
     }
     .admin-content-temp{
-        width: 240px;
-        min-width: 240px;
+        width: 0;
     }
-    #nav-admin-checked:checked ~ .nav-admin-overlap, .nav-admin-btn-menu{
-        display: none;
+    #nav-admin-checked:checked ~ .nav-admin-overlap{
+        display: block;
     }
-
+    #nav-admin-checked:checked ~ .nav-admin-left{
+        transform: translateX(0);
+    }
 }
 @media (min-width: 1200px) { 
     .nav-admin-search form{

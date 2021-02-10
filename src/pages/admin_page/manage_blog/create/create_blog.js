@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button, Chip, FormControl, Input, InputLabel, ListItemText, MenuItem, Select } from '@material-ui/core';
+import { Chip, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
 import './create_blog.css';
 import { useState } from 'react';
 import { TagsService } from '../../../../services/tag.service';
 import { Link } from 'react-router-dom';
+import { BlogService } from '../../../../services/blog.service';
+import { CommonConstants } from '../../../../common/constants';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
-        width: '98.5%',
+        width: '98%',
     },
     chips: {
         display: 'flex',
@@ -49,60 +51,128 @@ function getStyles(name, tag, theme) {
 export const CreateBlog = () => {
     const classes = useStyles();
     const theme = useTheme();
-    const [tags, setTags] = useState([]);
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [tagsFounded, setTagsFounded] = useState([]);
+    const [fileName, setFileName] = useState('..................')
+    const [state, setState] = useState({
+        tags: [],
+        title: '',
+        summary: '',
+        content: '',
+        image: '',
+        tagsFounded: [],
+    })
+    const { tags, title, summary, content, image, tagsFounded } = state;
+
+    // Fetch full tags
     useEffect(() => {
+        // Set file name
+        document.getElementById('my-files').onchange = function () {
+            setFileName(this.value.split('\\').pop());
+        };
         (async function () {
             let rs = await TagsService.find();
             if (typeof rs.msg === 'undefined') {
-                setTagsFounded(rs.data);
+                setState({
+                    ...state,
+                    tagsFounded: rs.data
+                })
             } else {
                 console.log(rs.msg);
             }
         })();
     }, [])
+
+    // Change tags
     const handleChange = (event) => {
-        setTags(event.target.value);
+        setState({
+            ...state,
+            tags: event.target.value
+        })
     };
+    // Change title
     const handleChangeTitle = (event) => {
-        setTitle(event.target.value)
+        setState({
+            ...state,
+            title: event.target.value
+        })
     }
-    const handleSubmit = () => {
-        (async function () {
-            let arr = [];
-            tags.forEach(el => {
-                arr.push(el._id);
+    // Change summary
+    const handleChangeSummary = (event) => {
+        setState({
+            ...state,
+            summary: event.target.value
+        })
+    }
+    // Upload main image
+    const handleUploadImage = (event) => {
+        event.preventDefault();
+        let formData = new FormData();
+        let photo = document.getElementById("my-files").files[0];
+        if (typeof photo !== 'undefined') {
+            formData.append("myFiles", photo);
+            fetch(`${CommonConstants.server}/uploads/single`, {
+                method: 'POST',
+                body: formData,
             })
-            const data = {
-                athourId: '601f7928c0bb930b9cee5a9b',
-                title: title,
-                summary: 'a',
-                content: content,
-                publishedBy: '601f7928c0bb930b9cee5a9b',
-                tag: arr
-            }
-            let rs = await TagsService.create(data);
-            if (typeof rs.msg === 'undefined') {
-                if (rs.result === 'ok') {
-                    console.log(`${rs.message} and new tag is: ${JSON.stringify(rs.data)}`);
-                } else {
-                    console.log(`${rs.message}`);
-                }
-            } else {
-                console.log(rs.msg);
-            }
-        })();
+                .then(res => res.json())
+                .then(data => {
+                    setState({
+                        ...state,
+                        image: data.url
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        } else {
+            setFileName('no have any image!')
+        }
     }
+
+    // Submit all
+    const handleCreate = () => {
+        if (validate()) {
+            (async function () {
+                let arr = [];
+                tags.forEach(el => {
+                    arr.push(el._id);
+                })
+                const data = {
+                    athourId: '601f7928c0bb930b9cee5a9b',
+                    title: title,
+                    summary: summary,
+                    content: content,
+                    image: image,
+                    tag: arr
+                }
+                let rs = await BlogService.create(data);
+                if (typeof rs.msg === 'undefined') {
+                    if (rs.result === 'ok') {
+                        console.log(`${rs.message} and new tag is: ${JSON.stringify(rs.data)}`);
+                    } else {
+                        console.log(`${rs.message}`);
+                    }
+                } else {
+                    console.log(rs.msg);
+                }
+            })();
+        } else {
+            console.log('image: ' + image + 'title: ' + title + "content:" + content + 'summary:' + summary)
+        }
+    }
+
+    const validate = () => {
+        if (title !== '' && content !== '' && summary !== '' && image !== '') return true;
+        return false;
+    }
+
     return (
         <div style={{ height: '100%', marginTop: '25px' }}>
-            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Create new a blog'}</h5>
-            <div style={{ height: '100%' }}>
-                <div className="row" style={{ width: '100%', height: '100%' }}>
-                    <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
+            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Tạo 1 blog mới'}</h5>
+            <div style={{ height: '100%', width: '100%' }}>
+                <div className="row" style={{ height: '100%'}}>
+                    <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12" style={{ pading: 0 }}>
                         <div className="editor-blog">
-                            <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Typing title..." onChange={handleChangeTitle} /><br></br>
+                            <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Nhập tiêu của blog..." onChange={handleChangeTitle} /><br></br>
                             <CKEditor
                                 editor={Editor}
                                 config={{
@@ -122,14 +192,17 @@ export const CreateBlog = () => {
                                     },
                                     licenseKey: '',
                                     ckfinder: {
-                                        uploadUrl: 'http://localhost:3030/uploads'
+                                        uploadUrl: 'http://localhost:3030/uploads/multi'
                                     }
                                 }}
                                 // onReady={editor => {
                                 //     console.log('Editor is ready to use!', editor);
                                 // }}
                                 onChange={(event, editor) => {
-                                    setContent(editor.getData());
+                                    setState({
+                                        ...state,
+                                        content: editor.getData()
+                                    })
                                 }}
                             // onBlur={(event, editor) => {
                             //     console.log('Blur.', editor);
@@ -141,48 +214,59 @@ export const CreateBlog = () => {
                         </div>
                     </div>
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 col-12">
-                        <form noValidate autoComplete="off">
-                            {tagsFounded.length > 0 ?
-                                <FormControl className={classes.formControl}>
-                                    <InputLabel id="mutiple-chip-label">Tags</InputLabel>
-                                    <Select
-                                        labelId="mutiple-chip-label"
-                                        id="mutiple-chip"
-                                        multiple
-                                        value={tags}
-                                        onChange={handleChange}
-                                        input={<Input id="select-multiple-chip" />}
-                                        renderValue={(selected) => (
-                                            <div className={classes.chips}>
-                                                {selected.map((value) => (
-                                                    <Chip key={value._id} label={value.tagName} className={classes.chip} />
-                                                ))}
-                                            </div>
-                                        )}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {tagsFounded.map((elm) => (
-                                            <MenuItem key={elm._id} value={elm} style={getStyles(elm, tags, theme)}>
-                                                {elm.tagName}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl> :
-                                <div>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
-                            }
-                            <br></br>
-                            <TextField
-                                style={{ width: '100%', margin: '25px 0px' }}
-                                id="outlined-multiline-static"
-                                label="Summary"
-                                multiline
-                                rows={7}
-                                defaultValue=""
-                                variant="outlined"
-                            />
-                            <br></br>
-                            <div style={{ textAlign: 'right' }}><Button variant="outlined" onClick={handleSubmit}>Submit</Button></div>
-                        </form>
+                        {tagsFounded.length > 0 ?
+                            <FormControl className={classes.formControl} style={{ marginBottom: "25px" }}>
+                                <InputLabel id="mutiple-chip-label">Tags</InputLabel>
+                                <Select
+                                    labelId="mutiple-chip-label"
+                                    id="mutiple-chip"
+                                    multiple
+                                    value={tags}
+                                    onChange={handleChange}
+                                    input={<Input id="select-multiple-chip" />}
+                                    renderValue={(selected) => (
+                                        <div className={classes.chips}>
+                                            {selected.map((value) => (
+                                                <Chip key={value._id} label={value.tagName} className={classes.chip} />
+                                            ))}
+                                        </div>
+                                    )}
+                                    MenuProps={MenuProps}
+                                >
+                                    {tagsFounded.map((elm) => (
+                                        <MenuItem key={elm._id} value={elm} style={getStyles(elm, tags, theme)}>
+                                            {elm.tagName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl> :
+                            <div style={{ marginBottom: "25px" }}>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
+                        }
+                        <TextField
+                            style={{ width: '100%', marginBottom: '25px' }}
+                            id="outlined-multiline-static"
+                            label="Nội dung tóm tắt"
+                            multiline
+                            rows={7}
+                            defaultValue=""
+                            variant="outlined"
+                            onChange={handleChangeSummary}
+                        />
+                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <form onSubmit={handleUploadImage}
+                                style={{ marginBottom: "50px", display: 'flex', justifyContent: 'space-between' }}
+                                encType="multipart/form-data" method="POST" className="custom-file">
+                                <input type="file" id="my-files" name="myFiles" style={{ display: 'none' }}></input>
+                                <div>
+                                    <label className="btn btn-outline-secondary" htmlFor="my-files" style={{ margin: 0 }}>Chọn ảnh</label>
+                                    <p style={{ padding: '5px', flexGrow: 1, maxWidth: "150px", color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
+                                </div>
+                                <div><i className="fa fa-angle-double-right"></i></div>
+                                <input type="submit" className="btn btn-outline-secondary" value="Tải lên"></input>
+                            </form>
+                            <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '400px', maxHeight: '100%', marginBottom: '25px' }} src={image} alt={fileName}></img>
+                            <div style={{ textAlign: 'right' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
+                        </div>
                     </div>
                 </div>
             </div>
