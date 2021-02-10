@@ -128,7 +128,7 @@
     flex-grow: 1;
     transition: all linear .3s;
     height: 100%;
-    margin: 0px 1%;
+    margin: 25px 1%;
 }
 .nav-admin-list li.active{
     opacity: 1; 
@@ -228,8 +228,8 @@
         transform: translateX(0);
     }
     .admin-content-temp{
-        width: 240px;
-        min-width: 240px;
+        width: 230px;
+        min-width: 230px;
     }
     #nav-admin-checked:checked ~ .nav-admin-overlap, .nav-admin-btn-menu{
         display: none;

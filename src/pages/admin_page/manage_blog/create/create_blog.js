@@ -166,7 +166,7 @@ export const CreateBlog = () => {
     }
 
     return (
-        <div style={{ height: '100%', marginTop: '25px' }}>
+        <div style={{ height: '100%'}}>
             <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Tạo 1 blog mới'}</h5>
             <div style={{ height: '100%', width: '100%' }}>
                 <div className="row" style={{ height: '100%'}}>
@@ -264,7 +264,7 @@ export const CreateBlog = () => {
                                 <div><i className="fa fa-angle-double-right"></i></div>
                                 <input type="submit" className="btn btn-outline-secondary" value="Tải lên"></input>
                             </form>
-                            <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '400px', maxHeight: '100%', marginBottom: '25px' }} src={image} alt={fileName}></img>
+                            <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '100%', maxHeight: '300px', marginBottom: '25px' }} src={image} alt={fileName}></img>
                             <div style={{ textAlign: 'right' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
                         </div>
                     </div>

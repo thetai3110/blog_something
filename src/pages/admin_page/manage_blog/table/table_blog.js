@@ -1,40 +1,93 @@
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
+import { BlogService } from "../../../../services/blog.service";
+import movies from "./movies";
+
+const BootyCheckbox = React.forwardRef(({ onClick, ...rest }, ref) => (
+    <div className="custom-control custom-checkbox">
+        <input
+            type="checkbox"
+            className="custom-control-input"
+            ref={ref}
+            {...rest}
+        />
+        <label className="custom-control-label" onClick={onClick} />
+    </div>
+));
 
 export const TableBlog = () => {
+    const [blogsFound, setBlogsFound] = useState([]);
+    useEffect(() => {
+        (async function () {
+            let rs = await BlogService.find();
+            if (typeof rs.msg === 'undefined') {
+                setBlogsFound(rs.data);
+            } else {
+                console.log(rs.msg);
+            }
+        })();
+    }, [])
+    const handleClick = (e) =>{
+        console.log(e)
+    }
+    const columns = [
+        {
+            name: "Title",
+            selector: "title",
+            sortable: true,
+            maxWidth: "300px",
+            format: row => `${row.title.slice(0, 10)}...`,
+        },
+        {
+            name: "Summary",
+            selector: "summary",
+            maxWidth: "500px",
+            sortable: true
+        },
+        {
+            name: "Image",
+            selector: "image",
+            maxWidth: "300px",
+            cell: row => <a href={`${row.image}`} target='blank'>{row.image}</a>
+        },
+        {
+            name: "Author",
+            selector: "authorId",
+            maxWidth: "100px"
+        },
+        {
+            name: "Published",
+            selector: "published",
+            maxWidth: "100px",
+            cell: row => <button onClick={()=> handleClick(row.published)} className={row.published ? 'btn btn-success' : 'btn btn-warning'} style={{ color: '#fff' }}>{row.published ? 'Đã đăng' : 'Đăng'}</button>
+        },
+        {
+            name: "Published By",
+            selector: "publishedBy",
+            maxWidth: "150px"
+        },
+        {
+            name: "Tags",
+            selector: "tag",
+            cell: row =><div>{row.tag.map(el =>{
+                return <div style={{border: '1px solid gray', display:'inline-block'}} key={el}>{el}</div>
+            })}</div>
+        }
+    ];
     return (
-        <div style={{ marginTop: "25px" }}>
-            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Quản lý blog'}</h5>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div><Link to="/admin/blog/create" style={{fontWeight: '500'}}>Create a new blog...</Link></div>
+        <div style={{ width: '100%' }}>
+            <div className="card">
+                <DataTable
+                    title="Blog"
+                    columns={columns}
+                    data={blogsFound}
+                    defaultSortField="title"
+                    pagination
+                    selectableRows
+                    selectableRowsComponent={BootyCheckbox}
+                />
+            </div>
         </div>
-    )
+    );
 }
