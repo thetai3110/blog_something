@@ -6,14 +6,15 @@ import "./blog_page.css";
 
 const BlogComponent = () => {
     const [blogsFound, setBlogsFound] = useState([]);
+    const TAG = "BlogComponent";
     useEffect(() => {
         (async function () {
             let rs = await BlogService.findByPublished(true);
             if (typeof rs.msg === "undefined") {
-                if (rs.result === "ok") setBlogsFound(rs.data); 
-                else console.log(rs.message);
+                if (rs.result === "ok") setBlogsFound(rs.data);
+                else console.log(TAG + ': ' + rs.message);
             } else {
-                console.log(rs.msg);
+                console.log(TAG + ': ' + rs.msg);
             }
         })();
     }, [])
@@ -33,7 +34,7 @@ const BlogComponent = () => {
                             </div>
                         </div>);
                 }) :
-                <div>Không tìm thấy bất kỳ bài viết nào {blogsFound.length +""}</div>
+                <div>Không tìm thấy bất kỳ bài viết nào {blogsFound.length + ""}</div>
             }
         </div>
     )

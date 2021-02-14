@@ -5,14 +5,17 @@ import { CreateBlog } from './manage_blog/create/create_blog';
 import { TableBlog } from './manage_blog/table/table_blog';
 
 export const AdminPage = () => {
-
+    const menus = [
+        { id: '1', title: 'blog', title_en: 'blog' }
+    ];
     useEffect(() => {
         const $$ = document.querySelectorAll.bind(document);
         const $ = document.querySelector.bind(document);
         const links = $$('.nav-admin-list li');
         links.forEach((elm) => {
             elm.onclick = function () {
-                $('.nav-admin-list li.active').classList.remove('active');
+                if($('.nav-admin-list li.active'))
+                    $('.nav-admin-list li.active').classList.remove('active');
                 this.classList.add('active');
             }
         });
@@ -42,15 +45,9 @@ export const AdminPage = () => {
                     <h4><Link to="/admin">Admin</Link></h4>
                 </div>
                 <ul className="nav-admin-list">
-                    <li className="active">
-                        <Link to="/admin/blog"><i className="fa fa-btc"></i> Blog manage</Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/blog"><i className="fa fa-btc"></i> Blog manage</Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/blog"><i className="fa fa-btc"></i> Blog manage</Link>
-                    </li>
+                    {menus.map((item) => {
+                        return <li key={item.id} className="nav-admin-list"><Link to={"/admin/" + item.title_en}>{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                    })}
                 </ul>
             </div>
             <div className="admin-content">

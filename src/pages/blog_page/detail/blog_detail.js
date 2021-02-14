@@ -4,6 +4,7 @@ import { BlogService } from "../../../services/blog.service";
 import './blog_detail.css';
 
 const BlogDetail = (props) => {
+    const TAG = "BlogDetail";
     const ref = useRef(null);
     const [tagsFound, setTagsFound] = useState([]);
     useEffect(() => {
@@ -15,9 +16,9 @@ const BlogDetail = (props) => {
                     let content = rs.data.content;
                     ref.current.insertAdjacentHTML('beforeend', content);
                 }
-                else console.log(rs.message);
+                else console.log(TAG + ': ' + rs.message);
             } else {
-                console.log(rs.msg);
+                console.log(TAG + ': ' + rs.msg);
             }
         })();
     }, [])

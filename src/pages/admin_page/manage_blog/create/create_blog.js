@@ -10,6 +10,7 @@ import { TagsService } from '../../../../services/tag.service';
 import { Link } from 'react-router-dom';
 import { BlogService } from '../../../../services/blog.service';
 import { CommonConstants } from '../../../../common/constants';
+import { toast } from '../../../../components/shared/toast_component/toast';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -49,6 +50,7 @@ function getStyles(name, tag, theme) {
     };
 }
 export const CreateBlog = () => {
+    const TAG = "CreateBlog";
     const classes = useStyles();
     const theme = useTheme();
     const [fileName, setFileName] = useState('..................')
@@ -62,27 +64,27 @@ export const CreateBlog = () => {
     })
     const { tags, title, summary, content, image, tagsFounded } = state;
 
-    // Fetch full tags
     useEffect(() => {
         // Set file name
-        document.getElementById('my-files').onchange = function () {
+        document.getElementById('file-upload-blog').onchange = function () {
             setFileName(this.value.split('\\').pop());
         };
+        // Fetch full tags
         (async function () {
             let rs = await TagsService.find();
             if (typeof rs.msg === 'undefined') {
-                if (rs.result === 'ok')
+                if (rs.result === 'ok') {
                     setState({
                         ...state,
                         tagsFounded: rs.data
                     });
-                else console.log(rs.message);
+                }
+                else console.log(TAG + ': ' + rs.message);
             } else {
-                console.log(rs.msg);
+                console.log(TAG + ': ' + rs.msg);
             }
         })();
     }, [])
-
     // Change tags
     const handleChange = (event) => {
         setState({
@@ -90,13 +92,6 @@ export const CreateBlog = () => {
             tags: event.target.value
         })
     };
-    // Change title
-    const handleChangeTitle = (event) => {
-        setState({
-            ...state,
-            title: event.target.value
-        })
-    }
     // Change summary
     const handleChangeSummary = (event) => {
         setState({
@@ -108,9 +103,9 @@ export const CreateBlog = () => {
     const handleUploadImage = (event) => {
         event.preventDefault();
         let formData = new FormData();
-        let photo = document.getElementById("my-files").files[0];
+        let photo = document.getElementById("file-upload-blog").files[0];
         if (typeof photo !== 'undefined') {
-            formData.append("myFiles", photo);
+            formData.append("file-upload-blog", photo);
             fetch(`${CommonConstants.server}/uploads/single`, {
                 method: 'POST',
                 body: formData,
@@ -123,13 +118,12 @@ export const CreateBlog = () => {
                     })
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(TAG + ': ' + err)
                 })
         } else {
             setFileName('no have any image!')
         }
     }
-
     // Submit all
     const handleCreate = () => {
         if (validate()) {
@@ -145,59 +139,67 @@ export const CreateBlog = () => {
                 let rs = await BlogService.create(data);
                 if (typeof rs.msg === 'undefined') {
                     if (rs.result === 'ok') {
-                        console.log(`${rs.message} and new tag is: ${JSON.stringify(rs.data)}`);
+                        toast({
+                            title: "Success!",
+                            message: "A new blog added.",
+                            type: "success",
+                            duration: 3000
+                        });
                     } else {
-                        console.log(rs.message);
+                        toast({
+                            title: "Failed!",
+                            message: `Failed at: ${rs.message}`,
+                            type: "error",
+                            duration: 3000
+                        });
                     }
                 } else {
-                    console.log(rs.msg);
+                    console.log(TAG + ': ' + rs.msg);
                 }
             })();
         } else {
-            console.log('image: ' + image + 'title: ' + title + "content:" + content + 'summary:' + summary)
+            console.log(TAG + ': ' + '{image: ' + image + ', title: ' + title + ", content: " + content + ', summary: ' + summary + '}')
+            toast({
+                title: "Warning!",
+                message: `Please fill all fields (${image === '' ? 'image' : ''}, ${title === '' ? 'title' : ''}, ${content === '' ? 'content' : ''}, ${summary === '' ? 'summary' : ''}).`,
+                type: "warning",
+                duration: 3000
+            });
         }
     }
-
     const validate = () => {
-        if (title !== '' && content !== '' && summary !== '' && image !== '') return true;
+        if (title !== '&nbsp;' && content !== '' && summary !== '' && image !== '') return true;
         return false;
     }
 
     return (
         <div style={{ height: '100%' }}>
-            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Create a new blog'}</h5>
-            <div style={{ height: '100%', width: '100%' }}>
+            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#447' }}>Create a new blog:</h5>
+            <div id="toast-custom"></div>
+            <div style={{ height: '100%' }}>
                 <div className="row" style={{ height: '100%' }}>
                     <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12" style={{ pading: 0 }}>
                         <div className="editor-blog">
-                            <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Typing title..." onChange={handleChangeTitle} /><br></br>
                             <CKEditor
                                 editor={Editor}
                                 config={{
                                     toolbar: {
                                         items: [
-                                            'heading', '|', 'bold', 'underline', 'italic', 'strikethrough', 'specialCharacters', 'fontBackgroundColor', 'fontColor',
-                                            'fontSize', 'fontFamily', 'highlight', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent', 'outdent', '|',
-                                            'imageUpload', 'imageInsert', 'mediaEmbed', 'CKFinder', '|', 'codeBlock', 'insertTable', '|', 'MathType', 'ChemType', 'blockQuote',
-                                            'undo', 'redo'
+                                            'heading', '|', 'bold', 'underline', 'italic', 'strikethrough', 'specialCharacters', 'fontBackgroundColor',
+                                            'fontColor', 'fontSize', 'fontFamily', 'highlight', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent',
+                                            'outdent', '|', 'imageUpload', 'imageInsert', 'mediaEmbed', 'CKFinder', '|', 'codeBlock', 'insertTable', '|',
+                                            'MathType', 'ChemType', 'blockQuote', 'undo', 'redo'
                                         ]
                                     },
                                     language: 'en',
                                     image: {
                                         toolbar: [
-                                            'imageTextAlternative',
-                                            'imageStyle:full',
-                                            'imageStyle:side',
-                                            'linkImage'
+                                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side', 'linkImage'
                                         ]
                                     },
                                     table: {
                                         contentToolbar: [
-                                            'tableColumn',
-                                            'tableRow',
-                                            'mergeTableCells',
-                                            'tableCellProperties',
-                                            'tableProperties'
+                                            'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'
                                         ]
                                     },
                                     licenseKey: '',
@@ -205,22 +207,13 @@ export const CreateBlog = () => {
                                         uploadUrl: 'http://localhost:3030/uploads/multi'
                                     }
                                 }}
-                                // onReady={editor => {
-                                //     console.log('Editor is ready to use!', editor);
-                                // }}
                                 onChange={(event, editor) => {
-                                    console.log(editor.getData())
                                     setState({
                                         ...state,
+                                        title: editor.getData().split('</h1>').shift().slice(4),
                                         content: editor.getData()
                                     })
                                 }}
-                            // onBlur={(event, editor) => {
-                            //     console.log('Blur.', editor);
-                            // }}
-                            // onFocus={(event, editor) => {
-                            //     console.log('Focus.', editor);
-                            // }}
                             />
                         </div>
                     </div>
@@ -267,9 +260,9 @@ export const CreateBlog = () => {
                             <form onSubmit={handleUploadImage}
                                 style={{ marginBottom: "50px", display: 'flex', justifyContent: 'space-between' }}
                                 encType="multipart/form-data" method="POST" className="custom-file">
-                                <input type="file" id="my-files" name="myFiles" style={{ display: 'none' }}></input>
+                                <input type="file" id="file-upload-blog" name="file-upload-blog" style={{ display: 'none' }}></input>
                                 <div>
-                                    <label className="btn btn-outline-secondary" htmlFor="my-files" style={{ margin: 0 }}>Choose image</label>
+                                    <label className="btn btn-outline-secondary" htmlFor="file-upload-blog" style={{ margin: 0 }}>Choose a image</label>
                                     <p style={{ padding: '5px', flexGrow: 1, maxWidth: "150px", color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
                                 </div>
                                 <div><i className="fa fa-angle-double-right"></i></div>
