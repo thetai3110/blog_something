@@ -71,10 +71,12 @@ export const CreateBlog = () => {
         (async function () {
             let rs = await TagsService.find();
             if (typeof rs.msg === 'undefined') {
-                setState({
-                    ...state,
-                    tagsFounded: rs.data
-                })
+                if (rs.result === 'ok')
+                    setState({
+                        ...state,
+                        tagsFounded: rs.data
+                    });
+                else console.log(rs.message);
             } else {
                 console.log(rs.msg);
             }
@@ -132,24 +134,20 @@ export const CreateBlog = () => {
     const handleCreate = () => {
         if (validate()) {
             (async function () {
-                let arr = [];
-                tags.forEach(el => {
-                    arr.push(el._id);
-                })
                 const data = {
-                    athourId: '601f7928c0bb930b9cee5a9b',
+                    author: { _id: '601f7928c0bb930b9cee5a9b', username: 'admin', fullname: 'Tran The Tai', email: 'trthetai3110@gmail.com' },
                     title: title,
                     summary: summary,
                     content: content,
                     image: image,
-                    tag: arr
+                    tags: tags
                 }
                 let rs = await BlogService.create(data);
                 if (typeof rs.msg === 'undefined') {
                     if (rs.result === 'ok') {
                         console.log(`${rs.message} and new tag is: ${JSON.stringify(rs.data)}`);
                     } else {
-                        console.log(`${rs.message}`);
+                        console.log(rs.message);
                     }
                 } else {
                     console.log(rs.msg);
@@ -166,29 +164,41 @@ export const CreateBlog = () => {
     }
 
     return (
-        <div style={{ height: '100%'}}>
-            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Tạo 1 blog mới'}</h5>
+        <div style={{ height: '100%' }}>
+            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#333' }}>{'>> Create a new blog'}</h5>
             <div style={{ height: '100%', width: '100%' }}>
-                <div className="row" style={{ height: '100%'}}>
+                <div className="row" style={{ height: '100%' }}>
                     <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12" style={{ pading: 0 }}>
                         <div className="editor-blog">
-                            <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Nhập tiêu của blog..." onChange={handleChangeTitle} /><br></br>
+                            <TextField style={{ marginBottom: '25px', width: '100%' }} id="standard-basic" label="Typing title..." onChange={handleChangeTitle} /><br></br>
                             <CKEditor
                                 editor={Editor}
                                 config={{
                                     toolbar: {
                                         items: [
-                                            'heading', '|', 'bold', 'underline', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                                            'indent', 'outdent', 'alignment', '|', 'imageUpload', 'blockQuote', 'insertTable',
-                                            'mediaEmbed', 'undo', 'redo', 'highlight', 'CKFinder', 'MathType', 'ChemType'
+                                            'heading', '|', 'bold', 'underline', 'italic', 'strikethrough', 'specialCharacters', 'fontBackgroundColor', 'fontColor',
+                                            'fontSize', 'fontFamily', 'highlight', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent', 'outdent', '|',
+                                            'imageUpload', 'imageInsert', 'mediaEmbed', 'CKFinder', '|', 'codeBlock', 'insertTable', '|', 'MathType', 'ChemType', 'blockQuote',
+                                            'undo', 'redo'
                                         ]
                                     },
                                     language: 'en',
                                     image: {
-                                        styles: ['full', 'side']
+                                        toolbar: [
+                                            'imageTextAlternative',
+                                            'imageStyle:full',
+                                            'imageStyle:side',
+                                            'linkImage'
+                                        ]
                                     },
                                     table: {
-                                        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                                        contentToolbar: [
+                                            'tableColumn',
+                                            'tableRow',
+                                            'mergeTableCells',
+                                            'tableCellProperties',
+                                            'tableProperties'
+                                        ]
                                     },
                                     licenseKey: '',
                                     ckfinder: {
@@ -199,6 +209,7 @@ export const CreateBlog = () => {
                                 //     console.log('Editor is ready to use!', editor);
                                 // }}
                                 onChange={(event, editor) => {
+                                    console.log(editor.getData())
                                     setState({
                                         ...state,
                                         content: editor.getData()
@@ -240,12 +251,12 @@ export const CreateBlog = () => {
                                     ))}
                                 </Select>
                             </FormControl> :
-                            <div style={{ marginBottom: "25px" }}>Not fonund any tag. You can create more at <Link to="/">Create tag</Link>.</div>
+                            <div style={{ marginBottom: "25px" }}>Not found any tags. You can create new tag at <Link to="/">Thêm tag</Link>.</div>
                         }
                         <TextField
                             style={{ width: '100%', marginBottom: '25px' }}
                             id="outlined-multiline-static"
-                            label="Nội dung tóm tắt"
+                            label="Summary"
                             multiline
                             rows={7}
                             defaultValue=""
@@ -258,11 +269,11 @@ export const CreateBlog = () => {
                                 encType="multipart/form-data" method="POST" className="custom-file">
                                 <input type="file" id="my-files" name="myFiles" style={{ display: 'none' }}></input>
                                 <div>
-                                    <label className="btn btn-outline-secondary" htmlFor="my-files" style={{ margin: 0 }}>Chọn ảnh</label>
+                                    <label className="btn btn-outline-secondary" htmlFor="my-files" style={{ margin: 0 }}>Choose image</label>
                                     <p style={{ padding: '5px', flexGrow: 1, maxWidth: "150px", color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
                                 </div>
                                 <div><i className="fa fa-angle-double-right"></i></div>
-                                <input type="submit" className="btn btn-outline-secondary" value="Tải lên"></input>
+                                <input type="submit" className="btn btn-outline-secondary" value="Upload"></input>
                             </form>
                             <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '100%', maxHeight: '300px', marginBottom: '25px' }} src={image} alt={fileName}></img>
                             <div style={{ textAlign: 'right' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
