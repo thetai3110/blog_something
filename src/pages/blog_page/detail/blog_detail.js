@@ -14,7 +14,7 @@ const BlogDetail = (props) => {
                 if (rs.result === 'ok') {
                     setTagsFound(rs.data.tags);
                     let content = rs.data.content;
-                    ref.current.insertAdjacentHTML('beforeend', content);
+                    ref.current.innerHTML = content;
                 }
                 else console.log(TAG + ': ' + rs.message);
             } else {
@@ -23,8 +23,10 @@ const BlogDetail = (props) => {
         })();
     }, [])
     return (
-        <div className="blog-detail-page ck-content">
-            <div ref={ref}></div>
+        <div className="blog-detail-page">
+            <div className="ck-content">
+                <div ref={ref}></div>
+            </div>
             <ul className="blog-tags-list">
                 {tagsFound.map(tag => {
                     return <li key={tag._id}>{tag.tagName}</li>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Chip, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 120,
         width: '98%',
+        marginBottom: '25px'
     },
     chips: {
         display: 'flex',
@@ -51,6 +52,7 @@ function getStyles(name, tag, theme) {
 }
 export const CreateBlog = () => {
     const TAG = "CreateBlog";
+    const contentPreviewRef = useRef(null);
     const classes = useStyles();
     const theme = useTheme();
     const [fileName, setFileName] = useState('..................')
@@ -118,6 +120,7 @@ export const CreateBlog = () => {
                     })
                 })
                 .catch(err => {
+                    toast({ title: "Failed!", message: `Failed at: ${err}`, type: "error", duration: 3000 });
                     console.log(TAG + ': ' + err)
                 })
         } else {
@@ -139,21 +142,13 @@ export const CreateBlog = () => {
                 let rs = await BlogService.create(data);
                 if (typeof rs.msg === 'undefined') {
                     if (rs.result === 'ok') {
-                        toast({
-                            title: "Success!",
-                            message: "A new blog added.",
-                            type: "success",
-                            duration: 3000
-                        });
+                        toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 3000 });
                     } else {
-                        toast({
-                            title: "Failed!",
-                            message: `Failed at: ${rs.message}`,
-                            type: "error",
-                            duration: 3000
-                        });
+                        toast({ title: "Failed!", message: `Failed at: ${rs.message}`, type: "error", duration: 3000 });
+                        console.log(TAG + ': ' + rs.message);
                     }
                 } else {
+                    toast({ title: "Failed!", message: `Failed at: ${rs.msg}`, type: "error", duration: 3000 });
                     console.log(TAG + ': ' + rs.msg);
                 }
             })();
@@ -167,18 +162,24 @@ export const CreateBlog = () => {
             });
         }
     }
+    // Validate
     const validate = () => {
         if (title !== '&nbsp;' && content !== '' && summary !== '' && image !== '') return true;
         return false;
     }
-
+    // Preview
+    const handelPreview = () => {
+        contentPreviewRef.current.innerHTML = content;
+    }
     return (
-        <div style={{ height: '100%' }}>
-            <h5 style={{ padding: '15px 0px', fontWeight: '500', color: '#447' }}>Create a new blog:</h5>
+        <div className="create-blog">
+            {/* Toast */}
             <div id="toast-custom"></div>
-            <div style={{ height: '100%' }}>
-                <div className="row" style={{ height: '100%' }}>
-                    <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12" style={{ pading: 0 }}>
+            <h5>Create a new blog: <i className="fa fa-eye create-blog-review-btn" data-toggle="modal" data-target=".bd-modal-preview" onClick={handelPreview}></i></h5>
+            <div className="create-blog-content">
+                <div className="row">
+                    {/* CKEditor */}
+                    <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
                         <div className="editor-blog">
                             <CKEditor
                                 editor={Editor}
@@ -193,8 +194,12 @@ export const CreateBlog = () => {
                                     },
                                     language: 'en',
                                     image: {
+                                        styles: [
+                                            'alignLeft', 'alignCenter', 'alignRight'
+                                        ],
                                         toolbar: [
-                                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side', 'linkImage'
+                                            'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+                                            '|', 'imageResize', '|', 'imageTextAlternative', '|', 'linkImage'
                                         ]
                                     },
                                     table: {
@@ -217,9 +222,10 @@ export const CreateBlog = () => {
                             />
                         </div>
                     </div>
+                    {/* Form */}
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 col-12">
                         {tagsFounded.length > 0 ?
-                            <FormControl className={classes.formControl} style={{ marginBottom: "25px" }}>
+                            <FormControl className={classes.formControl}>
                                 <InputLabel id="mutiple-chip-label">Tags</InputLabel>
                                 <Select
                                     labelId="mutiple-chip-label"
@@ -244,10 +250,10 @@ export const CreateBlog = () => {
                                     ))}
                                 </Select>
                             </FormControl> :
-                            <div style={{ marginBottom: "25px" }}>Not found any tags. You can create new tag at <Link to="/">Thêm tag</Link>.</div>
+                            <div className="create-blog-notags">Not found any tags. You can create new tag at <Link to="/">Create a new tag</Link>.</div>
                         }
                         <TextField
-                            style={{ width: '100%', marginBottom: '25px' }}
+                            style={{ marginBottom: '25px', width: '100%' }}
                             id="outlined-multiline-static"
                             label="Summary"
                             multiline
@@ -260,7 +266,7 @@ export const CreateBlog = () => {
                             <form onSubmit={handleUploadImage}
                                 style={{ marginBottom: "50px", display: 'flex', justifyContent: 'space-between' }}
                                 encType="multipart/form-data" method="POST" className="custom-file">
-                                <input type="file" id="file-upload-blog" name="file-upload-blog" style={{ display: 'none' }}></input>
+                                <input type="file" id="file-upload-blog" accept='image/*' name="file-upload-blog" style={{ display: 'none' }}></input>
                                 <div>
                                     <label className="btn btn-outline-secondary" htmlFor="file-upload-blog" style={{ margin: 0 }}>Choose a image</label>
                                     <p style={{ padding: '5px', flexGrow: 1, maxWidth: "150px", color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
@@ -270,6 +276,27 @@ export const CreateBlog = () => {
                             </form>
                             <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '100%', maxHeight: '300px', marginBottom: '25px' }} src={image} alt={fileName}></img>
                             <div style={{ textAlign: 'right' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Model preview */}
+            <div className="modal fade bd-modal-preview" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="modelPublishedLongTitle"><i className="fa fa-eye"></i> Preview</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="ck-content">
+                                <div ref={contentPreviewRef} style={{ padding: '0px 20px' }}></div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
