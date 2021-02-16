@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import './admin_page.css';
-import { CreateBlog } from './manage_blog/create/create_blog';
+import { CreateBlog } from './manage_blog/create_or_modify/create_or_modify';
 import { TableBlog } from './manage_blog/table/table_blog';
 
 export const AdminPage = () => {
@@ -54,8 +54,8 @@ export const AdminPage = () => {
                 <div className="admin-content-temp"></div>
                 <div className="admin-content-main">
                     <Switch>
-                        <Route path="/admin/blog" render={() => <TableBlog />} exact />
-                        <Route path="/admin/blog/create" render={() => <CreateBlog />} exact />
+                        <Route path="/admin/blog" render={(props) => <TableBlog {...props}/>} exact />
+                        <Route path="/admin/blog/create" render={(props) => <CreateBlog {...props}/>} exact />
                     </Switch>
                 </div>
             </div>

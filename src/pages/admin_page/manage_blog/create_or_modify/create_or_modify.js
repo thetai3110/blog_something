@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Chip, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
-import './create_blog.css';
+import './create_or_modify.css';
 import { useState } from 'react';
 import { TagsService } from '../../../../services/tag.service';
 import { Link } from 'react-router-dom';
@@ -50,19 +50,20 @@ function getStyles(name, tag, theme) {
                 : theme.typography.fontWeightMedium,
     };
 }
-export const CreateBlog = () => {
+export const CreateBlog = (props) => {
     const TAG = "CreateBlog";
     const contentPreviewRef = useRef(null);
     const classes = useStyles();
     const theme = useTheme();
-    const [fileName, setFileName] = useState('..................')
+    const [fileName, setFileName] = useState('..................');
+    const isCreate = typeof props.location.state === 'undefined' ? true : false;
     const [state, setState] = useState({
-        tags: [],
-        title: '',
-        summary: '',
-        content: '',
-        image: '',
-        tagsFounded: [],
+        tags: isCreate ? [] : props.location.state.tags,
+        title: isCreate ? '' : props.location.state.content.split('</h1>').shift().slice(4),
+        summary: isCreate ? '' : props.location.state.summary,
+        content: isCreate ? '' : props.location.state.content,
+        image: isCreate ? '' : props.location.state.image,
+        tagsFounded: []
     })
     const { tags, title, summary, content, image, tagsFounded } = state;
 
@@ -76,10 +77,7 @@ export const CreateBlog = () => {
             let rs = await TagsService.find();
             if (typeof rs.msg === 'undefined') {
                 if (rs.result === 'ok') {
-                    setState({
-                        ...state,
-                        tagsFounded: rs.data
-                    });
+                    setState({ ...state, tagsFounded: rs.data });
                 }
                 else console.log(TAG + ': ' + rs.message);
             } else {
@@ -142,7 +140,10 @@ export const CreateBlog = () => {
                 let rs = await BlogService.create(data);
                 if (typeof rs.msg === 'undefined') {
                     if (rs.result === 'ok') {
-                        toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 3000 });
+                        toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
+                        setTimeout(()=>{
+                            props.history.replace('/admin/blog');
+                        }, 2000)
                     } else {
                         toast({ title: "Failed!", message: `Failed at: ${rs.message}`, type: "error", duration: 3000 });
                         console.log(TAG + ': ' + rs.message);
@@ -157,6 +158,44 @@ export const CreateBlog = () => {
             toast({
                 title: "Warning!",
                 message: `Please fill all fields (${image === '' ? 'image' : ''}, ${title === '' ? 'title' : ''}, ${content === '' ? 'content' : ''}, ${summary === '' ? 'summary' : ''}).`,
+                type: "warning",
+                duration: 3000
+            });
+        }
+    }
+    // Modify
+    const handleModify = () => {
+        if (validate()) {
+            (async function () {
+                const data = {
+                    title: title,
+                    summary: summary,
+                    content: content,
+                    image: image,
+                    tags: tags,
+                    modifyAt: Date.now
+                }
+                let rs = await BlogService.modify(props.location.state._id, data);
+                if (typeof rs.msg === 'undefined') {
+                    if (rs.result === 'ok') {
+                        toast({ title: "Success!", message: "This blog was modified.", type: "success", duration: 2000 });
+                        setTimeout(()=>{
+                            props.history.replace('/admin/blog');
+                        }, 2000)
+                    } else {
+                        toast({ title: "Failed!", message: `Failed at: ${rs.message}`, type: "error", duration: 3000 });
+                        console.log(TAG + ': ' + rs.message);
+                    }
+                } else {
+                    toast({ title: "Failed!", message: `Failed at: ${rs.msg}`, type: "error", duration: 3000 });
+                    console.log(TAG + ': ' + rs.msg);
+                }
+            })();
+        } else {
+            console.log(TAG + ': ' + '{image: ' + image + ', title: ' + title + ", content: " + content + ', summary: ' + summary + '}')
+            toast({
+                title: "Warning!",
+                message: `Please fill all fields (${image === '' ? 'image' : ''}, ${title === '&nbsp;' ? 'title' : ''}, ${content === '' ? 'content' : ''}, ${summary === '' ? 'summary' : ''}).`,
                 type: "warning",
                 duration: 3000
             });
@@ -182,6 +221,7 @@ export const CreateBlog = () => {
                     <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
                         <div className="editor-blog">
                             <CKEditor
+                                data={content}
                                 editor={Editor}
                                 config={{
                                     toolbar: {
@@ -258,7 +298,7 @@ export const CreateBlog = () => {
                             label="Summary"
                             multiline
                             rows={7}
-                            defaultValue=""
+                            defaultValue={summary}
                             variant="outlined"
                             onChange={handleChangeSummary}
                         />
@@ -275,7 +315,8 @@ export const CreateBlog = () => {
                                 <input type="submit" className="btn btn-outline-secondary" value="Upload"></input>
                             </form>
                             <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '100%', maxHeight: '300px', marginBottom: '25px' }} src={image} alt={fileName}></img>
-                            <div style={{ textAlign: 'right' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
+                            <div style={{ textAlign: 'right', display: isCreate ? 'block' : 'none' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
+                            <div style={{ textAlign: 'right', display: isCreate ? 'none' : 'block' }}><input type="submit" onClick={handleModify} className="btn btn-outline-info" value="Modify" ></input></div>
                         </div>
                     </div>
                 </div>

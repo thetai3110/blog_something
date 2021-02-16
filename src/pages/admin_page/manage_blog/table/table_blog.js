@@ -17,7 +17,7 @@ const BootyCheckbox = React.forwardRef(({ onClick, ...rest }, ref) => (
     </div>
 ));
 
-export const TableBlog = () => {
+export const TableBlog = (props) => {
     const TAG = "TableBlog";
     const contentPreviewRef = useRef(null);
     const [blogsFound, setBlogsFound] = useState([]);
@@ -75,6 +75,10 @@ export const TableBlog = () => {
             toast({ title: "Failed!", message: `Failed at: ${rs.msg}`, type: "error", duration: 3000 });
             console.log(TAG + ': ' + rs.msg);
         }
+    }
+    // Redirect to modify page
+    const handelRedirectModify = () => {
+        props.history.push('/admin/blog/create', currentRow);
     }
     // Column table
     const columns = [
@@ -236,7 +240,7 @@ export const TableBlog = () => {
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             <div>
                                 <button type="button" style={{ marginRight: '10px' }} className="btn btn-danger" onClick={handleDelete} data-dismiss="modal">Delete</button>
-                                <button type="button" className="btn btn-info" onClick={handlePublish} data-dismiss="modal">Modify</button>
+                                <button type="button" className="btn btn-info" onClick={handelRedirectModify} data-dismiss="modal">Modify</button>
                             </div>
                         </div>
                     </div>
