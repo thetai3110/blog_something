@@ -11,7 +11,8 @@ function App() {
   return (
     <Switch>
       <Route path="/" render={() => <HomePage />} exact></Route>
-      <Route path="/blog" render={() => <BlogPage />} exact></Route>
+      <Route path="/blog" render={(props) => <BlogPage {...props} />} exact></Route>
+      <Route path="/blog/:page" render={(props) => <BlogPage {...props} />} exact></Route>
       <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
       <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
       <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>

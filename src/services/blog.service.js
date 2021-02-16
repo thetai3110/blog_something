@@ -19,6 +19,18 @@ export const BlogService = {
             .then(data => { return data })
             .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
+    findByPage: function (page) {
+        return fetch(`${CommonConstants.server}/blog/page/${page}`)
+            .then(res => res.json())
+            .then(data => { return data })
+            .catch(err => { return { msg: `fetch failed because: ${err}` } })
+    },
+    total: function () {
+        return fetch(`${CommonConstants.server}/blog/total`)
+            .then(res => res.json())
+            .then(data => { return data })
+            .catch(err => { return { msg: `fetch failed because: ${err}` } })
+    },
     create: function (data) {
         return fetch(`${CommonConstants.server}/blog/create`, {
             method: 'POST',

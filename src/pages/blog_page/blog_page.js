@@ -1,23 +1,39 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { pageLayoutDefault } from "../../components/higer_order/page-layout-default";
+import { Pagination } from "../../components/shared/pagination_component/pagination.component";
 import { BlogService } from "../../services/blog.service";
 import "./blog_page.css";
 
-const BlogComponent = () => {
-    const [blogsFound, setBlogsFound] = useState([]);
+const BlogComponent = (props) => {
     const TAG = "BlogComponent";
+    const [blogsFound, setBlogsFound] = useState([]);
+    const [total, setTotal] = useState(0);
+    const currentPage = typeof props.match.params.page === 'undefined' ? 1 : props.match.params.page;
     useEffect(() => {
-        (async function () {
-            let rs = await BlogService.findByPublished(true);
-            if (typeof rs.msg === "undefined") {
-                if (rs.result === "ok") setBlogsFound(rs.data);
-                else console.log(TAG + ': ' + rs.message);
-            } else {
-                console.log(TAG + ': ' + rs.msg);
-            }
-        })();
-    }, [])
+        getTotal();
+        getBlogsFound();
+    }, [props])
+    // Fetch blog by page
+    const getBlogsFound = async () => {
+        let rs = await BlogService.findByPage(currentPage);
+        if (typeof rs.msg === "undefined") {
+            if (rs.result === "ok") setBlogsFound(rs.data);
+            else console.log(TAG + ': ' + rs.message);
+        } else {
+            console.log(TAG + ': ' + rs.msg);
+        }
+    }
+    // Get total item
+    const getTotal = async () => {
+        const rs = await BlogService.total();
+        if (typeof rs.msg === "undefined") {
+            if (rs.result === "ok") setTotal(rs.data);
+            else console.log(TAG + ': ' + rs.message);
+        } else {
+            console.log(TAG + ': ' + rs.msg);
+        }
+    }
     return (
         <div className="blog-page">
             {blogsFound.length > 0 ?
@@ -36,6 +52,7 @@ const BlogComponent = () => {
                 }) :
                 <div>Không tìm thấy bất kỳ bài viết nào {blogsFound.length + ""}</div>
             }
+            <Pagination {...{ total: total % 3 === 0 ? parseInt(total / 3) : parseInt(total / 3) + 1, link: '/blog', currentPage: currentPage }} />
         </div>
     )
 }
