@@ -86,8 +86,7 @@ export const TableBlog = (props) => {
             name: "Title",
             selector: "title",
             sortable: true,
-            maxWidth: '300px',
-            minWidth: '200px',
+            width: '10%',
             cell: row => <div data-toggle="tooltip" data-placement="bottom"
                 title={row.title}
                 style={{ whiteSpace: 'pre-wrap', overflow: 'hidden', textOverflow: 'ellipsis', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', display: '-webkit-box' }}>
@@ -98,8 +97,7 @@ export const TableBlog = (props) => {
             name: "Summary",
             selector: "summary",
             sortable: true,
-            maxWidth: '500px',
-            minWidth: '250px',
+            width: '15%',
             cell: row => <div data-toggle="tooltip" data-placement="bottom"
                 title={row.summary}
                 style={{ whiteSpace: 'pre-wrap', overflow: 'hidden', textOverflow: 'ellipsis', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', display: '-webkit-box' }}>
@@ -109,15 +107,13 @@ export const TableBlog = (props) => {
         {
             name: "Image",
             selector: "image",
-            maxWidth: '400px',
-            minWidth: '200px',
+            width: '12%',
             cell: row => <a href={`${row.image}`} target='blank'>{row.image}</a>
         },
         {
             name: "Tags",
             selector: "tag",
-            maxWidth: '300px',
-            minWidth: '175px',
+            width: '12%',
             cell: row => <div>{row.tags.map(el => {
                 return <div style={{ backgroundColor: '#EBEBEB', borderRadius: '15px', padding: '5px 9px', margin: '5px 5px 5px 0px', display: 'inline-block' }} key={el._id}>{el.tagName}</div>
             })}</div>
@@ -125,14 +121,14 @@ export const TableBlog = (props) => {
         {
             name: "Author",
             selector: "author",
-            maxWidth: "150px",
+            width: '6%',
             sortable: true,
             cell: row => <p style={{ margin: 0 }}>{row.author.username}</p>
         },
         {
             name: "Create at",
             selector: "createAt",
-            maxWidth: "200px",
+            width: '7%',
             cell: row => <div data-toggle="tooltip" data-placement="bottom"
                 title={row.createAt}
                 style={{ whiteSpace: 'pre-wrap', overflow: 'hidden', textOverflow: 'ellipsis', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', display: '-webkit-box' }}>
@@ -142,7 +138,7 @@ export const TableBlog = (props) => {
         {
             name: "Modify at",
             selector: "modifyAt",
-            maxWidth: "200px",
+            width: '7%',
             cell: row => <div data-toggle="tooltip" data-placement="bottom"
                 title={row.modifyAt}
                 style={{ whiteSpace: 'pre-wrap', overflow: 'hidden', textOverflow: 'ellipsis', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', display: '-webkit-box' }}>
@@ -153,8 +149,7 @@ export const TableBlog = (props) => {
             name: "Published",
             selector: "published",
             center: true,
-            maxWidth: "200px",
-            minWidth: '130px',
+            width: '8%',
             cell: row => <button onClick={() => handleSetCurrent(row, true)}
                 className={row.published ? 'btn btn-danger' : 'btn btn-success'}
                 style={{ color: '#fff', fontSize: '14px' }}
@@ -163,13 +158,13 @@ export const TableBlog = (props) => {
         {
             name: "Published By",
             selector: "publishedBy",
-            maxWidth: "200px",
+            width: '8%',
             sortable: true,
         },
         {
             name: "Published At",
             selector: "publishedAt",
-            maxWidth: "200px",
+            width: '7%',
             cell: row => <div data-toggle="tooltip" data-placement="bottom"
                 title={row.publishedAt}
                 style={{ whiteSpace: 'pre-wrap', overflow: 'hidden', textOverflow: 'ellipsis', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', display: '-webkit-box' }}>
@@ -178,7 +173,8 @@ export const TableBlog = (props) => {
         },
         {
             name: "Preview",
-            maxWidth: "100px",
+            width: '5%',
+            center: true,
             cell: row => <button style={{ border: 'none', background: 'transparent', fontSize: '18px', outline: 0 }}
                 data-toggle="modal" data-target=".bd-modal-preview"
                 onClick={() => handleSetCurrent(row, false)}><i className="fa fa-eye"></i></button>
