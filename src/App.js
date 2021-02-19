@@ -6,6 +6,7 @@ import DiscussPage from './pages/discuss_page/discuss_page';
 import CodeOnlinePage from './pages/code_online_page/code_online_page';
 import { AdminPage } from './pages/admin_page/admin_page';
 import BlogDetailPage from './pages/blog_page/detail/blog_detail';
+import { LoginPage } from './pages/login_page/login_page';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
       <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>
       <Route path="/admin" render={() => <AdminPage />}></Route>
+      <Route path="/login" render={() => <LoginPage />}></Route>
     </Switch>
   );
 }

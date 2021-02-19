@@ -8,7 +8,8 @@ const HeaderComponent = () => {
         { id: '2', title: 'thảo luận', title_en: 'discuss' },
         { id: '3', title: 'blog', title_en: 'blog' },
         { id: '4', title: 'code online', title_en: 'code-online' },
-        { id: '5', title: 'admin', title_en: 'admin' }
+        { id: '5', title: 'admin', title_en: 'admin' },
+        { id: '6', title: 'login', title_en: 'login' }
     ]
     return (
         <nav className="navbar">

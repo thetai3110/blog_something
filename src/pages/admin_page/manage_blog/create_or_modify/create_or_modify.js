@@ -66,7 +66,6 @@ export const CreateBlog = (props) => {
         tagsFounded: []
     })
     const { tags, title, summary, content, image, tagsFounded } = state;
-
     useEffect(() => {
         // Set file name
         document.getElementById('file-upload-blog').onchange = function () {
