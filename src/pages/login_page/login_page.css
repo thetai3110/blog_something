@@ -9,7 +9,8 @@
 	width:95%;
 	margin:auto;
 	max-width:450px;
-	min-height:595px;
+	min-height:675px;
+	height: auto;
 	position:relative;
 	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
@@ -89,7 +90,7 @@
 	margin-top: 15px;
 	width: 100%;
 }
-.login-other li a{
+.login-other li button{
 	width: auto;
 	height: auto;
 	padding: 0 10px;
@@ -100,20 +101,24 @@
 	line-height: 30px;
 	color: #fff;
 	border-radius: 0;
+	border: none;
+}
+.login-other li button:hover{
+	opacity: 0.8;
 }
 .login-other ul li{
 	display: inline-block;
 	line-height: 30px;
 }
-.login-other ul .fb a{
+.login-other ul .fb button{
 	background: #3b5998;
 }
-.login-other ul .tw a{
+.login-other ul .tw button{
 	padding: 0 8px;
 	background: #55acee;
 	margin-left: 10px;
 }
-.login-other ul .gl a{
+.login-other ul .gl button{
 	padding: 0 8px;
 	background: #e02f2f;
 	margin-left: 10px;

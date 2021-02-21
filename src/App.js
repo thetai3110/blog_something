@@ -61,16 +61,16 @@ function App() {
 }
 
 const Logout = () => {
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth()
+  const TAG = 'Logout'
+  const { logout } = useAuth()
   const history = useHistory()
   useEffect(() => {
     (async function () {
       try {
         await logout()
         history.push("/login")
-      } catch {
-        setError("Failed to logout")
+      } catch (error) {
+        console.log(TAG + ': ' + error)
       }
     })();
   }, [])

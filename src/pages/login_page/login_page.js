@@ -1,51 +1,57 @@
 import { Link, useHistory } from 'react-router-dom';
 import './login_page.css';
-import firebase from 'firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useRef } from 'react';
 import { useAuth } from '../../contexts/auth_context';
 import { useState } from 'react';
-
-// Configure FirebaseUI.
-const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: 'popup',
-    signInSuccessUrl: '/',
-    // We will display Google and Facebook as auth providers.
-    signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID
-    ],
-    // callbacks: {
-    //   // Avoid redirects after sign-in.
-    //   signInSuccessWithAuthResult: () => false,
-    // },
-};
+import { auth } from '../../firebase';
 
 export const LoginPage = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { login } = useAuth()
+    const { login, logout, loginWithGoogle, loginWithFacebook } = useAuth()
     const [error, setError] = useState("")
     const history = useHistory()
-
+    async function handleLoginFacebook(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            await loginWithFacebook()
+            history.push('/')
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+    async function handleLoginGoogle(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            await loginWithGoogle()
+            history.push('/')
+        } catch (error) {
+            setError(error.message)
+        }
+    }
     async function handleSubmit(e) {
         e.preventDefault()
         try {
             setError("")
-            await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/")
-        } catch {
-            setError("Failed to log in")
+            const rs = await login(emailRef.current.value, passwordRef.current.value)
+            if (rs.user.emailVerified) {
+                history.push('/')
+            } else {
+                setError('The user not exists. The user may have been deleted.')
+                logout()
+            }
+        } catch (error) {
+            setError(error.message)
         }
     }
-
     return (
         <div className="login_page">
             <div className="login-wrap">
                 <div className="login-content">
                     <h2>sign in</h2>
-                    <div className="alert alert-danger" role="alert" style={{ color: 'red', display: error === '' ? 'none' : 'block' }}>
+                    <div className="alert alert-danger" role="alert" style={{ color: 'red', fontSize: '13px', display: error === '' ? 'none' : 'block' }}>
                         {error}
                     </div>
                     <div className="login-form">
@@ -69,7 +75,10 @@ export const LoginPage = () => {
                             </div>
                             <div className="hr"></div>
                             <div className="login-other">
-                                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                                <ul>
+                                    <li className="fb"><button onClick={handleLoginFacebook}><i className="fa fa-facebook-square"></i></button></li>
+                                    <li className="gl"><button onClick={handleLoginGoogle}><i className="fa fa-google"></i></button></li>
+                                </ul>
                             </div>
                         </form>
                     </div>
@@ -83,10 +92,30 @@ export const SignUpPage = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup } = useAuth()
+    const { signup, loginWithGoogle, loginWithFacebook } = useAuth()
     const [error, setError] = useState("")
-    const history = useHistory()
-
+    const [message, setMessage] = useState("")
+    const history = useHistory();
+    async function handleLoginFacebook(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            await loginWithFacebook()
+            history.push('/')
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+    async function handleLoginGoogle(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            await loginWithGoogle()
+            history.push('/')
+        } catch (error) {
+            setError(error.message)
+        }
+    }
     async function handleSubmit(e) {
         e.preventDefault()
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -94,20 +123,30 @@ export const SignUpPage = () => {
         }
         try {
             setError("")
+            setMessage("")
             await signup(emailRef.current.value, passwordRef.current.value)
-            history.push("/login")
-        } catch {
-            setError("Failed to create an account")
+            await auth.currentUser.sendEmailVerification({
+                url: 'http://localhost:3000/',
+            });
+            // setTimeout(() => {
+            //     if (!rs.user.emailVerified)
+            //         rs.user.delete();
+            // }, 10000);
+            setMessage("Success, please check email and verify email that you just register!")
+        } catch (error) {
+            setError(error.message);
         }
     }
-
     return (
         <div className="login_page">
             <div className="login-wrap">
                 <div className="login-content">
                     <h2>sign up</h2>
-                    <div className="alert alert-danger" role="alert" style={{ color: 'red', display: error === '' ? 'none' : 'block' }}>
+                    <div className="alert alert-danger" role="alert" style={{ color: 'red', fontSize: '13px', display: error === '' ? 'none' : 'block' }}>
                         {error}
+                    </div>
+                    <div className="alert alert-success" role="alert" style={{ fontSize: '13px', display: message === "" ? 'none' : 'block' }}>
+                        {message}
                     </div>
                     <div className="login-form">
                         <form className="sign-up" onSubmit={handleSubmit}>
@@ -132,7 +171,10 @@ export const SignUpPage = () => {
                             </div>
                             <div className="hr"></div>
                             <div className="login-other">
-                                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                                <ul>
+                                    <li className="fb"><button onClick={handleLoginFacebook}><i className="fa fa-facebook-square"></i></button></li>
+                                    <li className="gl"><button onClick={handleLoginGoogle}><i className="fa fa-google"></i></button></li>
+                                </ul>
                             </div>
                         </form>
                     </div>
@@ -144,10 +186,30 @@ export const SignUpPage = () => {
 
 export const ForgotPasswordPage = () => {
     const emailRef = useRef()
-    const { resetPassword } = useAuth()
+    const { resetPassword, loginWithFacebook, loginWithGoogle } = useAuth()
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
-
+    const history = useHistory();
+    async function handleLoginFacebook(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            await loginWithFacebook()
+            history.push('/')
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+    async function handleLoginGoogle(e) {
+        e.preventDefault()
+        try {
+            setError("")
+            await loginWithGoogle()
+            history.push('/')
+        } catch (error) {
+            setError(error.message)
+        }
+    }
     async function handleSubmit(e) {
         e.preventDefault()
         try {
@@ -155,20 +217,19 @@ export const ForgotPasswordPage = () => {
             setError("")
             await resetPassword(emailRef.current.value)
             setMessage("Check your inbox for further instructions")
-        } catch {
-            setError("Failed to reset password")
+        } catch (error) {
+            setError(error.message)
         }
     }
-
     return (
         <div className="login_page">
             <div className="login-wrap">
                 <div className="login-content">
                     <h2>password reset</h2>
-                    <div className="alert alert-danger" role="alert" style={{ color: 'red', display: error === '' ? 'none' : 'block' }}>
+                    <div className="alert alert-danger" role="alert" style={{ color: 'red', fontSize: '13px', display: error === '' ? 'none' : 'block' }}>
                         {error}
                     </div>
-                    <div className="alert alert-success" role="alert" style={{ display: message === "" ? 'none' : 'block' }}>
+                    <div className="alert alert-success" role="alert" style={{ fontSize: '13px', display: message === "" ? 'none' : 'block' }}>
                         {message}
                     </div>
                     <div className="login-form">
@@ -185,7 +246,10 @@ export const ForgotPasswordPage = () => {
                             </div>
                             <div className="hr"></div>
                             <div className="login-other">
-                                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                                <ul>
+                                    <li className="fb"><button onClick={handleLoginFacebook}><i className="fa fa-facebook-square"></i></button></li>
+                                    <li className="gl"><button onClick={handleLoginGoogle}><i className="fa fa-google"></i></button></li>
+                                </ul>
                             </div>
                         </form>
                     </div>
