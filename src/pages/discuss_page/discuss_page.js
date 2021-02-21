@@ -4,8 +4,9 @@ import Search from "../../components/shared/search_conponent/search.component";
 import { Link } from 'react-router-dom';
 import Topic from './topic_component/topic.component';
 import { Pagination } from '../../components/shared/pagination_component/pagination.component';
-
+import firebase from 'firebase';
 const DiscussComponent = () => {
+    console.log(firebase.auth().currentUser)
     return (
         <div className="discuss-page container">
             <div className="direct"><Link to="/" className="link">Trang chủ</Link> 	&gt; <Link to="/discuss" className="link">Thảo luận</Link></div>
