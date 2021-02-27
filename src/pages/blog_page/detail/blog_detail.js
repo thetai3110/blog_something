@@ -13,22 +13,23 @@ const BlogDetailPage = (props) => {
     const [tagsFound, setTagsFound] = useState([]);
     useEffect(() => {
         (async function () {
-            let rs = await BlogService.findById(props.match.params.id);
-            if (typeof rs.msg === 'undefined') {
-                if (rs.result === 'ok') {
+            try {
+                const res = await BlogService.findById(props.match.params.id);
+                const rs = await res.json();
+                if (rs.result === "ok") {
                     setTagsFound(rs.data.tags);
                     let content = rs.data.content;
                     ref.current.innerHTML = content;
                 }
                 else console.log(TAG + ': ' + rs.message);
-            } else {
-                console.log(TAG + ': ' + rs.msg);
+            } catch (error) {
+                console.log(TAG + ': ' + error);
             }
         })();
     }, [])
     const handleShowEmoji = () => {
         let status = emojiRef.current.style.display === 'none' ? false : true;
-        if(status) emojiRef.current.style.display = 'none'
+        if (status) emojiRef.current.style.display = 'none'
         else emojiRef.current.style.display = 'block'
     }
     return (
@@ -37,8 +38,8 @@ const BlogDetailPage = (props) => {
                 <div ref={ref}></div>
             </div>
             <ul className="blog-tags-list">
-                {tagsFound.map(tag => {
-                    return <li key={tag._id}>{tag}</li>
+                {tagsFound.map((el, i) => {
+                    return <li key={i}>{el}</li>
                 })}
             </ul>
             <div className="comment">

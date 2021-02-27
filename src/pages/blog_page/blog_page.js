@@ -16,22 +16,24 @@ const BlogPage = (props) => {
     }, [props])
     // Fetch blog by page
     const getBlogsFound = async () => {
-        let rs = await BlogService.findByPage(currentPage);
-        if (typeof rs.msg === "undefined") {
+        try {
+            let res = await BlogService.findByPage(currentPage);
+            let rs = await res.json();
             if (rs.result === "ok") setBlogsFound(rs.data);
             else console.log(TAG + ': ' + rs.message);
-        } else {
-            console.log(TAG + ': ' + rs.msg);
+        } catch (error) {
+            console.log(TAG + ': ' + error);
         }
     }
     // Get total item
     const getTotal = async () => {
-        const rs = await BlogService.total();
-        if (typeof rs.msg === "undefined") {
+        try {
+            const res = await BlogService.total();
+            const rs = await res.json();
             if (rs.result === "ok") setTotal(rs.data);
             else console.log(TAG + ': ' + rs.message);
-        } else {
-            console.log(TAG + ': ' + rs.msg);
+        } catch (error) {
+            console.log(TAG + ': ' + error);
         }
     }
     return (

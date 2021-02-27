@@ -6,12 +6,15 @@ import { useState } from 'react';
 import { toast } from '../../../components/shared/toast_component/toast';
 import { CommonConstants } from '../../../common/constants';
 import { BlogService } from '../../../services/blog.service';
+import { TabScrollButton } from '@material-ui/core';
 export const BlogCreate = (props) => {
     const TAG = "BlogCreate";
     const contentPreviewRef = useRef(null);
     const inputRef = useRef(null);
     const tagsRef = useRef(null);
+    const publishRef = useRef(null);
     const summaryRef = useRef(null);
+    const overloadRef = useRef(null);
     const [fileName, setFileName] = useState('..................');
     const [tags, setTags] = useState([]);
     const [state, setState] = useState({
@@ -21,8 +24,8 @@ export const BlogCreate = (props) => {
         image: '',
         tagsFounded: []
     })
-    const { title, summary, content, image, tagsFounded } = state;
-    useEffect(() => {
+    const { title, summary, content, image } = state;
+    useEffect(async () => {
         // Set file name
         document.getElementById('file-upload-blog').onchange = function () {
             setFileName(this.value.split('\\').pop());
@@ -54,10 +57,11 @@ export const BlogCreate = (props) => {
             setFileName('no have any image!')
         }
     }
-    const handleAddTag = (event) => {
-        if (event.key === 'Enter') {
+    // Tags
+    const handleKeyDown = (event) => {
+        if (event.keyCode == 13) {
             let val = event.target.value;
-            if (val !== '') {
+            if (val !== '' && !tags.includes(val)) {
                 if (tags.length < 5) {
                     let currentTags = tags;
                     let item = document.createElement('span')
@@ -72,9 +76,18 @@ export const BlogCreate = (props) => {
                 }
             }
         }
+        if (event.keyCode === 8 || event.keyCode === 46) {
+            let val = event.target.value;
+            if (val === '' && tagsRef.current.children.length > 0) {
+                tagsRef.current.removeChild(tagsRef.current.children[tagsRef.current.children.length - 1]);
+                let currentTags = tags;
+                currentTags.pop();
+                setTags(currentTags);
+            }
+        }
     }
     // Submit all
-    const handleCreate = () => {
+    const handleCreate = (publish) => {
         console.log()
         if (validate()) {
             (async function () {
@@ -84,10 +97,12 @@ export const BlogCreate = (props) => {
                     summary: summaryRef.current.value,
                     content: content,
                     image: image,
-                    tags: tags
+                    tags: tags,
+                    published: publish
                 }
-                let rs = await BlogService.create(data);
                 try {
+                    const res = await BlogService.create(data);
+                    const rs = await res.json();
                     if (rs.result === 'ok') {
                         toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
                         setTimeout(() => {
@@ -117,29 +132,56 @@ export const BlogCreate = (props) => {
         if (title !== '&nbsp;' && content !== '' && summaryRef.current.value !== '' && image !== '') return true;
         return false;
     }
-    // Preview
-    const handelPreview = () => {
-        contentPreviewRef.current.innerHTML = content;
-    }
     return (
-        <div>
+        <>
             <div className="create-blog">
                 {/* Toast */}
                 <div id="toast-custom"></div>
-                <div className="action">
-                    <button className="btn btn-outline-secondary" onClick={handelPreview} data-toggle="modal" data-target=".bd-modal-preview">Xem <i className="fa fa-eye"></i></button>
-                    <button className="btn btn-outline-secondary" onClick={handleCreate}>Tạo</button>
+                {/* Overload */}
+                <div className="overload" ref={overloadRef} onClick={() => {
+                    publishRef.current.style.display = 'none';
+                    overloadRef.current.style.display = 'none';
+                }}></div>
+                <div className="actions">
+                    <button className="btn btn-secondary" onClick={() => contentPreviewRef.current.innerHTML = content} data-toggle="modal" data-target=".bd-modal-preview">Xem trước <i className="fa fa-eye"></i></button>
+                    {/* Publish */}
+                    <div className="publish">
+                        <button className="btn btn-secondary" onClick={() => {
+                            publishRef.current.style.display = 'block';
+                            overloadRef.current.style.display = 'block';
+                        }}>Xong <i className="fa fa-chevron-down" aria-hidden="true"></i></button>
+                        <div className="publish-box" ref={publishRef} id="publish-box">
+                            <h6>Công khai bài viết</h6>
+                            <p>Lựa chọn:</p>
+                            <div className="publish-option">
+                                <input type="radio" name="publish" id="public" defaultChecked={false}></input><label htmlFor="public">Công khai</label><br></br>
+                                <input type="radio" name="publish" id="private" defaultChecked={false}></input><label htmlFor="private">Riêng tư</label><br></br>
+                                <input type="radio" name="publish" id="draft" defaultChecked={true}></input><label htmlFor="draft">Draft</label>
+                                <hr></hr>
+                                <div className="option-description" id="public-description">
+                                    <p>Tất cả mọi người đều có thể nhìn thấy bài viết này.</p>
+                                    <button className="btn btn-primary" onClick={() => handleCreate(1)}>Công khai</button>
+                                </div>
+                                <div className="option-description" id="private-description">
+                                    <p>Chỉ có bạn mới có thể nhìn thấy bài viết này. Bạn có thể công khai nó bất cứ khi nào.</p>
+                                    <button className="btn btn-primary" onClick={() => handleCreate(2)}>Riêng tư</button>
+                                </div>
+                                <div className="option-description" id="draft-description">
+                                    <p>Lưu nháp nếu bạn chưa hoàn thành bài viết này và muốn chỉnh sửa tiếp.</p>
+                                    <button className="btn btn-primary" onClick={() => handleCreate(0)}>Lưu nháp</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {/* Input tags */}
                 <div className="tags-input">
-                    <div ref={tagsRef} className="tags">
-                        {tags.map((el, i) => {
-                            return <span key={i}>{el} <i className="fa fa-close"></i></span>
-                        })}
-                    </div>
+                    <div ref={tagsRef} className="tags"></div>
                     <div className="input">
-                        <input ref={inputRef} placeholder="Tạo không quá 5 tag" type="text" onKeyPress={handleAddTag} onChange={() => { }}></input>
+                        <input ref={inputRef} placeholder="Tạo không quá 5 tag" type="text" onKeyDown={handleKeyDown} onChange={() => { }}></input>
                     </div>
                 </div>
+                {/* Summary and upload image */}
                 <div className="summary row">
                     <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
                         <textarea ref={summaryRef} placeholder="Tóm tắt"></textarea>
@@ -151,18 +193,17 @@ export const BlogCreate = (props) => {
                                 encType="multipart/form-data" method="POST" className="custom-file">
                                 <input type="file" id="file-upload-blog" accept='image/*' name="file-upload-blog" style={{ display: 'none' }}></input>
                                 <div>
-                                    <label className="btn btn-outline-secondary" htmlFor="file-upload-blog" style={{ margin: 0 }}>Choose a image</label>
+                                    <label className="btn btn-secondary" htmlFor="file-upload-blog" style={{ margin: 0 }}>Chọn ảnh</label>
                                     <p style={{ padding: '5px', flexGrow: 1, maxWidth: "150px", color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
                                 </div>
                                 <div><i className="fa fa-angle-double-right"></i></div>
-                                <input type="submit" className="btn btn-outline-secondary" value="Upload"></input>
+                                <input type="submit" className="btn btn-secondary" value="Tải lên"></input>
                             </form>
                             <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '100%', maxHeight: '300px', marginBottom: '25px' }} src={image} alt={fileName}></img>
-                            {/* <div style={{ textAlign: 'right', display: isCreate ? 'block' : 'none' }}><input type="submit" onClick={handleCreate} className="btn btn-outline-info" value="Create new blog" ></input></div>
-                            <div style={{ textAlign: 'right', display: isCreate ? 'none' : 'block' }}><input type="submit" onClick={handleModify} className="btn btn-outline-info" value="Modify" ></input></div> */}
                         </div>
                     </div>
                 </div>
+                {/* Editor */}
                 <div className="create-blog-content">
                     {/* CKEditor */}
                     <div className="editor-blog">
@@ -213,7 +254,7 @@ export const BlogCreate = (props) => {
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="modelPublishedLongTitle"><i className="fa fa-eye"></i> Preview</h5>
+                                <h5 className="modal-title" id="modelPublishedLongTitle"><i className="fa fa-eye"></i> Xem trước</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -230,7 +271,7 @@ export const BlogCreate = (props) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
