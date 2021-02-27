@@ -12,7 +12,7 @@ const HeaderComponent = () => {
         { id: '3', title: 'blog', title_en: 'blog' },
         { id: '4', title: 'code online', title_en: 'code-online' },
         { id: '5', title: 'admin', title_en: 'admin' },
-        {...login}
+        { ...login }
     ]
     return (
         <nav className="navbar">
@@ -28,12 +28,15 @@ const HeaderComponent = () => {
                     })}
                 </ul>
                 <div className="navbar-items">
+                    <span className="edit"><Link to="/create-blog">{currentUser ? <i className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link></span>
                     <form className="navbar-search">
                         <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
                         <button><i className="fa fa-search"></i></button>
                     </form>
-                    <div><i className="fa fa-facebook-square"></i></div>
-                    <div><i className="fa fa-twitter-square"></i></div>
+                    <span className="social">
+                        <div><i className="fa fa-facebook-square"></i></div>
+                        <div><i className="fa fa-twitter-square"></i></div>
+                    </span>
                 </div>
             </div>
             <input className="navbar-checked" type="checkbox" hidden id="navbar-checked" name="navbar-checked"></input>

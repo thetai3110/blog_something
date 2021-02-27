@@ -5,7 +5,7 @@ import { Pagination } from "../../components/shared/pagination_component/paginat
 import { BlogService } from "../../services/blog.service";
 import "./blog_page.css";
 
-const BlogComponent = (props) => {
+const BlogPage = (props) => {
     const TAG = "BlogComponent";
     const [blogsFound, setBlogsFound] = useState([]);
     const [total, setTotal] = useState(0);
@@ -57,5 +57,4 @@ const BlogComponent = (props) => {
     )
 }
 
-const BlogPage = pageLayoutDefault(BlogComponent);
 export default BlogPage;

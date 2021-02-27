@@ -1,11 +1,10 @@
 import './discuss_page.css';
-import { pageLayoutDefault } from "../../components/higer_order/page-layout-default";
 import Search from "../../components/shared/search_conponent/search.component";
 import { Link } from 'react-router-dom';
 import Topic from './topic_component/topic.component';
 import { Pagination } from '../../components/shared/pagination_component/pagination.component';
 import firebase from 'firebase';
-const DiscussComponent = () => {
+const DiscussPage = () => {
     console.log(firebase.auth().currentUser)
     return (
         <div className="discuss-page container">
@@ -31,5 +30,4 @@ const DiscussComponent = () => {
     )
 }
 
-const DiscussPage = pageLayoutDefault(DiscussComponent, true);
 export default DiscussPage;
