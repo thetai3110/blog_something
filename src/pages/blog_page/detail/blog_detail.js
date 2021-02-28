@@ -1,36 +1,35 @@
 import { useEffect, useRef, useState } from "react"
-import { pageLayoutDefault } from "../../../components/higer_order/page-layout-default";
 import { BlogService } from "../../../services/blog.service";
 import './blog_detail.css';
-import 'emoji-mart/css/emoji-mart.css'
-import { Picker } from 'emoji-mart'
-import avatar from '../../../assests/avatar.jpg';
+import 'emoji-mart/css/emoji-mart.css';
+import app from "../../../firebase";
+import Comments from '../../../components/shared/comment_component/comment';
 
 const BlogDetailPage = (props) => {
     const TAG = "BlogDetail";
     const ref = useRef(null);
-    const emojiRef = useRef(null);
     const [tagsFound, setTagsFound] = useState([]);
+    const [comments, setComments] = useState([])
     useEffect(() => {
-        (async function () {
-            try {
-                const res = await BlogService.findById(props.match.params.id);
-                const rs = await res.json();
-                if (rs.result === "ok") {
-                    setTagsFound(rs.data.tags);
-                    let content = rs.data.content;
-                    ref.current.innerHTML = content;
-                }
-                else console.log(TAG + ': ' + rs.message);
-            } catch (error) {
-                console.log(TAG + ': ' + error);
-            }
-        })();
+        const db = app.database().ref('Comments');
+        db.on('value', (snap) => {
+            setComments(snap.val());
+        });
+        findBlogDetail();
     }, [])
-    const handleShowEmoji = () => {
-        let status = emojiRef.current.style.display === 'none' ? false : true;
-        if (status) emojiRef.current.style.display = 'none'
-        else emojiRef.current.style.display = 'block'
+    const findBlogDetail = async () => {
+        try {
+            const res = await BlogService.findById(props.match.params.id);
+            const rs = await res.json();
+            if (rs.result === "ok") {
+                setTagsFound(rs.data.tags);
+                let content = rs.data.content;
+                ref.current.innerHTML = content;
+            }
+            else console.log(TAG + ': ' + rs.message);
+        } catch (error) {
+            console.log(TAG + ': ' + error);
+        }
     }
     return (
         <div className="blog-detail-page">
@@ -42,19 +41,53 @@ const BlogDetailPage = (props) => {
                     return <li key={i}>{el}</li>
                 })}
             </ul>
-            <div className="comment">
-                <div className="comment-avatar">
-                    <img src={avatar} alt=""></img>
-                </div>
-                <div className="comment-type">
-                    <textarea id="comment-input" name="nowrap" cols="30" rows="5" wrap="soft"></textarea>
-                    <div className="comment-option">
-                        <span onClick={handleShowEmoji}><i className="fa fa-smile-o" aria-hidden="true"></i></span>
+            <Comments typeComment={true} id={props.match.params.id} />
+            <div className="list-comments">
+                {Object.keys(comments).map((el, i) => {
+                    return <div key={i} className="cmt">
+                        <div className="comments-user">
+                            <img src={comments[el].avatar} alt={comments[el].avatar}></img>
+                            <div className="comments-content">
+                                <h6>{comments[el].user}</h6>
+                                <p>{comments[el].content}</p>
+                                <div className="comments-action">
+                                    <span className="action">Thích</span>
+                                    <label className="action" htmlFor={el}>Phản hồi</label>
+                                    <span><i className="fa fa-thumbs-up" aria-hidden="true"></i> 2</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="cmt-feedback">
+                            {
+                                typeof comments[el].feedback !== 'undefined' ?
+                                    Object.keys(comments[el].feedback).map((elm, i) => {
+                                        return <div key={i} className="cmt">
+                                            <div className="comments-user">
+                                                <img src={comments[el].feedback[elm].avatar} alt={comments[el].feedback[elm].avatar}></img>
+                                                <div className="comments-content">
+                                                    <h6>{comments[el].feedback[elm].user}</h6>
+                                                    <p>{comments[el].feedback[elm].content}</p>
+                                                    <div className="comments-action">
+                                                        <span className="action">Thích</span>
+                                                        <label className="action" htmlFor={elm}>Phản hồi</label>
+                                                        <span><i className="fa fa-thumbs-up" aria-hidden="true"></i> 2</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="checkbox" name="feedback" className="feedbackCK" id={elm}></input>
+                                            <div className="feedback">
+                                                <Comments typeComment={false} keyComment={el} />
+                                            </div>
+                                        </div>
+                                    }) : <div></div>
+                            }
+                        </div>
+                        <input type="checkbox" name="feedback" className="feedbackCK" id={el}></input>
+                        <div className="feedback">
+                            <Comments typeComment={false} keyComment={el} />
+                        </div>
                     </div>
-                    <div className="emoji-picker" ref={emojiRef}>
-                        <Picker />
-                    </div>
-                </div>
+                })}
             </div>
         </div>
     )

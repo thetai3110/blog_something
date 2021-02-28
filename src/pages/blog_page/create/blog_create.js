@@ -31,6 +31,9 @@ export const BlogCreate = (props) => {
             setFileName(this.value.split('\\').pop());
         };
     }, [])
+    useEffect(() => {
+
+    })
     // Upload main image
     const handleUploadImage = (event) => {
         event.preventDefault();
@@ -65,7 +68,7 @@ export const BlogCreate = (props) => {
                 if (tags.length < 5) {
                     let currentTags = tags;
                     let item = document.createElement('span')
-                    item.innerHTML = `${val} <i class="fa fa-close"></i>`
+                    item.innerHTML = `${val} <i class="fa fa-close close-tag"></i>`
                     tagsRef.current.appendChild(item)
                     inputRef.current.value = ''
 
@@ -84,6 +87,20 @@ export const BlogCreate = (props) => {
                 currentTags.pop();
                 setTags(currentTags);
             }
+        }
+    }
+    const handleRemoveTag = (event) => {
+        if (event.target.closest('.close-tag')) {
+            const val = event.target.closest('span').innerText.trim();
+            tags.forEach((el, i) => {
+                if(val === el){
+                    tagsRef.current.removeChild(tagsRef.current.children[i]);
+                    let currentTags = tags;
+                    currentTags.splice(i,1);
+                    console.log(currentTags)
+                    setTags(currentTags);
+                }
+            })
         }
     }
     // Submit all
@@ -176,7 +193,7 @@ export const BlogCreate = (props) => {
                 </div>
                 {/* Input tags */}
                 <div className="tags-input">
-                    <div ref={tagsRef} className="tags"></div>
+                    <div ref={tagsRef} className="tags" onClick={handleRemoveTag}></div>
                     <div className="input">
                         <input ref={inputRef} placeholder="Tạo không quá 5 tag" type="text" onKeyDown={handleKeyDown} onChange={() => { }}></input>
                     </div>

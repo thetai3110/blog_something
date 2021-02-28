@@ -165,6 +165,7 @@
     background-color: rgba(0, 0, 0, .2);
     display: none;
     animation: fadeIn linear 0.5s;
+    z-index: 998;
 }
 .navbar-checked:checked ~ .navbar-overlap{
     display: block;

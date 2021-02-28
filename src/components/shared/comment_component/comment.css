@@ -1,0 +1,58 @@
+.comment{
+    display: flex;
+    width: 100%;
+}
+.comment-avatar img{
+    max-width: 50px;
+    max-height: 50px;
+    margin-right: 1rem;
+}
+.comment-type{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid rgba(0,0,0,.1);
+    background-color: #fff;
+    padding: 10px 0px 20px 0px;
+}
+.comment-type textarea{
+    flex-grow: 1;
+    border: none;
+    padding: 5px 10px;
+    resize: none;
+    max-height: 200px;
+    font-size: 13px;
+}
+.comment-type textarea:focus{
+    outline: none;
+}
+.comment-type textarea:focus ~ .emoji-picker{
+    display: none;
+}
+.comment-option span{
+    padding: 10px;
+    font-size: 22px;
+    color: rgb(121, 116, 116);
+}
+.comment-option:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+.emoji-picker{
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    z-index: 999999;
+    display: none;
+}
+.send{
+    text-align: right;
+    border: 1px solid rgba(0,0,0,.1);
+    border-top: none;
+    margin-left: 66px;
+}
+.send button{
+    font-size: 13px;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+}
