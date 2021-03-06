@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import java from '../../../assests/java.png';
-import './course-item.component.css';
+import java from '../../assests/java.png';
+import './courseitem.component.css';
 
 const CourseItemComponent = () => {
 

@@ -1,5 +1,5 @@
 import './footer.component.css';
-import logo from '../../../logo.svg';
+import logo from '../../logo.svg';
 import { Link } from "react-router-dom";
 const FooterComponent = () => {
     return (

@@ -1,4 +1,4 @@
-import './toast.css';
+import './toast.component.css';
 export const toast = ({ title = "", message = "", type = "info", duration = 3000 }) => {
     const main = document.getElementById("toast-custom");
     if (main) {

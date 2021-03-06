@@ -3,7 +3,7 @@ import { BlogService } from "../../../services/blog.service";
 import './blog_detail.css';
 import 'emoji-mart/css/emoji-mart.css';
 import app from "../../../firebase";
-import Comments from '../../../components/shared/comment_component/comment';
+import Comments from '../../../components/comment/comment.component';
 
 const BlogDetailPage = (props) => {
     const TAG = "BlogDetail";
@@ -69,15 +69,15 @@ const BlogDetailPage = (props) => {
                                                     <p>{comments[el].feedback[elm].content}</p>
                                                     <div className="comments-action">
                                                         <span className="action">Thích</span>
-                                                        <label className="action" htmlFor={elm}>Phản hồi</label>
+                                                        <label className="action" htmlFor={el}>Phản hồi</label>
                                                         <span><i className="fa fa-thumbs-up" aria-hidden="true"></i> 2</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input type="checkbox" name="feedback" className="feedbackCK" id={elm}></input>
+                                            {/* <input type="checkbox" name="feedback" className="feedbackCK" id={elm}></input>
                                             <div className="feedback">
                                                 <Comments typeComment={false} keyComment={el} />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     }) : <div></div>
                             }

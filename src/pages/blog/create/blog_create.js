@@ -3,10 +3,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
 import './blog_create.css';
 import { useState } from 'react';
-import { toast } from '../../../components/shared/toast_component/toast';
+import { toast } from '../../../components/toast/toast.component';
 import { CommonConstants } from '../../../common/constants';
 import { BlogService } from '../../../services/blog.service';
-import { TabScrollButton } from '@material-ui/core';
 export const BlogCreate = (props) => {
     const TAG = "BlogCreate";
     const contentPreviewRef = useRef(null);

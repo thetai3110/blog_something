@@ -1,17 +1,17 @@
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import './App.css';
-import BlogPage from './pages/blog_page/blog_page';
-import HomePage from './pages/home_page/home_page';
-import DiscussPage from './pages/discuss_page/discuss_page';
+import BlogPage from './pages/blog/blog_page';
+import HomePage from './pages/home/home_page';
+import DiscussPage from './pages/discuss/discuss_page';
 import CodeOnlinePage from './pages/code_online_page/code_online_page';
-import BlogDetailPage from './pages/blog_page/detail/blog_detail';
-import { ForgotPasswordPage, LoginPage, SignUpPage } from './pages/login_page/login_page';
+import BlogDetailPage from './pages/blog/detail/blog_detail';
+import { ForgotPasswordPage, LoginPage, SignUpPage } from './pages/login/login_page';
 import { AuthProvider, useAuth } from './contexts/auth_context';
 import { useEffect } from 'react';
-import { PrivateRoute } from './private/private_router';
-import { BlogCreate } from './pages/blog_page/create/blog_create';
-import HeaderComponent from './components/shared/header_component/header.component';
-import FooterComponent from './components/shared/footer_component/footer.component';
+// import { PrivateRoute } from './private/private_router';
+import { BlogCreate } from './pages/blog/create/blog_create';
+import HeaderComponent from './components/header/header.component';
+import FooterComponent from './components/footer/footer.component';
 
 function App() {
   const location = useLocation();

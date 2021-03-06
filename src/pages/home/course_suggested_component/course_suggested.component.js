@@ -1,4 +1,4 @@
-import CourseItemComponent from '../../../components/shared/course_item_component/course-item.component';
+import CourseItemComponent from '../../../components/course_item/courseitem.component';
 import './course_suggested.component.css';
 
 const CourseSuggestedComponent = () => {

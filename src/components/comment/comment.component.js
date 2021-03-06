@@ -1,9 +1,9 @@
-import "./comment.css";
+import "./comment.component.css";
 import { Picker } from 'emoji-mart';
-import avatar from '../../../assests/avatar.jpg';
+import avatar from '../../assests/avatar.jpg';
 import { useRef } from "react";
-import { CommentService } from "../../../services/comment.service";
-import { useAuth } from "../../../contexts/auth_context";
+import { CommentService } from "../../services/comment.service";
+import { useAuth } from "../../contexts/auth_context";
 
 const Comments = (props) => {
     const TAG = 'Comments';

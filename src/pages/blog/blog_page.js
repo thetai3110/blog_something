@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { pageLayoutDefault } from "../../components/higer_order/page-layout-default";
-import { Pagination } from "../../components/shared/pagination_component/pagination.component";
+import { Pagination } from "../../components/pagination/pagination.component";
 import { BlogService } from "../../services/blog.service";
 import "./blog_page.css";
 

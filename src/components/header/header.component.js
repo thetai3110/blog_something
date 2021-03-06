@@ -1,7 +1,7 @@
 import './hearder.component.css';
-import logo from '../../../logo.svg';
+import logo from '../../logo.svg';
 import { Link } from "react-router-dom";
-import { useAuth } from '../../../contexts/auth_context';
+import { useAuth } from '../../contexts/auth_context';
 
 const HeaderComponent = () => {
     const { currentUser } = useAuth()
