@@ -9,7 +9,7 @@ import { ForgotPasswordPage, LoginPage, SignUpPage } from './pages/login/login_p
 import { AuthProvider, useAuth } from './contexts/auth_context';
 import { useEffect } from 'react';
 // import { PrivateRoute } from './private/private_router';
-import { BlogCreate } from './pages/blog/create/blog_create';
+import BlogCreate from './pages/blog/create/blog_create';
 import HeaderComponent from './components/header/header.component';
 import FooterComponent from './components/footer/footer.component';
 
@@ -23,8 +23,8 @@ function App() {
           <div style={{ paddingRight: '10%', paddingLeft: '10%', paddingTop: '25px', paddingBottom: '25px' }}>
             <Switch>
               <Route path="/" component={HomePage} exact></Route>
-              <Route path="/blog" render={(props) => <BlogPage {...props} />} exact></Route>
-              <Route path="/blog/:page" render={(props) => <BlogPage {...props} />} exact></Route>
+              <Route path="/blog" component={BlogPage} exact></Route>
+              <Route path="/blog/:page" component={BlogPage} exact></Route>
               <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
               <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
               <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>

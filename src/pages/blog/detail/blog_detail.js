@@ -1,28 +1,28 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { BlogService } from "../../../services/blog.service";
 import './blog_detail.css';
 import 'emoji-mart/css/emoji-mart.css';
 import app from "../../../firebase";
 import Comments from '../../../components/comment/comment.component';
-
-const BlogDetailPage = (props) => {
+import { connect } from "react-redux";
+import { setTagsBlog } from "../../../redux/blog/blog_actions";
+import { setLstComments } from '../../../redux/comment/comment.actions';
+const BlogDetailPage = ({ tagsBlog, setTagsBlog, lstComments, setLstComments, match }) => {
     const TAG = "BlogDetail";
     const ref = useRef(null);
-    const [tagsFound, setTagsFound] = useState([]);
-    const [comments, setComments] = useState([])
     useEffect(() => {
-        const db = app.database().ref('Comments');
+        const db = app.database().ref('Comments').limitToFirst(5)
         db.on('value', (snap) => {
-            setComments(snap.val());
+            setLstComments(snap.val());
         });
         findBlogDetail();
     }, [])
     const findBlogDetail = async () => {
         try {
-            const res = await BlogService.findById(props.match.params.id);
+            const res = await BlogService.findById(match.params.id);
             const rs = await res.json();
             if (rs.result === "ok") {
-                setTagsFound(rs.data.tags);
+                setTagsBlog(rs.data.tags);
                 let content = rs.data.content;
                 ref.current.innerHTML = content;
             }
@@ -37,19 +37,19 @@ const BlogDetailPage = (props) => {
                 <div ref={ref}></div>
             </div>
             <ul className="blog-tags-list">
-                {tagsFound.map((el, i) => {
+                {tagsBlog.map((el, i) => {
                     return <li key={i}>{el}</li>
                 })}
             </ul>
-            <Comments typeComment={true} id={props.match.params.id} />
+            <Comments typeComment={true} id={match.params.id} />
             <div className="list-comments">
-                {Object.keys(comments).map((el, i) => {
+                {Object.keys(lstComments).map((el, i) => {
                     return <div key={i} className="cmt">
                         <div className="comments-user">
-                            <img src={comments[el].avatar} alt={comments[el].avatar}></img>
+                            <img src={lstComments[el].avatar} alt={lstComments[el].avatar}></img>
                             <div className="comments-content">
-                                <h6>{comments[el].user}</h6>
-                                <p>{comments[el].content}</p>
+                                <h6>{lstComments[el].user}</h6>
+                                <p>{lstComments[el].content}</p>
                                 <div className="comments-action">
                                     <span className="action">Thích</span>
                                     <label className="action" htmlFor={el}>Phản hồi</label>
@@ -59,14 +59,14 @@ const BlogDetailPage = (props) => {
                         </div>
                         <div className="cmt-feedback">
                             {
-                                typeof comments[el].feedback !== 'undefined' ?
-                                    Object.keys(comments[el].feedback).map((elm, i) => {
+                                typeof lstComments[el].feedback !== 'undefined' ?
+                                    Object.keys(lstComments[el].feedback).map((elm, i) => {
                                         return <div key={i} className="cmt">
                                             <div className="comments-user">
-                                                <img src={comments[el].feedback[elm].avatar} alt={comments[el].feedback[elm].avatar}></img>
+                                                <img src={lstComments[el].feedback[elm].avatar} alt={lstComments[el].feedback[elm].avatar}></img>
                                                 <div className="comments-content">
-                                                    <h6>{comments[el].feedback[elm].user}</h6>
-                                                    <p>{comments[el].feedback[elm].content}</p>
+                                                    <h6>{lstComments[el].feedback[elm].user}</h6>
+                                                    <p>{lstComments[el].feedback[elm].content}</p>
                                                     <div className="comments-action">
                                                         <span className="action">Thích</span>
                                                         <label className="action" htmlFor={el}>Phản hồi</label>
@@ -74,10 +74,6 @@ const BlogDetailPage = (props) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* <input type="checkbox" name="feedback" className="feedbackCK" id={elm}></input>
-                                            <div className="feedback">
-                                                <Comments typeComment={false} keyComment={el} />
-                                            </div> */}
                                         </div>
                                     }) : <div></div>
                             }
@@ -93,4 +89,13 @@ const BlogDetailPage = (props) => {
     )
 }
 
-export default BlogDetailPage;
+const mapStateToProps = ({ blog, comment }) => ({
+    tagsBlog: blog.tagsBlog,
+    lstComments: comment.lstComments
+})
+
+const mapDispatchToProps = dispatch => ({
+    setTagsBlog: tags => dispatch(setTagsBlog(tags)),
+    setLstComments: comments => dispatch(setLstComments(comments))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(BlogDetailPage);

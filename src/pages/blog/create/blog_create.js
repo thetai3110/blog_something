@@ -6,7 +6,9 @@ import { useState } from 'react';
 import { toast } from '../../../components/toast/toast.component';
 import { CommonConstants } from '../../../common/constants';
 import { BlogService } from '../../../services/blog.service';
-export const BlogCreate = (props) => {
+import { connect } from 'react-redux';
+import { setBlogInfo, setFilename, setTagsCreating } from '../../../redux/blog/blog_actions';
+const BlogCreate = ({ tagsCreating, setTagsCreating, blogInfo, setBlogInfo, fileName, setFileName, history }) => {
     const TAG = "BlogCreate";
     const contentPreviewRef = useRef(null);
     const inputRef = useRef(null);
@@ -14,16 +16,7 @@ export const BlogCreate = (props) => {
     const publishRef = useRef(null);
     const summaryRef = useRef(null);
     const overloadRef = useRef(null);
-    const [fileName, setFileName] = useState('..................');
-    const [tags, setTags] = useState([]);
-    const [state, setState] = useState({
-        title: '',
-        summary: '',
-        content: '',
-        image: '',
-        tagsFounded: []
-    })
-    const { title, summary, content, image } = state;
+    const { title, summary, content, image } = blogInfo;
     useEffect(async () => {
         // Set file name
         document.getElementById('file-upload-blog').onchange = function () {
@@ -46,8 +39,8 @@ export const BlogCreate = (props) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    setState({
-                        ...state,
+                    setBlogInfo({
+                        ...blogInfo,
                         image: data.url
                     })
                 })
@@ -63,16 +56,16 @@ export const BlogCreate = (props) => {
     const handleKeyDown = (event) => {
         if (event.keyCode == 13) {
             let val = event.target.value;
-            if (val !== '' && !tags.includes(val)) {
-                if (tags.length < 5) {
-                    let currentTags = tags;
+            if (val !== '' && !tagsCreating.includes(val)) {
+                if (tagsCreating.length < 5) {
+                    let currentTags = tagsCreating;
                     let item = document.createElement('span')
                     item.innerHTML = `${val} <i class="fa fa-close close-tag"></i>`
                     tagsRef.current.appendChild(item)
                     inputRef.current.value = ''
 
                     currentTags.push(val);
-                    setTags(currentTags);
+                    setTagsCreating(currentTags);
                 } else {
                     toast({ title: "Warning!", message: 'Cannot create too 5 tags', type: "warning", duration: 3000 });
                 }
@@ -82,22 +75,21 @@ export const BlogCreate = (props) => {
             let val = event.target.value;
             if (val === '' && tagsRef.current.children.length > 0) {
                 tagsRef.current.removeChild(tagsRef.current.children[tagsRef.current.children.length - 1]);
-                let currentTags = tags;
+                let currentTags = tagsCreating;
                 currentTags.pop();
-                setTags(currentTags);
+                setTagsCreating(currentTags);
             }
         }
     }
     const handleRemoveTag = (event) => {
         if (event.target.closest('.close-tag')) {
             const val = event.target.closest('span').innerText.trim();
-            tags.forEach((el, i) => {
-                if(val === el){
+            tagsCreating.forEach((el, i) => {
+                if (val === el) {
                     tagsRef.current.removeChild(tagsRef.current.children[i]);
-                    let currentTags = tags;
-                    currentTags.splice(i,1);
-                    console.log(currentTags)
-                    setTags(currentTags);
+                    let currentTags = tagsCreating;
+                    currentTags.splice(i, 1);
+                    setTagsCreating(currentTags);
                 }
             })
         }
@@ -113,16 +105,19 @@ export const BlogCreate = (props) => {
                     summary: summaryRef.current.value,
                     content: content,
                     image: image,
-                    tags: tags,
+                    tags: tagsCreating,
                     published: publish
                 }
                 try {
                     const res = await BlogService.create(data);
                     const rs = await res.json();
                     if (rs.result === 'ok') {
+                        setBlogInfo({ ...blogInfo, image: '', title: '' })
+                        setTagsCreating([]);
+                        setFileName('');
                         toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
                         setTimeout(() => {
-                            props.history.replace('/');
+                            history.replace('/');
                         }, 2000)
                     } else {
                         toast({ title: "Failed!", message: `Failed at: ${rs.message}`, type: "error", duration: 3000 });
@@ -224,7 +219,6 @@ export const BlogCreate = (props) => {
                     {/* CKEditor */}
                     <div className="editor-blog">
                         <CKEditor
-                            data={content}
                             editor={Editor}
                             config={{
                                 toolbar: {
@@ -256,8 +250,8 @@ export const BlogCreate = (props) => {
                                 }
                             }}
                             onChange={(event, editor) => {
-                                setState({
-                                    ...state,
+                                setBlogInfo({
+                                    ...blogInfo,
                                     title: editor.getData().split('</h1>').shift().slice(4),
                                     content: editor.getData()
                                 })
@@ -291,3 +285,16 @@ export const BlogCreate = (props) => {
     );
 }
 
+const mapStateToProps = ({ blog }) => ({
+    tagsCreating: blog.tagsCreating,
+    blogInfo: blog.blogInfo,
+    fileName: blog.fileName
+})
+
+const mapDispatchToProps = dispatch => ({
+    setTagsCreating: tags => dispatch(setTagsCreating(tags)),
+    setBlogInfo: blogInfo => dispatch(setBlogInfo(blogInfo)),
+    setFileName: name => dispatch(setFilename(name))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogCreate);
