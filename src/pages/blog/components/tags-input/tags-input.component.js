@@ -9,7 +9,7 @@ const TagsInput = ({ tagsCreating, setTagsCreating }) => {
     const tagsRef = useRef(null);
     // Tags
     const handleKeyDown = (event) => {
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             let val = event.target.value;
             if (val !== '' && !tagsCreating.includes(val)) {
                 if (tagsCreating.length < 5) {

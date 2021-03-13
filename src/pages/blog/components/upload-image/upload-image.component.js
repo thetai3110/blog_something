@@ -8,10 +8,12 @@ import './upload-image.component.css';
 const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
     const TAG = "UploadImage";
     const { image } = blogInfo
-    useEffect(async () => {
-        document.getElementById('file-upload-blog').onchange = function () {
-            setFileName(this.value.split('\\').pop());
-        };
+    useEffect(() => {
+        (async function () {
+            document.getElementById('file-upload-blog').onchange = function () {
+                setFileName(this.value.split('\\').pop());
+            };
+        }())
     }, [])
     // Upload main image
     const handleUploadImage = (event) => {

@@ -1,6 +1,8 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { auth } from "../firebase"
 import firebase from 'firebase';
+import { connect } from "react-redux";
+import { setCurrentUSer } from "../redux/user/user.actions";
 
 const AuthContext = React.createContext()
 
@@ -8,10 +10,7 @@ export function useAuth() {
     return useContext(AuthContext)
 }
 
-export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState()
-    const [loading, setLoading] = useState(true)
-
+const AuthProvider = ({ children, currentUser, setCurrentUser }) => {
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
     }
@@ -49,7 +48,6 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
-            setLoading(false)
         })
 
         return unsubscribe
@@ -69,7 +67,17 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     )
 }
+
+const mapStateToProps = ({ user }) => ({
+    currentUser: user.currentUser,
+})
+
+const mapDispatchToProps = dispatch => ({
+    setCurrentUser: user => dispatch(setCurrentUSer(user)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(AuthProvider);
+

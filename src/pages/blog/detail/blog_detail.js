@@ -11,22 +11,21 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, setLstComments, match }) => {
     const TAG = "BlogDetail";
     const ref = useRef(null);
     useEffect(() => {
-        findBlogDetail();
-    }, [])
-    const findBlogDetail = async () => {
-        try {
-            const res = await BlogService.findById(match.params.id);
-            const rs = await res.json();
-            if (rs.result === "ok") {
-                setTagsBlog(rs.data.tags);
-                let content = rs.data.content;
-                ref.current.innerHTML = content;
+        (async function () {
+            try {
+                const res = await BlogService.findById(match.params.id);
+                const rs = await res.json();
+                if (rs.result === "ok") {
+                    setTagsBlog(rs.data.tags);
+                    let content = rs.data.content;
+                    ref.current.innerHTML = content;
+                }
+                else console.log(TAG + ': ' + rs.message);
+            } catch (error) {
+                console.log(TAG + ': ' + error);
             }
-            else console.log(TAG + ': ' + rs.message);
-        } catch (error) {
-            console.log(TAG + ': ' + error);
-        }
-    }
+        }())
+    }, [])
     return (
         <div className="blog-detail-page">
             <div className="ck-content">

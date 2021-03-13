@@ -51,7 +51,6 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
                 }
             })();
         } else {
-            console.log(TAG + ': ' + '{image: ' + image + ', title: ' + title + ", content: " + content + ', summary: ' + summary + '}')
             toast({
                 title: "Warning!",
                 message: `Please fill all fields (${image === '' ? 'image, ' : ''} ${title === '' ? 'title, ' : ''} ${content === '' ? 'content, ' : ''} ${summary === '' ? 'summary' : ''}).`,
