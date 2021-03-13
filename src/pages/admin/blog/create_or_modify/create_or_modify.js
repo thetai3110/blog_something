@@ -248,7 +248,7 @@ export const CreateBlog = (props) => {
                                     },
                                     licenseKey: '',
                                     ckfinder: {
-                                        uploadUrl: 'http://localhost:3030/uploads/multi'
+                                        uploadUrl: `${process.env.REACT_APP_SERVER}/uploads/multi`
                                     }
                                 }}
                                 onChange={(event, editor) => {

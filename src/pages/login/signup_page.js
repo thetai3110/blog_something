@@ -22,7 +22,7 @@ const SignUpPage = ({ error, message, setError, setMessage }) => {
             setMessage("")
             await signup(emailRef.current.value, passwordRef.current.value)
             await auth.currentUser.sendEmailVerification({
-                url: 'http://localhost:3000/',
+                url: `${process.env.REACT_APP_CLIENT}/`,
             });
             setMessage("Success, please check email and verify email that you just register!")
         } catch (error) {

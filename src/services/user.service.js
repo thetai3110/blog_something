@@ -1,20 +1,18 @@
-import { CommonConstants } from "../common/constants"
-
 export const UserService = {
     find: function () {
-        return fetch(`${CommonConstants.server}/user`)
+        return fetch(`${process.env.REACT_APP_SERVER}/user`)
             .then(res => res.json())
             .then(data => { return data })
             .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
     findByUsername: function (username) {
-        return fetch(`${CommonConstants.server}/user/${username}`)
+        return fetch(`${process.env.REACT_APP_SERVER}/user/${username}`)
             .then(res => res.json())
             .then(data => { return data })
             .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
     create: function (data) {
-        return fetch(`${CommonConstants.server}/user/create`, {
+        return fetch(`${process.env.REACT_APP_SERVER}/user/create`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: new Headers({
@@ -26,7 +24,7 @@ export const UserService = {
             .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
     modify: function (id, data) {
-        return fetch(`${CommonConstants.server}/user/modify/${id}`, {
+        return fetch(`${process.env.REACT_APP_SERVER}/user/modify/${id}`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: new Headers({
@@ -38,7 +36,7 @@ export const UserService = {
             .catch(err => { return { msg: `fetch failed because: ${err}` } })
     },
     delete: function (id) {
-        return fetch(`${CommonConstants.server}/user/delete/${id}`)
+        return fetch(`${process.env.REACT_APP_SERVER}/user/delete/${id}`)
             .then(res => res.json())
             .then(data => { return data })
             .catch(err => { return { msg: `fetch failed because: ${err}` } })

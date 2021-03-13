@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { CommonConstants } from '../../../../common/constants';
 import { toast } from '../../../../components/toast/toast.component';
 import { setBlogInfo, setFilename } from '../../../../redux/blog/blog_actions';
 import './upload-image.component.css';
@@ -22,7 +21,7 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
         let photo = document.getElementById("file-upload-blog").files[0];
         if (typeof photo !== 'undefined') {
             formData.append("file-upload-blog", photo);
-            fetch(`${CommonConstants.server}/uploads/single`, {
+            fetch(`${process.env.REACT_APP_SERVER}/uploads/single`, {
                 method: 'POST',
                 body: formData,
             })

@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/auth_context"
 import { setError, setMessage } from "../../redux/login/login.actions"
 import OthersLogin from "./components/others-login.component"
 
-const ForgotPasswordPage = ({error, message, setError, setMessage, history}) => {
+const ForgotPasswordPage = ({error, message, setError, setMessage}) => {
     const emailRef = useRef()
     const { resetPassword } = useAuth()
     async function handleSubmit(e) {
