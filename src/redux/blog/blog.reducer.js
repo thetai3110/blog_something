@@ -1,9 +1,11 @@
 import { BlogTypes } from "./blog.types"
 
 const INITIAL_STATE = {
+    // Load blog
     lstBlogs: [],
     countBlogs: 0,
     tagsBlog: [],
+    // Create blog
     tagsCreating: [],
     blogInfo: {
         title: '',
@@ -11,7 +13,8 @@ const INITIAL_STATE = {
         content: '',
         image: ''
     },
-    fileName: ''
+    fileName: '',
+    hiddenSave: true
 }
 
 export const blogReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +36,9 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.SET_FILENAME: {
             return { ...state, fileName: action.payload }
+        }
+        case BlogTypes.TOGGLE_SAVE_BOX: {
+            return { ...state, hiddenSave: !state.hiddenSave }
         }
         default:
             return state;

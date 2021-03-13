@@ -29,3 +29,7 @@ export const setFilename = name => ({
     type: BlogTypes.SET_FILENAME,
     payload: name
 })
+
+export const toggleSaveBox = () => ({
+    type: BlogTypes.TOGGLE_SAVE_BOX
+})

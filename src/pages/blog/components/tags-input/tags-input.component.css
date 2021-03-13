@@ -1,0 +1,38 @@
+/* Tags */
+.tags-input{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 1px solid #d4d4d8;
+    margin: 1rem 0;
+    background-color: #fff;
+    height: auto;
+}
+.tags{
+    height: 100%;
+    padding: 5px;
+}
+.tags span{
+    display: inline-block;
+    background-color: #F4F4F5;
+    border-radius: 5px;
+    color: #96969b;
+    font-size: 15px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+.input{
+    flex-grow: 1;
+}
+.input input{
+    width: 100%;
+    padding: 10px 10px;
+    border: none;
+    outline: 0;
+    font-size: 15px;
+}
+.tags span i:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}

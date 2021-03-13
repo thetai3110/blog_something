@@ -1,0 +1,60 @@
+.save-box{
+    height: auto;
+    z-index: 99999;
+    position: absolute;
+    text-align: left;
+    background-color: #fff;
+    padding: 10px 25px;
+    margin-top: 10px;
+    width: 350px;
+    max-width: 350px;
+    right: 0;
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+    z-index: 999;
+}
+.save-box::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-right: 32px;
+    border-width: 5px;
+    border-style: solid;
+    border-color:  transparent transparent #fff transparent;
+    z-index: 999;
+  }
+.save-box p{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.save-option input, .save-option label{
+    display: inline-block;
+}
+.save-option label{
+    margin: 0;
+    font-size: 14px;
+}
+.save-option input{
+    margin-right: 1rem;
+}
+.option-description{
+    display: none;
+    margin-bottom: 10px;
+}
+.option-description p{
+    font-size: 14px;
+}
+.option-description button{
+    font-size: 13px;
+}
+input#private:checked ~ #private-description{
+    display: block;
+}
+input#draft:checked ~ #draft-description{
+    display: block;
+}
+input#public:checked ~ #public-description{
+    display: block;
+}

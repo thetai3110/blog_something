@@ -1,0 +1,11 @@
+/* Actions */
+.actions{
+    text-align: right;
+}
+.actions button + .save-blog{
+    margin-left: 15px;
+}
+.save-blog{
+    display: inline-block;
+    position: relative;
+}
