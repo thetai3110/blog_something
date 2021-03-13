@@ -2,7 +2,7 @@
   "name": "blog",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://thetai3110.github.io/",
+  "homepage": "https://thetai3110.github.io/home",
   "dependencies": {
     "@ckeditor/ckeditor5-ckfinder": "^25.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.0",
