@@ -34,7 +34,7 @@ const Comments = (props) => {
             console.log(TAG + ": " + error)
         }
     }
-    const handleComment1 = (e) => {
+    const handleCancel = (e) => {
         e.target.closest('.feedback').previousSibling.checked = false
     }
     return (
@@ -59,7 +59,7 @@ const Comments = (props) => {
                 </div>
             </div>
             <div className="send">
-                {!props.typeComment ? <button onClick={handleComment1} className="btn btn-primary">Hủy</button> : ''}
+                {!props.typeComment ? <button onClick={handleCancel} className="btn btn-primary">Hủy</button> : ''}
                 <button className="btn btn-primary" onClick={(e) => handleComment(props.typeComment, e)}>Bình luận</button>
             </div>
         </>

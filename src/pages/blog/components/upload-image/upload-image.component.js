@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { CommonConstants } from '../../../../common/constants';
 import { toast } from '../../../../components/toast/toast.component';
@@ -7,6 +8,11 @@ import './upload-image.component.css';
 const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
     const TAG = "UploadImage";
     const { image } = blogInfo
+    useEffect(async () => {
+        document.getElementById('file-upload-blog').onchange = function () {
+            setFileName(this.value.split('\\').pop());
+        };
+    }, [])
     // Upload main image
     const handleUploadImage = (event) => {
         event.preventDefault();
