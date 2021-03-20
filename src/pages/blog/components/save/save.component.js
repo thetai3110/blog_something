@@ -51,7 +51,7 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
         } else {
             toast({
                 title: "Warning!",
-                message: `Please fill all fields (${image === '' ? 'image, ' : ''} ${title === '' ? 'title, ' : ''} ${content === '' ? 'content, ' : ''} ${summary === '' ? 'summary' : ''}).`,
+                message: `Please fill all fields (${image === '' ? 'image, ' : ''} ${title === '&nbsp;' ? 'title, ' : ''} ${content === '' ? 'content, ' : ''} ${summary === '' ? 'summary' : ''}).`,
                 type: "warning",
                 duration: 3000
             });
