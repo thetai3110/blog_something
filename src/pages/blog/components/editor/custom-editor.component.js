@@ -15,10 +15,29 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                     config={{
                         toolbar: {
                             items: [
-                                'heading', '|', 'bold', 'underline', 'italic', 'strikethrough', 'specialCharacters', 'fontBackgroundColor',
-                                'fontColor', 'fontSize', 'fontFamily', 'highlight', 'link', '|', 'bulletedList', 'numberedList', '|', 'indent',
-                                'outdent', '|', 'imageUpload', 'imageInsert', 'mediaEmbed', 'CKFinder', '|', 'codeBlock', 'insertTable', '|',
-                                'MathType', 'ChemType', 'blockQuote', 'undo', 'redo'
+                                'heading','|',
+                                'bold',
+                                'underline',
+                                'italic',
+                                'strikethrough',
+                                'link',
+                                'bulletedList',
+                                'numberedList',
+                                '|',
+                                'outdent',
+                                'indent',
+                                '|',
+                                'imageUpload',
+                                'mediaEmbed',
+                                'insertTable',
+                                'blockQuote',
+                                '|',
+                                'codeBlock',
+                                'MathType',
+                                'ChemType',
+                                '|',
+                                'undo',
+                                'redo'
                             ]
                         },
                         language: 'en',
