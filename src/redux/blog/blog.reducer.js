@@ -14,7 +14,8 @@ const INITIAL_STATE = {
         image: ''
     },
     fileName: '',
-    hiddenSave: true
+    hiddenSave: true,
+    progress: 0
 }
 
 export const blogReducer = (state = INITIAL_STATE, action) => {
@@ -39,6 +40,9 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.TOGGLE_SAVE_BOX: {
             return { ...state, hiddenSave: !state.hiddenSave }
+        }
+        case BlogTypes.PROGRESS_UPLOAD: {
+            return { ...state, progress: action.payload }
         }
         default:
             return state;

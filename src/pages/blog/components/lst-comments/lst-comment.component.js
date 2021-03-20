@@ -1,9 +1,19 @@
 import { useEffect } from 'react';
+import LazyLoad from 'react-lazyload';
 import { connect } from 'react-redux';
 import Comments from '../../../../components/comment/comment.component';
 import app from '../../../../firebase';
 import { setLstComments } from '../../../../redux/comment/comment.actions';
 import './lst-comment.component.css';
+
+const Loading = () => (
+    <div style={{ textAlign: 'center', width: '100%' }}>
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+)
+
 const LstComments = ({ lstComments, setLstComments, idBlog }) => {
     useEffect(() => {
         const db = app.database().ref('Comments');
@@ -25,7 +35,7 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
             <div className="list-comments">
                 <div className="cmt-content">
                     {lstComments ? lstComments.map((el, i) => {
-                        return <div key={i} className="cmt">
+                        return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
                             <div className="comments-user">
                                 <img src={el.value.avatar} alt={el.value.avatar}></img>
                                 <div className="comments-content">
@@ -63,7 +73,7 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
                             <div className="feedback">
                                 <Comments typeComment={false} keyComment={el.idCmt} />
                             </div>
-                        </div>
+                        </LazyLoad>
                     }) : null}
                 </div>
             </div>

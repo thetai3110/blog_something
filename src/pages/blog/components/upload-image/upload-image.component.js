@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { toast } from '../../../../components/toast/toast.component';
 import { storage } from '../../../../firebase';
-import { setBlogInfo, setFilename } from '../../../../redux/blog/blog_actions';
+import { setBlogInfo, setFilename, setProgressUpload } from '../../../../redux/blog/blog_actions';
 import './upload-image.component.css';
 
-const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
+const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, setProgress }) => {
     const TAG = "UploadImage";
     const { image } = blogInfo
     useEffect(() => {
@@ -25,10 +25,10 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
             uploadTask.on(
                 "state_changed",
                 snapshot => {
-                    // const progress = Math.round(
-                    //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                    // );
-                    //setProgress(progress);
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    setProgress(progress);
                 },
                 error => {
                     toast({ title: "Failed!", message: error, type: "error", duration: 2000 });
@@ -50,17 +50,19 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
     return (
         <div className="upload-image">
             <form onSubmit={handleUploadImage}
-                style={{ marginBottom: "50px", display: 'flex', justifyContent: 'space-between' }}
-                encType="multipart/form-data" method="POST" className="custom-file">
+                encType="multipart/form-data" method="POST" className="custom-file form-upload">
                 <input type="file" id="file-upload-blog" accept='image/*' name="file-upload-blog" style={{ display: 'none' }}></input>
-                <div>
-                    <label className="btn btn-secondary" htmlFor="file-upload-blog" style={{ margin: 0 }}>Chọn ảnh</label>
-                    <p style={{ padding: '5px', flexGrow: 1, maxWidth: "150px", color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
+                <div className="action">
+                    <label className="btn btn-secondary" htmlFor="file-upload-blog">Chọn ảnh</label>
+                    <p style={{ color: fileName === 'no have any image!' ? 'red' : '#333' }}><i>{fileName}</i></p>
                 </div>
                 <div><i className="fa fa-angle-double-right"></i></div>
                 <input type="submit" className="btn btn-secondary" value="Tải lên"></input>
             </form>
-            <img style={{ display: image !== '' ? 'block' : 'none', maxWidth: '100%', maxHeight: '300px', marginBottom: '25px' }} src={image} alt={fileName}></img>
+            <div className="progress" style={{ width: 'auto', marginBottom: '0.5rem' }}>
+                <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{progress}%</div>
+            </div>
+            <img style={{ display: image !== '' ? 'block' : 'none'}} src={image} alt={fileName}></img>
         </div>
     )
 }
@@ -68,10 +70,12 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
 const mapStateToProps = ({ blog }) => ({
     blogInfo: blog.blogInfo,
     fileName: blog.fileName,
+    progress: blog.progress
 })
 
 const mapDispatchToProps = dispatch => ({
     setBlogInfo: blogInfo => dispatch(setBlogInfo(blogInfo)),
     setFileName: name => dispatch(setFilename(name)),
+    setProgress: progress => dispatch(setProgressUpload(progress))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(UploadImage);

@@ -33,3 +33,8 @@ export const setFilename = name => ({
 export const toggleSaveBox = () => ({
     type: BlogTypes.TOGGLE_SAVE_BOX
 })
+
+export const setProgressUpload = (progress) => ({
+    type: BlogTypes.PROGRESS_UPLOAD,
+    payload: progress
+})

@@ -5,7 +5,7 @@ const FooterComponent = () => {
     return (
         <div>
             <footer>
-                <div className="row">
+                <div className="row" style={{width: '100%'}}>
                     <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
                         <div className="footer-left">
                             <Link to="/"><img src={logo} alt=""></img></Link>
