@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { toast } from '../../../../components/toast/toast.component';
+import { storage } from '../../../../firebase';
 import { setBlogInfo, setFilename } from '../../../../redux/blog/blog_actions';
 import './upload-image.component.css';
 
@@ -17,25 +18,31 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName }) => {
     // Upload main image
     const handleUploadImage = (event) => {
         event.preventDefault();
-        let formData = new FormData();
-        let photo = document.getElementById("file-upload-blog").files[0];
-        if (typeof photo !== 'undefined') {
-            formData.append("file-upload-blog", photo);
-            fetch(`${process.env.REACT_APP_SERVER}/uploads/single`, {
-                method: 'POST',
-                body: formData,
-            })
-                .then(res => res.json())
-                .then(data => {
-                    setBlogInfo({
-                        ...blogInfo,
-                        image: data.url
-                    })
-                })
-                .catch(err => {
-                    toast({ title: "Failed!", message: `Failed at: ${err}`, type: "error", duration: 3000 });
-                    console.log(TAG + ': ' + err)
-                })
+        let image = document.getElementById("file-upload-blog").files[0];
+        if (typeof image !== 'undefined') {
+            let uploadName = 'upload' + Date.now() + '.' + image.type.split("/").pop();
+            const uploadTask = storage.ref(`uploads/${uploadName}`).put(image);
+            uploadTask.on(
+                "state_changed",
+                snapshot => {
+                    // const progress = Math.round(
+                    //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    // );
+                    //setProgress(progress);
+                },
+                error => {
+                    toast({ title: "Failed!", message: error, type: "error", duration: 2000 });
+                },
+                () => {
+                    storage
+                        .ref("uploads")
+                        .child(uploadName)
+                        .getDownloadURL()
+                        .then(url => {
+                            setBlogInfo({ ...blogInfo, image: url })
+                        });
+                }
+            );
         } else {
             setFileName('no have any image!')
         }

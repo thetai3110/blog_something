@@ -1,6 +1,7 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
 import { connect } from 'react-redux';
+import { storage } from '../../../../firebase';
 import { setBlogInfo } from '../../../../redux/blog/blog_actions';
 import './custom-editor.component.css';
 
@@ -35,9 +36,9 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                             ]
                         },
                         licenseKey: '',
-                        ckfinder: {
-                            uploadUrl: `${process.env.REACT_APP_SERVER}/uploads/multi`
-                        }
+                        // ckfinder: {
+                        //     uploadUrl: `${process.env.REACT_APP_SERVER}/uploads/multi`
+                        // }
                     }}
                     onChange={(event, editor) => {
                         setBlogInfo({
@@ -46,10 +47,73 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                             content: editor.getData()
                         })
                     }}
+                    onReady={editor => {
+                        editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+                            return new UploadAdapter(loader);
+                        };
+                    }}
                 />
             </div>
         </div>
     )
+}
+class UploadAdapter {
+    constructor(loader) {
+        this.loader = loader;
+    }
+    // Starts the upload process.
+    upload() {
+        return this.loader.file.then(
+            file =>
+                new Promise((resolve, reject) => {
+                    let uploadName = 'upload' + Date.now() + '.' + file.type.split("/").pop();
+                    let uploadTask = storage.ref(`uploads/${uploadName}`).put(file);
+                    uploadTask.on(
+                        'state_changed', // or 
+                        function (snapshot) {
+                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                            // var progress =
+                            //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            // console.log("Upload is " + progress + "% done");
+                            // switch (snapshot.state) {
+                            //     case storage.TaskState.PAUSED: // or 'paused'
+                            //         console.log("Upload is paused");
+                            //         break;
+                            //     case storage.TaskState.RUNNING: // or 'running'
+                            //         console.log("Upload is running");
+                            //         break;
+                            // }
+                        },
+                        function (error) {
+                            // switch (error.code) {
+                            //     case "storage/unauthorized":
+                            //         reject(" User doesn't have permission to access the object");
+                            //         break;
+
+                            //     case "storage/canceled":
+                            //         reject("User canceled the upload");
+                            //         break;
+
+                            //     case "storage/unknown":
+                            //         reject(
+                            //             "Unknown error occurred, inspect error.serverResponse"
+                            //         );
+                            //         break;
+                            // }
+                        },
+                        function () {
+                            uploadTask.snapshot.ref
+                                .getDownloadURL()
+                                .then(function (downloadURL) {
+                                    resolve({
+                                        default: downloadURL
+                                    });
+                                });
+                        }
+                    );
+                })
+        );
+    }
 }
 
 const mapStateToProps = ({ blog }) => ({
