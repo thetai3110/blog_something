@@ -20,12 +20,13 @@ const Comments = (props) => {
             let comment = commentRef.current.value;
             if (typeComment) {
                 if (comment !== '') {
-                    await CommentService.newComment(props.id, currentUser.displayName, comment, currentUser.photoURL);
+                    await CommentService.newComment(currentUser.displayName, comment, currentUser.photoURL, props.id);
                     commentRef.current.value = '';
                 }
             } else {
                 if (comment !== '') {
-                    await CommentService.newFeedback(props.keyComment, currentUser.displayName, comment, currentUser.photoURL);
+                    console.log(props.id + " " + props.keyComment)
+                    await CommentService.newFeedback(props.keyBlog, props.keyComment, currentUser.displayName, comment, currentUser.photoURL);
                     commentRef.current.value = '';
                     e.target.closest('.feedback').previousSibling.checked = false
                 }

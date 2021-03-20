@@ -16,14 +16,10 @@ const Loading = () => (
 
 const LstComments = ({ lstComments, setLstComments, idBlog }) => {
     useEffect(() => {
-        const db = app.database().ref('Comments');
+        const db = app.database().ref(`Blogs/${idBlog}/comments`);
         db.on('value', (snap) => {
             if (snap.val() !== null) {
-                // setLstComments(snap.val());
-                let arr = Object.keys(snap.val()).filter((val) => {
-                    return snap.val()[val].id === idBlog
-                })
-                let lstCmt = arr.map(val => {
+                let lstCmt = Object.keys(snap.val()).map(val => {
                     return { idCmt: val, value: snap.val()[val] }
                 })
                 setLstComments(lstCmt);
@@ -71,7 +67,7 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
                             </div>
                             <input type="checkbox" name="feedback" className="feedbackCK" id={el.idCmt}></input>
                             <div className="feedback">
-                                <Comments typeComment={false} keyComment={el.idCmt} />
+                                <Comments typeComment={false} keyComment={el.idCmt} keyBlog={idBlog} />
                             </div>
                         </LazyLoad>
                     }) : null}

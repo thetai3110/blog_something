@@ -7,20 +7,20 @@ import { connect } from "react-redux";
 import { setTagsBlog } from "../../../redux/blog/blog_actions";
 import { setLstComments } from '../../../redux/comment/comment.actions';
 import LstComments from "../components/lst-comments/lst-comment.component";
-const BlogDetailPage = ({ tagsBlog, setTagsBlog, setLstComments, match }) => {
+import app from "../../../firebase";
+const BlogDetailPage = ({ tagsBlog, setTagsBlog, match }) => {
     const TAG = "BlogDetail";
     const ref = useRef(null);
     useEffect(() => {
         (async function () {
             try {
-                const res = await BlogService.findById(match.params.id);
-                const rs = await res.json();
-                if (rs.result === "ok") {
-                    setTagsBlog(rs.data.tags);
-                    let content = rs.data.content;
-                    ref.current.innerHTML = content;
-                }
-                else console.log(TAG + ': ' + rs.message);
+                const db = app.database().ref(`Blogs/${match.params.id}`);
+                db.on('value', (snap) => {
+                    if (snap.val() !== null) {
+                        setTagsBlog(snap.val().tags);
+                        ref.current.innerHTML = snap.val().content;
+                    }
+                });
             } catch (error) {
                 console.log(TAG + ': ' + error);
             }

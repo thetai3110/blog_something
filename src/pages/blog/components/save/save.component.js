@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { toast } from '../../../../components/toast/toast.component';
+import { useAuth } from '../../../../contexts/auth_context';
 import { setBlogInfo, setFilename, setTagsCreating, toggleSaveBox } from '../../../../redux/blog/blog_actions';
 import { BlogService } from '../../../../services/blog.service';
 import './save.component.css';
 const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, setFileName, toggleSaveBox, history }) => {
     const TAG = 'SaveBlogBox';
+    const { currentUser } = useAuth();
     const { title, summary, image, content } = blogInfo;
     // Validate
     const validate = () => {
@@ -23,28 +25,23 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
     const handleCreate = (publish) => {
         if (validate()) {
             (async function () {
+                console.log(currentUser.displayName)
                 const data = {
-                    author: { _id: '601f7928c0bb930b9cee5a9b', username: 'admin', fullname: 'Tran The Tai', email: 'trthetai3110@gmail.com' },
+                    author: currentUser.displayName,
                     title: title,
                     summary: summary,
                     content: content,
                     image: image,
                     tags: tagsCreating,
-                    published: publish
+                    published: publish,
+                    comments: []
                 }
                 try {
-                    const res = await BlogService.create(data);
-                    const rs = await res.json();
-                    if (rs.result === 'ok') {
-                        clearAll();
-                        toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
-                        setTimeout(() => {
-                            history.replace('/');
-                        }, 2000)
-                    } else {
-                        toast({ title: "Failed!", message: `Failed at: ${rs.message}`, type: "error", duration: 3000 });
-                        console.log(TAG + ': ' + rs.message);
-                    }
+                    await BlogService.create(data)
+                    toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
+                    setTimeout(() => {
+                        history.replace('/');
+                    }, 2000)
                 } catch (err) {
                     toast({ title: "Failed!", message: `Failed at: ${err}`, type: "error", duration: 3000 });
                     console.log(TAG + ': ' + err);

@@ -1,16 +1,15 @@
 import app from "../firebase";
 
 export const CommentService = {
-    newComment: function (id, user, content, avatar) {
-        app.database().ref('Comments').push({
-            id,
+    newComment: function (user, content, avatar, key) {
+        app.database().ref(`Blogs/${key}/comments`).push({
             user,
             content,
             avatar
         })
     },
-    newFeedback: function (key, user, content, avatar) {
-        app.database().ref(`Comments/${key}/feedback`).push({
+    newFeedback: function (keyParent, keyChild, user, content, avatar) {
+        app.database().ref(`Blogs/${keyParent}/comments/${keyChild}/feedback`).push({
             user,
             content,
             avatar

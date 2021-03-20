@@ -7,7 +7,7 @@ export const Pagination = (props) => {
     }
     return (
         <nav aria-label="Page navigation example">
-            <ul className="pagination">
+            <ul className="pagination" style={{display: 'flex', justifyContent: 'center'}}>
                 <li className={parseInt(props.currentPage) === 1 ? 'page-item disabled' : 'page-item'}>
                     <Link className="page-link" to={`${props.link}/${parseInt(props.currentPage) - 1}`} aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
