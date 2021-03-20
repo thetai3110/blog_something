@@ -8,8 +8,8 @@ import './lst-comment.component.css';
 
 const Loading = () => (
     <div style={{ textAlign: 'center', width: '100%' }}>
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
+        <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
         </div>
     </div>
 )

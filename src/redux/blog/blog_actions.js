@@ -38,3 +38,8 @@ export const setProgressUpload = (progress) => ({
     type: BlogTypes.PROGRESS_UPLOAD,
     payload: progress
 })
+
+export const setHiddenProgressUpload = (status) => ({
+    type: BlogTypes.HIDDEN_PROGRESS,
+    payload: status
+})

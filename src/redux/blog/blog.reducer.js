@@ -14,8 +14,11 @@ const INITIAL_STATE = {
         image: ''
     },
     fileName: '',
+    // Save
     hiddenSave: true,
-    progress: 0
+    // Progress upload
+    progress: 0,
+    hidenProgress: true
 }
 
 export const blogReducer = (state = INITIAL_STATE, action) => {
@@ -43,6 +46,9 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.PROGRESS_UPLOAD: {
             return { ...state, progress: action.payload }
+        }
+        case BlogTypes.HIDDEN_PROGRESS: {
+            return { ...state, hiddenProgress: action.payload }
         }
         default:
             return state;

@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { toast } from '../../../../components/toast/toast.component';
 import { storage } from '../../../../firebase';
-import { setBlogInfo, setFilename, setProgressUpload } from '../../../../redux/blog/blog_actions';
+import { setHiddenProgressUpload, setBlogInfo, setFilename, setProgressUpload } from '../../../../redux/blog/blog_actions';
 import './upload-image.component.css';
 
-const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, setProgress }) => {
+const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, setProgress, hiddenProgress, setHiddenProgress }) => {
     const TAG = "UploadImage";
     const { image } = blogInfo
     useEffect(() => {
+        setHiddenProgress(true);
         (async function () {
             document.getElementById('file-upload-blog').onchange = function () {
                 setFileName(this.value.split('\\').pop());
@@ -22,6 +23,7 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, s
         if (typeof image !== 'undefined') {
             let uploadName = 'upload' + Date.now() + '.' + image.type.split("/").pop();
             const uploadTask = storage.ref(`uploads/${uploadName}`).put(image);
+            setHiddenProgress(false);
             uploadTask.on(
                 "state_changed",
                 snapshot => {
@@ -59,10 +61,10 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, s
                 <div><i className="fa fa-angle-double-right"></i></div>
                 <input type="submit" className="btn btn-secondary" value="Tải lên"></input>
             </form>
-            <div className="progress" style={{ width: 'auto', marginBottom: '0.5rem' }}>
+            {!hiddenProgress ? <div className="progress" style={{ width: 'auto', marginBottom: '0.5rem' }}>
                 <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{progress}%</div>
-            </div>
-            <img style={{ display: image !== '' ? 'block' : 'none'}} src={image} alt={fileName}></img>
+            </div> : null}
+            <img style={{ display: image !== '' ? 'block' : 'none' }} src={image} alt={fileName}></img>
         </div>
     )
 }
@@ -70,12 +72,14 @@ const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, s
 const mapStateToProps = ({ blog }) => ({
     blogInfo: blog.blogInfo,
     fileName: blog.fileName,
-    progress: blog.progress
+    progress: blog.progress,
+    hiddenProgress: blog.hiddenProgress
 })
 
 const mapDispatchToProps = dispatch => ({
     setBlogInfo: blogInfo => dispatch(setBlogInfo(blogInfo)),
     setFileName: name => dispatch(setFilename(name)),
-    setProgress: progress => dispatch(setProgressUpload(progress))
+    setProgress: progress => dispatch(setProgressUpload(progress)),
+    setHiddenProgress: (status) => dispatch(setHiddenProgressUpload(status)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(UploadImage);

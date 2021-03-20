@@ -9,7 +9,7 @@ import SummaryBlog from '../components/summary/summary.component';
 import UploadImage from '../components/upload-image/upload-image.component';
 import CustomEditor from '../components/editor/custom-editor.component';
 
-const BlogCreate = ({ hiddenSave, toggleSaveBox }) => {
+const BlogCreate = ({ hiddenSave, toggleSaveBox, history }) => {
     return (
         <>
             <div className="create-blog">

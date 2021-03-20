@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { Redirect, Route, Switch, useLocation, withRouter } from 'react-router-dom';
 import './App.css';
 import { useAuth } from './contexts/auth_context';
 import AuthProvider from './contexts/auth_context';
@@ -8,6 +8,7 @@ import HeaderComponent from './components/header/header.component';
 import FooterComponent from './components/footer/footer.component';
 import React from 'react';
 import { Suspense } from 'react';
+import { connect } from 'react-redux';
 
 const BlogPage = React.lazy(() => import('./pages/blog/blog_page'));
 const HomePage = React.lazy(() => import('./pages/home/home_page'));
@@ -19,8 +20,8 @@ const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot_page'))
 const BlogCreate = React.lazy(() => import('./pages/blog/create/blog_create'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup_page'));
 
-function App() {
-  const location = useLocation();
+function App({ currentUser, location }) {
+  console.log(currentUser)
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')
     return (
       <AuthProvider>
@@ -28,7 +29,15 @@ function App() {
         <div style={{ backgroundColor: '#f8f9fb' }}>
           <div style={{ paddingTop: '25px', paddingBottom: '25px' }} className="container-xl">
             <Suspense fallback={<div>Loading...</div>}>
-              <AppRouter />
+              <Switch>
+                <Route path="/" component={HomePage} exact></Route>
+                <Route path="/blog" component={BlogPage} exact></Route>
+                <Route path="/blog/:page" component={BlogPage} exact></Route>
+                <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
+                <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
+                <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>
+                <Route path="/create-blog" render={(props) => currentUser ? <BlogCreate {...props} /> : <Redirect to='/login' />}></Route>
+              </Switch>
             </Suspense>
           </div>
         </div>
@@ -49,21 +58,6 @@ function App() {
   )
 }
 
-const AppRouter = () => {
-  const { currentUser } = useAuth();
-  return (
-    <Switch>
-      <Route path="/" component={HomePage} exact></Route>
-      <Route path="/blog" component={BlogPage} exact></Route>
-      <Route path="/blog/:page" component={BlogPage} exact></Route>
-      <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
-      <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
-      <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>
-      <Route path="/create-blog" render={(props) => currentUser ? <BlogCreate {...props} /> : <Redirect to='/login' />}></Route>
-    </Switch>
-  )
-}
-
 const Logout = ({ history }) => {
   const TAG = 'Logout'
   const { logout } = useAuth()
@@ -81,4 +75,7 @@ const Logout = ({ history }) => {
   return (<div>Logout...</div>)
 }
 
-export default App;
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+})
+export default withRouter(connect(mapStateToProps)(App));
