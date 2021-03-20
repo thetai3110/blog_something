@@ -6,7 +6,7 @@ import { setLstComments } from '../../../../redux/comment/comment.actions';
 import './lst-comment.component.css';
 const LstComments = ({ lstComments, setLstComments, idBlog }) => {
     useEffect(() => {
-        const db = app.database().ref('Comments').limitToFirst(5)
+        const db = app.database().ref('Comments');
         db.on('value', (snap) => {
             if (snap.val() !== null) {
                 // setLstComments(snap.val());
