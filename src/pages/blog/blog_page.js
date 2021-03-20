@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Pagination } from "../../components/pagination/pagination.component";
 import { setCountBlogs, setLstBlogs } from "../../redux/blog/blog_actions";
 import { BlogService } from "../../services/blog.service";
 import "./blog_page.css";
+import placeholder_img from '../../assests/placeholder_img.png'
 
 const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match }) => {
     const TAG = "BlogComponent";
     const currentPage = typeof match.params.page === 'undefined' ? 1 : match.params.page;
+    const imgRef = useRef(null);
     useEffect(() => {
         getTotal();
         getBlogsFound();
@@ -37,6 +39,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match }) =
             console.log(TAG + ': ' + error);
         }
     }
+
     return (
         <div className="blog-page">
             {lstBlogs.length > 0 ?
@@ -44,7 +47,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match }) =
                     return (
                         <div className="row blog-list" key={blog._id}>
                             <div className="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-xs-12 col-12 blog-img">
-                                <Link to={`/blog/detail/${blog._id}`}><img src={blog.image} alt=""></img></Link>
+                                <Link to={`/blog/detail/${blog._id}`}><img ref={imgRef} onError={(e) => e.target.src = placeholder_img} src={blog.image} alt=""></img></Link>
                             </div>
                             <div className="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-xs-12 col-12 blog-content">
                                 <h4><Link to={`/blog/detail/${blog._id}`}>{blog.title}</Link></h4>
