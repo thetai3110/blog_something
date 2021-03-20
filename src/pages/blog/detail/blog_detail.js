@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react"
-import { BlogService } from "../../../services/blog.service";
 import './blog_detail.css';
 import 'emoji-mart/css/emoji-mart.css';
 import Comments from '../../../components/comment/comment.component';
@@ -10,15 +9,17 @@ import LstComments from "../components/lst-comments/lst-comment.component";
 import app from "../../../firebase";
 const BlogDetailPage = ({ tagsBlog, setTagsBlog, match }) => {
     const TAG = "BlogDetail";
-    const ref = useRef(null);
+    const ref = useRef();
     useEffect(() => {
+        setTagsBlog([]);
         (async function () {
             try {
                 const db = app.database().ref(`Blogs/${match.params.id}`);
                 db.on('value', (snap) => {
                     if (snap.val() !== null) {
                         setTagsBlog(snap.val().tags);
-                        ref.current.innerHTML = snap.val().content;
+                        if(ref.current !== null)
+                            ref.current.innerHTML = snap.val().content;
                     }
                 });
             } catch (error) {

@@ -38,6 +38,7 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
                 }
                 try {
                     await BlogService.create(data)
+                    clearAll();
                     toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
                     setTimeout(() => {
                         history.replace('/');

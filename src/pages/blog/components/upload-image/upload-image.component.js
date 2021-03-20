@@ -6,7 +6,6 @@ import { setHiddenProgressUpload, setBlogInfo, setFilename, setProgressUpload } 
 import './upload-image.component.css';
 
 const UploadImage = ({ blogInfo, fileName, setBlogInfo, setFileName, progress, setProgress, hiddenProgress, setHiddenProgress }) => {
-    const TAG = "UploadImage";
     const { image } = blogInfo
     useEffect(() => {
         setHiddenProgress(true);

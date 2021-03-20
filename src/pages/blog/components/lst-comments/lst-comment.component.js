@@ -16,6 +16,7 @@ const Loading = () => (
 
 const LstComments = ({ lstComments, setLstComments, idBlog }) => {
     useEffect(() => {
+        setLstComments([]);
         const db = app.database().ref(`Blogs/${idBlog}/comments`);
         db.on('value', (snap) => {
             if (snap.val() !== null) {

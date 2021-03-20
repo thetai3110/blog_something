@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Pagination } from "../../components/pagination/pagination.component";
 import { setCountBlogs, setLstBlogs } from "../../redux/blog/blog_actions";
-import { BlogService } from "../../services/blog.service";
 import "./blog_page.css";
 import placeholder_img from '../../assests/placeholder_img.png'
 import app from "../../firebase";
@@ -17,6 +16,8 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match }) =
     }, [match])
     const getBlogsFound = async () => {
         try {
+            setLstBlogs([]);
+            setCountBlogs(0);
             const db = app.database().ref('Blogs');
             db.on('value', (snap) => {
                 if (snap.val() !== null) {
@@ -24,7 +25,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match }) =
                         return { id: val, value: snap.val()[val] }
                     })
                     setCountBlogs(lst.length);
-                    setLstBlogs(lst);
+                    setLstBlogs(lst.slice((currentPage - 1) * 3, (currentPage - 1) * 3 + 3));
                 }
             });
         } catch (error) {

@@ -25,7 +25,6 @@ const Comments = (props) => {
                 }
             } else {
                 if (comment !== '') {
-                    console.log(props.id + " " + props.keyComment)
                     await CommentService.newFeedback(props.keyBlog, props.keyComment, currentUser.displayName, comment, currentUser.photoURL);
                     commentRef.current.value = '';
                     e.target.closest('.feedback').previousSibling.checked = false
