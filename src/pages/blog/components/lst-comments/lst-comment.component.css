@@ -1,6 +1,13 @@
 /* List-comments */
 .list-comments{
     margin: 1rem 0;
+    max-height: 550px;
+    overflow-y: auto;
+    border: 1px solid rgba(0,0,0,.1);
+    background-color: #fff;
+}
+.cmt-content{
+    padding: 1rem;
 }
 .comments-user{
     display: flex;

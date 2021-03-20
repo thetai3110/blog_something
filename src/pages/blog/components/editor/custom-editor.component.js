@@ -1,5 +1,6 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import Editor from 'ckeditor5-build-custom';
+import Editor  from 'ckeditor5-build-custom';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { connect } from 'react-redux';
 import { storage } from '../../../../firebase';
 import { setBlogInfo } from '../../../../redux/blog/blog_actions';

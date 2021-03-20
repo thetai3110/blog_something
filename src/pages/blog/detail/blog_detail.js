@@ -37,7 +37,7 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, setLstComments, match }) => {
                 })}
             </ul>
             <Comments typeComment={true} id={match.params.id} />
-            <LstComments />
+            <LstComments idBlog={match.params.id}/>
         </div>
     )
 }
