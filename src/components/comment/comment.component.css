@@ -30,12 +30,15 @@
 .comment-type textarea:focus ~ .emoji-picker{
     display: none;
 }
+.comment-option{
+    position: relative;
+}
 .comment-option span{
     padding: 10px;
     font-size: 22px;
     color: rgb(121, 116, 116);
 }
-.comment-option:hover{
+.comment-option span:hover{
     opacity: 0.8;
     cursor: pointer;
 }
@@ -44,7 +47,6 @@
     right: 0;
     bottom: 100%;
     z-index: 999999;
-    display: none;
 }
 .send{
     text-align: right;

@@ -1,19 +1,19 @@
 import "./comment.component.css";
 import { Picker } from 'emoji-mart';
 import avatar from '../../assests/avatar.jpg';
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { CommentService } from "../../services/comment.service";
 import { useAuth } from "../../contexts/auth_context";
-
+import { setHiddenEmoji } from "../../redux/comment/comment.actions";
+import { connect } from "react-redux";
+import $ from 'jquery';
 const Comments = (props) => {
     const TAG = 'Comments';
     const commentRef = useRef(null)
     const emojiRef = useRef(null);
     const { currentUser } = useAuth();
     const handleShowEmoji = (e) => {
-        let status = emojiRef.current.style.display === 'none' ? false : true;
-        if (status) emojiRef.current.style.display = 'none'
-        else emojiRef.current.style.display = 'block'
+        props.setHiddenEmoji();
     }
     const handleComment = async (typeComment, e) => {
         try {
@@ -37,6 +37,14 @@ const Comments = (props) => {
     const handleCancel = (e) => {
         e.target.closest('.feedback').previousSibling.checked = false
     }
+    useEffect(()=>{
+        window.addEventListener('scroll', handleScroll);
+        return function clean(){
+            window.removeEventListener('scroll', handleScroll);
+        }
+    })
+    const handleScroll = () => {
+    }
     return (
         <>
             <div className="comment">
@@ -50,11 +58,11 @@ const Comments = (props) => {
                     }} name="nowrap" rows="2" wrap="soft"></textarea>
                     <div className="comment-option">
                         <span onClick={handleShowEmoji}><i className="fa fa-smile-o" aria-hidden="true"></i></span>
-                    </div>
-                    <div className="emoji-picker" ref={emojiRef} >
-                        <Picker onSelect={(emoji, e) => {
-                            commentRef.current.value = commentRef.current.value + emoji.native;
-                        }} />
+                        <div className="emoji-picker" ref={emojiRef} style={{display: props.hiddenEmoji ? 'none' : 'block'}}>
+                            <Picker onSelect={(emoji, e) => {
+                                commentRef.current.value = commentRef.current.value + emoji.native;
+                            }} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,4 +74,11 @@ const Comments = (props) => {
     )
 }
 
-export default Comments;
+const mapStateToProps = ({ comment }) => ({
+    hiddenEmoji: comment.hiddenEmoji
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    setHiddenEmoji: () => dispatch(setHiddenEmoji())
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

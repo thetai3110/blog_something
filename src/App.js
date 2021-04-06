@@ -27,7 +27,7 @@ function App({ currentUser, location }) {
       <AuthProvider>
         <HeaderComponent />
         <div style={{ backgroundColor: '#f8f9fb' }}>
-          <div style={{ paddingTop: '25px', paddingBottom: '25px' }} className="container-xl">
+          <div style={{ paddingTop: '25px', paddingBottom: '25px'}} className="container-xl">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 <Route path="/" component={HomePage} exact></Route>

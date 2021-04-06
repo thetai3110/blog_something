@@ -7,7 +7,8 @@ import { setTagsBlog } from "../../../redux/blog/blog_actions";
 import { setLstComments } from '../../../redux/comment/comment.actions';
 import LstComments from "../components/lst-comments/lst-comment.component";
 import app from "../../../firebase";
-const BlogDetailPage = ({ tagsBlog, setTagsBlog, match }) => {
+import { setLoading } from "../../../redux/common/common.actions";
+const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading }) => {
     const TAG = "BlogDetail";
     const ref = useRef();
     useEffect(() => {
@@ -18,8 +19,10 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match }) => {
                 db.on('value', (snap) => {
                     if (snap.val() !== null) {
                         setTagsBlog(snap.val().tags);
-                        if(ref.current !== null)
+                        if (ref.current !== null) {
+                            setLoading(false)
                             ref.current.innerHTML = snap.val().content;
+                        }
                     }
                 });
             } catch (error) {
@@ -27,29 +30,40 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match }) => {
             }
         }())
     }, [])
-    return (
-        <div className="blog-detail-page">
-            <div className="ck-content">
-                <div ref={ref}></div>
+    if (isLoading) {
+        return (
+            <div style={{ textAlign: 'center' }} className="blog-page">
+                <div className="spinner-grow" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
             </div>
-            <ul className="blog-tags-list">
-                {tagsBlog.map((el, i) => {
-                    return <li key={i}>{el}</li>
-                })}
-            </ul>
-            <Comments typeComment={true} id={match.params.id} />
-            <LstComments idBlog={match.params.id}/>
-        </div>
-    )
+        )
+    } else
+        return (
+            <div className="blog-detail-page">
+                <div className="ck-content">
+                    <div ref={ref}></div>
+                </div>
+                <ul className="blog-tags-list">
+                    {tagsBlog.map((el, i) => {
+                        return <li key={i}>{el}</li>
+                    })}
+                </ul>
+                <Comments typeComment={true} id={match.params.id} />
+                <LstComments idBlog={match.params.id} />
+            </div>
+        )
 }
 
-const mapStateToProps = ({ blog, comment }) => ({
+const mapStateToProps = ({ blog, comment, common }) => ({
     tagsBlog: blog.tagsBlog,
-    lstComments: comment.lstComments
+    lstComments: comment.lstComments,
+    isLoading: common.isLoading
 })
 
 const mapDispatchToProps = dispatch => ({
     setTagsBlog: tags => dispatch(setTagsBlog(tags)),
-    setLstComments: comments => dispatch(setLstComments(comments))
+    setLstComments: comments => dispatch(setLstComments(comments)),
+    setLoading: (isLoading) => dispatch(setLoading(isLoading))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(BlogDetailPage);
