@@ -18,10 +18,10 @@ const BlogCreate = ({ hiddenSave, toggleSaveBox, history }) => {
                 <ActionsBlog />
                 <TagsInput />
                 <div className="summary row">
-                    <div className="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-xs-12 col-12">
+                    <div className="col l-9 md-8 c-12">
                         <SummaryBlog />
                     </div>
-                    <div className="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 col-12">
+                    <div className="col l-3 md-4 c-12">
                         <UploadImage />
                     </div>
                 </div>

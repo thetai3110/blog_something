@@ -42,7 +42,7 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
                                         <span className="action">Thích</span>
                                         <label className="action" htmlFor={el.idCmt}>Phản hồi</label>
                                         <span><i className="fa fa-thumbs-up" aria-hidden="true"></i> 2</span>
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
                             <div className="cmt-feedback">

@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom"
-
+import { Link } from "react-router-dom";
+import './pagination.component.css';
 export const Pagination = (props) => {
     const pageInfo = [];
     for (let i = 0; i < props.total; i++) {
         pageInfo.push(props.link + '/' + (i + 1));
     }
     return (
-        <nav aria-label="Page navigation example">
-            <ul className="pagination" style={{display: 'flex', justifyContent: 'center'}}>
+        <nav aria-label="Page navigation example" className="custom-pagination">
+            <ul className="pagination">
                 <li className={parseInt(props.currentPage) === 1 ? 'page-item disabled' : 'page-item'}>
                     <Link className="page-link" to={`${props.link}/${parseInt(props.currentPage) - 1}`} aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>

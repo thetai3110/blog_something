@@ -7,7 +7,7 @@ import firebase from 'firebase';
 const DiscussPage = () => {
     console.log(firebase.auth().currentUser)
     return (
-        <div className="discuss-page container">
+        <div className="discuss-page">
             <div className="direct"><Link to="/" className="link">Trang chủ</Link> 	&gt; <Link to="/discuss" className="link">Thảo luận</Link></div>
             <div className="row top">
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 col-12">

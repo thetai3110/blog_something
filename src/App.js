@@ -1,9 +1,9 @@
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import './App.css';
+import './index.css';
 import { useAuth } from './contexts/auth_context';
 import AuthProvider from './contexts/auth_context';
 import { useEffect } from 'react';
-// import { PrivateRoute } from './private/private_router';
 import HeaderComponent from './components/header/header.component';
 import FooterComponent from './components/footer/footer.component';
 import React from 'react';
@@ -26,8 +26,8 @@ function App({ currentUser, location }) {
     return (
       <AuthProvider>
         <HeaderComponent />
-        <div style={{ backgroundColor: '#f8f9fb' }}>
-          <div style={{ paddingTop: '25px', paddingBottom: '25px'}} className="container-xl">
+        <div style={{ backgroundColor: '#f8f9fb'}}>
+          <div className="grid wide">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 <Route path="/" component={HomePage} exact></Route>
@@ -41,7 +41,7 @@ function App({ currentUser, location }) {
             </Suspense>
           </div>
         </div>
-        {location.pathname !== '/create-blog' ? <FooterComponent /> : null}
+        {location.pathname !== '/create-blog' ? <div style={{ borderTop: '1px solid rgb(220, 228, 198)' }}><FooterComponent /></div> : null}
       </AuthProvider>
     );
   else return (

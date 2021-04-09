@@ -1,8 +1,9 @@
+.suggested{
+    padding: 2rem 0;
+}
 .suggested h3{
     color: #2C31CF;
-    font-weight: 700;
-}
-.suggested a{
-    color: #2C31CF;
-    font-weight: 600;
+    margin: 0 0 1rem 0;
+    font-weight: bold;
+    text-align: center;
 }

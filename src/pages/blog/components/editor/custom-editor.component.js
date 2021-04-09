@@ -1,5 +1,7 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import Editor  from 'ckeditor5-build-custom';
+import Editor from 'ckeditor5-build-custom';
+import JoditEditor from 'jodit-react';
+import { useRef, useState } from 'react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { connect } from 'react-redux';
 import { toast } from '../../../../components/toast/toast.component';
@@ -8,9 +10,24 @@ import { setBlogInfo } from '../../../../redux/blog/blog_actions';
 import './custom-editor.component.css';
 
 const CustomEditor = ({ blogInfo, setBlogInfo }) => {
+    const editor = useRef(null)
+    const [content, setContent] = useState('')
+
+    const config = {
+        readonly: false,
+        uploader: {
+            "insertImageAsBase64URI": true
+        }
+    }
     return (
         <div className="create-blog-content">
-            <div className="editor-blog">
+            <JoditEditor
+                ref={editor}
+                value={content}
+                config={config}
+                tabIndex={1}
+            />
+            {/* <div className="editor-blog">
                 <CKEditor
                     editor={Editor}
                     config={{
@@ -74,7 +91,7 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                         };
                     }}
                 />
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -92,7 +109,7 @@ class UploadAdapter {
                     uploadTask.on(
                         'state_changed', // or 
                         function (snapshot) {
-                            
+
                         },
                         function (error) {
                             toast({ title: "Failed!", message: error, type: "error", duration: 2000 });

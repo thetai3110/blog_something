@@ -3,9 +3,9 @@ import logo from '../../logo.svg';
 import { Link } from "react-router-dom";
 const FooterComponent = () => {
     return (
-        <footer>
-            <div className="row" style={{ width: '100%' }}>
-                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+        <footer className="grid wide">
+            <div className="row">
+                <div className="col l-6 md-12 c-12">
                     <div className="footer-left">
                         <Link to="/"><img src={logo} alt=""></img></Link>
                         <p>Đây là một trang web mà ở đó mọi người có tự học rất nhiều ngôn ngữ khác nhau và trao đổi kiến thức với nhau về lập trình.</p>
@@ -17,7 +17,7 @@ const FooterComponent = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4">
+                <div className="col l-2 md-4 c-4">
                     <div className="footer-center">
                         <div className="heading"><h2>Liên kết</h2></div>
                         <div className="content">
@@ -30,7 +30,7 @@ const FooterComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-xs-4 col-4">
+                <div className="col l-2 md-4 c-4">
                     <div className="footer-center">
                         <div className="heading"><h2>Thông tin</h2></div>
                         <div className="content">
@@ -42,7 +42,7 @@ const FooterComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="ccol-xl-2 col-lg-2 ol-md-4 col-sm-4 col-xs-4 col-4">
+                <div className="col l-2 md-4 c-4">
                     <div className="footer-center">
                         <div className="heading"><h2>Trợ giúp</h2></div>
                         <div className="content">

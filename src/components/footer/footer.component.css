@@ -1,14 +1,7 @@
-footer{
-	border-top: 1px solid rgb(220, 228, 198);
-}
-footer .row{
-	padding-left: 10%;
-	padding-right: 10%;
-}
 .footer-left{
 	overflow: hidden;
     position: relative;
-    margin-bottom: 20px;
+    margin: 2rem 0;
 }
 .footer-left a{
 	width: 100px;
@@ -67,7 +60,7 @@ footer .row{
 .footer-center{
 	overflow: hidden;
     position: relative;
-    margin-bottom: 20px;
+	margin: 2rem 0;
 }
 .footer-center .heading h2{
 	margin: 0;
@@ -97,7 +90,4 @@ footer .row{
 	margin: 0;
 	color: #3b3c54;
 	line-height: 1;
-}
-footer{
-	padding-top: 30px;
 }
