@@ -1,6 +1,8 @@
 /* List-comments */
-.list-comments{
+#list-comments{
     margin: 1rem 0;
+    box-sizing: border-box;
+    display: block;
     max-height: 550px;
     overflow-y: auto;
     border: 1px solid rgba(0,0,0,.1);
@@ -12,7 +14,7 @@
 .feedback{
     margin-left: 66px;
 }
-.list-comments .feedback-feedback{
+.feedback-feedback{
     margin-left: 66px;
     display: none;
 }

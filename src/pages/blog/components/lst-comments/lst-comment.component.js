@@ -29,28 +29,26 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
                 setLstComments(lstCmt);
             }
         });
-        // Handle scroll and show composer edit text
-        console.log($('.feedback-feedback'))
     }, [])
     return (
-        <div className="list-comments">
+        <div id="list-comments">
             <div className="cmt-content">
                 {lstComments ? lstComments.map((el, i) => {
                     return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
-                        <Comment comment={el.value} />
+                        <Comment comment={el.value} showWithId={el.idCmt}/>
                         <div className="feedback">
                             {typeof el.value.feedback !== 'undefined' ?
                                 Object.keys(el.value.feedback).map((elm, i) => {
                                     return <div key={i} className="cmt">
-                                        <Comment comment={el.value.feedback[elm]} />
-                                        <div className="feedback-feedback">
+                                        <Comment comment={el.value.feedback[elm]} showWithId={elm}/>
+                                        <div id={elm} className="feedback-feedback">
                                             <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
                                         </div>
                                     </div>
                                 }) : <div></div>
                             }
                         </div>
-                        <div className="feedback-cmt">
+                        <div id={el.idCmt} className="feedback-feedback">
                             <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
                         </div>
                     </LazyLoad>

@@ -1,8 +1,22 @@
 import './comment.css';
+import $ from 'jquery';
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, showWithId }) => {
     const handleFeedback = (e) => {
-        console.log(e)
+        // Scroll body
+        $(window).scrollTop($("#list-comments")[0].offsetTop);
+
+        // Scroll comment
+        const id = "#" + showWithId;
+        $('.feedback-feedback').css("display", "none");
+        $(id).css("display", "block");
+        $('#list-comments').animate({
+            scrollTop: $(id)[0].offsetTop - $("#list-comments")[0].offsetTop - $(id).height()
+        }, 1000);
+        // Select textarea
+        let composer = $(id).children()[0];
+        let containEdit = $(composer).children()[1];
+        $(containEdit).children()[0].focus();
     }
     return (
         <div className="comment">

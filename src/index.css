@@ -4,7 +4,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: Helvetica;
 }
-html, body {height: 100%;}
+html, body {
+  height: 100%;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
