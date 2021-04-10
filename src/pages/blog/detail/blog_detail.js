@@ -8,11 +8,13 @@ import LstComments from "../components/lst-comments/lst-comment.component";
 import app from "../../../firebase";
 import { setLoading } from "../../../redux/common/common.actions";
 import ComposerEditText from "../components/composer-edittext/composer-edittext.component";
+import Loading from "../../../components/loading/loading";
 const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading }) => {
     const TAG = "BlogDetail";
     const ref = useRef();
     useEffect(() => {
         setTagsBlog([]);
+        setLoading(true);
         (async function () {
             try {
                 const db = app.database().ref(`Blogs/${match.params.id}`);
@@ -20,7 +22,7 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
                     if (snap.val() !== null) {
                         setTagsBlog(snap.val().tags);
                         if (ref.current !== null) {
-                            setLoading(false)
+                            setLoading(false);
                             ref.current.innerHTML = snap.val().content;
                         }
                     }
@@ -31,13 +33,7 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
         }())
     }, [])
     if (isLoading) {
-        return (
-            <div style={{ textAlign: 'center' }} className="blog-page">
-                <div className="spinner-grow" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        )
+        return <Loading></Loading>
     } else
         return (
             <div className="blog-detail-page">

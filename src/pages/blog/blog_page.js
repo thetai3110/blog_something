@@ -7,41 +7,36 @@ import "./blog_page.css";
 import placeholder_img from '../../assests/placeholder_img.png'
 import app from "../../firebase";
 import { setLoading } from "../../redux/common/common.actions";
+import Loading from "../../components/loading/loading";
 
 const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isLoading, setLoading }) => {
     const TAG = "BlogComponent";
     const currentPage = typeof match.params.page === 'undefined' ? 1 : match.params.page;
     const imgRef = useRef(null);
     useEffect(() => {
-        getBlogsFound();
+        setLoading(true);
+        (async function () {
+            try {
+                setLstBlogs([]);
+                setCountBlogs(0);
+                const db = app.database().ref('Blogs');
+                db.on('value', (snap) => {
+                    if (snap.val() !== null) {
+                        let lst = Object.keys(snap.val()).map(val => {
+                            return { id: val, value: snap.val()[val] }
+                        })
+                        setCountBlogs(lst.length);
+                        setLstBlogs(lst.slice((currentPage - 1) * 3, (currentPage - 1) * 3 + 3));
+                        setLoading(false);
+                    }
+                });
+            } catch (error) {
+                console.log(TAG + ': ' + error);
+            }
+        })()
     }, [match])
-    const getBlogsFound = async () => {
-        try {
-            setLstBlogs([]);
-            setCountBlogs(0);
-            const db = app.database().ref('Blogs');
-            db.on('value', (snap) => {
-                if (snap.val() !== null) {
-                    let lst = Object.keys(snap.val()).map(val => {
-                        return { id: val, value: snap.val()[val] }
-                    })
-                    setCountBlogs(lst.length);
-                    setLstBlogs(lst.slice((currentPage - 1) * 3, (currentPage - 1) * 3 + 3));
-                    setLoading(false);
-                }
-            });
-        } catch (error) {
-            console.log(TAG + ': ' + error);
-        }
-    }
     if (isLoading) {
-        return (
-            <div style={{textAlign: 'center'}} className="blog-page">
-                <div className="spinner-grow" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        )
+        return <Loading></Loading>
     } else
         return (
             <div className="blog-page">

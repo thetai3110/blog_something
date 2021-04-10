@@ -6,15 +6,7 @@ import { setLstComments } from '../../../../redux/comment/comment.actions';
 import './lst-comment.component.css';
 import ComposerEditText from '../composer-edittext/composer-edittext.component';
 import Comment from '../comment/comment';
-import $ from 'jquery';
-
-const Loading = () => (
-    <div style={{ textAlign: 'center', width: '100%' }}>
-        <div className="spinner-border" role="status">
-            <span className="sr-only">Loading...</span>
-        </div>
-    </div>
-)
+import Loading from '../../../../components/loading/loading';
 
 const LstComments = ({ lstComments, setLstComments, idBlog }) => {
     useEffect(() => {
@@ -34,24 +26,28 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
         <div id="list-comments">
             <div className="cmt-content">
                 {lstComments ? lstComments.map((el, i) => {
-                    return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
-                        <Comment comment={el.value} showWithId={el.idCmt}/>
+                    return <div key={i}>
+                        <LazyLoad className="cmt" placeholder={<Loading />}>
+                            <Comment comment={el.value} showWithId={el.idCmt} />
+                        </LazyLoad>
                         <div className="feedback">
                             {typeof el.value.feedback !== 'undefined' ?
                                 Object.keys(el.value.feedback).map((elm, i) => {
-                                    return <div key={i} className="cmt">
-                                        <Comment comment={el.value.feedback[elm]} showWithId={elm}/>
-                                        <div id={elm} className="feedback-feedback">
-                                            <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
+                                    return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
+                                        <div className="cmt">
+                                            <Comment comment={el.value.feedback[elm]} showWithId={elm} />
+                                            <div id={elm} className="feedback-feedback">
+                                                <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
+                                            </div>
                                         </div>
-                                    </div>
+                                    </LazyLoad>
                                 }) : <div></div>
                             }
                         </div>
                         <div id={el.idCmt} className="feedback-feedback">
                             <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
                         </div>
-                    </LazyLoad>
+                    </div>
                 }) : null}
             </div>
         </div>
