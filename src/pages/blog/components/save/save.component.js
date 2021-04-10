@@ -41,7 +41,7 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
                     clearAll();
                     toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
                     setTimeout(() => {
-                        history.replace('/');
+                        history.replace('/blog');
                     }, 2000)
                 } catch (err) {
                     toast({ title: "Failed!", message: `Failed at: ${err}`, type: "error", duration: 3000 });

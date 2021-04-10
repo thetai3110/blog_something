@@ -49,10 +49,10 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
                     lstBlogs.map(blog => {
                         return (
                             <div className="row blog-list" key={blog.id}>
-                                <div className="col-xl-2 col-lg-2 col-md-3 col-sm-12 col-xs-12 col-12 blog-img">
+                                <div className="col l-2 md-3 c-12 blog-img">
                                     <Link to={`/blog/detail/${blog.id}`}><img ref={imgRef} onError={(e) => e.target.src = placeholder_img} src={blog.value.image} alt=""></img></Link>
                                 </div>
-                                <div className="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-xs-12 col-12 blog-content">
+                                <div className="col l-10 md-9 c-12 blog-content">
                                     <h4><Link to={`/blog/detail/${blog.id}`}>{blog.value.title}</Link></h4>
                                     <p>{blog.value.summary}</p>
                                     <p>Tác giả: {blog.value.author}</p>

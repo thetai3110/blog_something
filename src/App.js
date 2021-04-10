@@ -21,7 +21,6 @@ const BlogCreate = React.lazy(() => import('./pages/blog/create/blog_create'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup_page'));
 
 function App({ currentUser, location }) {
-  console.log(currentUser)
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')
     return (
       <AuthProvider>
@@ -36,7 +35,7 @@ function App({ currentUser, location }) {
                 <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
                 <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
                 <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>
-                <Route path="/create-blog" render={(props) => currentUser ? <BlogCreate {...props} /> : <Redirect to='/login' />}></Route>
+                <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
               </Switch>
             </Suspense>
           </div>

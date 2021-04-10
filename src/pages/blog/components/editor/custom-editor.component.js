@@ -1,8 +1,5 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-build-custom';
-import JoditEditor from 'jodit-react';
-import { useRef, useState } from 'react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { connect } from 'react-redux';
 import { toast } from '../../../../components/toast/toast.component';
 import { storage } from '../../../../firebase';
@@ -10,50 +7,40 @@ import { setBlogInfo } from '../../../../redux/blog/blog_actions';
 import './custom-editor.component.css';
 
 const CustomEditor = ({ blogInfo, setBlogInfo }) => {
-    const editor = useRef(null)
-    const [content, setContent] = useState('')
-
-    const config = {
-        readonly: false,
-        uploader: {
-            "insertImageAsBase64URI": true
-        }
-    }
     return (
         <div className="create-blog-content">
-            <JoditEditor
-                ref={editor}
-                value={content}
-                config={config}
-                tabIndex={1}
-            />
-            {/* <div className="editor-blog">
+            <div className="editor-blog">
                 <CKEditor
                     editor={Editor}
                     config={{
                         toolbar: {
                             items: [
-                                'heading','|',
+                                'code',
+                                '|',
+                                'heading',
+                                '|',
                                 'bold',
                                 'underline',
                                 'italic',
-                                'strikethrough',
-                                'link',
+                                'fontFamily',
+                                'fontSize',
+                                'fontColor',
+                                'fontBackgroundColor',
+                                'highlight',
+                                '|',
                                 'bulletedList',
                                 'numberedList',
                                 '|',
                                 'outdent',
                                 'indent',
                                 '|',
+                                'link',
                                 'imageUpload',
-                                'mediaEmbed',
-                                'insertTable',
                                 'blockQuote',
-                                '|',
+                                'insertTable',
+                                'mediaEmbed',
+                                'imageInsert',
                                 'codeBlock',
-                                'MathType',
-                                'ChemType',
-                                '|',
                                 'undo',
                                 'redo'
                             ]
@@ -74,9 +61,6 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                             ]
                         },
                         licenseKey: '',
-                        // ckfinder: {
-                        //     uploadUrl: `${process.env.REACT_APP_SERVER}/uploads/multi`
-                        // }
                     }}
                     onChange={(event, editor) => {
                         setBlogInfo({
@@ -91,7 +75,7 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                         };
                     }}
                 />
-            </div> */}
+            </div>
         </div>
     )
 }
