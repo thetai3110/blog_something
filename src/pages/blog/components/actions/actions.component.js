@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { toggleSaveBox } from '../../../../redux/blog/blog_actions';
 import './actions.component.css';
-import SaveBlogBox from '../save/save.component';
+import SaveBlogBox from '../save-box/save-box.component';
 const ActionsBlog = ({ hiddenSave, toggleSaveBox }) => {
     return (
         <div className="actions">

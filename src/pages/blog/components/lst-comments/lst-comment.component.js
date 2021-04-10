@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import LazyLoad from 'react-lazyload';
 import { connect } from 'react-redux';
-import Comments from '../../../../components/comment/comment.component';
 import app from '../../../../firebase';
 import { setLstComments } from '../../../../redux/comment/comment.actions';
 import './lst-comment.component.css';
+import ComposerEditText from '../composer-edittext/composer-edittext.component';
+import Comment from '../comment/comment';
+import $ from 'jquery';
 
 const Loading = () => (
     <div style={{ textAlign: 'center', width: '100%' }}>
@@ -16,6 +18,7 @@ const Loading = () => (
 
 const LstComments = ({ lstComments, setLstComments, idBlog }) => {
     useEffect(() => {
+        // Find comments
         setLstComments([]);
         const db = app.database().ref(`Blogs/${idBlog}/comments`);
         db.on('value', (snap) => {
@@ -26,56 +29,35 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
                 setLstComments(lstCmt);
             }
         });
+        // Handle scroll and show composer edit text
+        console.log($('.feedback-feedback'))
     }, [])
-    if (lstComments.length > 0)
-        return (
-            <div className="list-comments">
-                <div className="cmt-content">
-                    {lstComments ? lstComments.map((el, i) => {
-                        return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
-                            <div className="comments-user">
-                                <img src={el.value.avatar} alt={el.value.avatar}></img>
-                                <div className="comments-content">
-                                    <h6>{el.value.user}</h6>
-                                    <p>{el.value.content}</p>
-                                    <div className="comments-action">
-                                        <span className="action">Thích</span>
-                                        <label className="action" htmlFor={el.idCmt}>Phản hồi</label>
-                                        <span><i className="fa fa-thumbs-up" aria-hidden="true"></i> 2</span>
-                                    </div> 
-                                </div>
-                            </div>
-                            <div className="cmt-feedback">
-                                {
-                                    typeof el.value.feedback !== 'undefined' ?
-                                        Object.keys(el.value.feedback).map((elm, i) => {
-                                            return <div key={i} className="cmt">
-                                                <div className="comments-user">
-                                                    <img src={el.value.feedback[elm].avatar} alt={el.value.feedback[elm].avatar}></img>
-                                                    <div className="comments-content">
-                                                        <h6>{el.value.feedback[elm].user}</h6>
-                                                        <p>{el.value.feedback[elm].content}</p>
-                                                        <div className="comments-action">
-                                                            <span className="action">Thích</span>
-                                                            <label className="action" htmlFor={el.idCmt}>Phản hồi</label>
-                                                            <span><i className="fa fa-thumbs-up" aria-hidden="true"></i> 2</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }) : <div></div>
-                                }
-                            </div>
-                            <input type="checkbox" name="feedback" className="feedbackCK" id={el.idCmt}></input>
-                            <div className="feedback">
-                                <Comments typeComment={false} keyComment={el.idCmt} keyBlog={idBlog} />
-                            </div>
-                        </LazyLoad>
-                    }) : null}
-                </div>
+    return (
+        <div className="list-comments">
+            <div className="cmt-content">
+                {lstComments ? lstComments.map((el, i) => {
+                    return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
+                        <Comment comment={el.value} />
+                        <div className="feedback">
+                            {typeof el.value.feedback !== 'undefined' ?
+                                Object.keys(el.value.feedback).map((elm, i) => {
+                                    return <div key={i} className="cmt">
+                                        <Comment comment={el.value.feedback[elm]} />
+                                        <div className="feedback-feedback">
+                                            <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
+                                        </div>
+                                    </div>
+                                }) : <div></div>
+                            }
+                        </div>
+                        <div className="feedback-cmt">
+                            <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
+                        </div>
+                    </LazyLoad>
+                }) : null}
             </div>
-        )
-    else return null
+        </div>
+    )
 }
 
 const mapStateToProps = ({ comment }) => ({

@@ -8,74 +8,72 @@ import './custom-editor.component.css';
 
 const CustomEditor = ({ blogInfo, setBlogInfo }) => {
     return (
-        <div className="create-blog-content">
-            <div className="editor-blog">
-                <CKEditor
-                    editor={Editor}
-                    config={{
-                        toolbar: {
-                            items: [
-                                'code',
-                                '|',
-                                'heading',
-                                '|',
-                                'bold',
-                                'underline',
-                                'italic',
-                                'fontFamily',
-                                'fontSize',
-                                'fontColor',
-                                'fontBackgroundColor',
-                                'highlight',
-                                '|',
-                                'bulletedList',
-                                'numberedList',
-                                '|',
-                                'outdent',
-                                'indent',
-                                '|',
-                                'link',
-                                'imageUpload',
-                                'blockQuote',
-                                'insertTable',
-                                'mediaEmbed',
-                                'imageInsert',
-                                'codeBlock',
-                                'undo',
-                                'redo'
-                            ]
-                        },
-                        language: 'en',
-                        image: {
-                            styles: [
-                                'alignLeft', 'alignCenter', 'alignRight'
-                            ],
-                            toolbar: [
-                                'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
-                                '|', 'imageResize', '|', 'imageTextAlternative', '|', 'linkImage'
-                            ]
-                        },
-                        table: {
-                            contentToolbar: [
-                                'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'
-                            ]
-                        },
-                        licenseKey: '',
-                    }}
-                    onChange={(event, editor) => {
-                        setBlogInfo({
-                            ...blogInfo,
-                            title: editor.getData().split('</h1>').shift().slice(4),
-                            content: editor.getData()
-                        })
-                    }}
-                    onReady={editor => {
-                        editor.plugins.get("FileRepository").createUploadAdapter = loader => {
-                            return new UploadAdapter(loader);
-                        };
-                    }}
-                />
-            </div>
+        <div className="editor-blog">
+            <CKEditor
+                editor={Editor}
+                config={{
+                    toolbar: {
+                        items: [
+                            'code',
+                            '|',
+                            'heading',
+                            '|',
+                            'bold',
+                            'underline',
+                            'italic',
+                            'fontFamily',
+                            'fontSize',
+                            'fontColor',
+                            'fontBackgroundColor',
+                            'highlight',
+                            '|',
+                            'bulletedList',
+                            'numberedList',
+                            '|',
+                            'outdent',
+                            'indent',
+                            '|',
+                            'link',
+                            'imageUpload',
+                            'blockQuote',
+                            'insertTable',
+                            'mediaEmbed',
+                            'imageInsert',
+                            'codeBlock',
+                            'undo',
+                            'redo'
+                        ]
+                    },
+                    language: 'en',
+                    image: {
+                        styles: [
+                            'alignLeft', 'alignCenter', 'alignRight'
+                        ],
+                        toolbar: [
+                            'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+                            '|', 'imageResize', '|', 'imageTextAlternative', '|', 'linkImage'
+                        ]
+                    },
+                    table: {
+                        contentToolbar: [
+                            'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'
+                        ]
+                    },
+                    licenseKey: '',
+                }}
+                onChange={(event, editor) => {
+                    setBlogInfo({
+                        ...blogInfo,
+                        title: editor.getData().split('</h1>').shift().slice(4),
+                        content: editor.getData()
+                    })
+                }}
+                onReady={editor => {
+                    editor.plugins.get("FileRepository").createUploadAdapter = loader => {
+                        return new UploadAdapter(loader);
+                    };
+                }}
+            />
         </div>
     )
 }
@@ -91,7 +89,7 @@ class UploadAdapter {
                     let uploadName = 'upload' + Date.now() + '.' + file.type.split("/").pop();
                     let uploadTask = storage.ref(`uploads/${uploadName}`).put(file);
                     uploadTask.on(
-                        'state_changed', // or 
+                        'state_changed',
                         function (snapshot) {
 
                         },

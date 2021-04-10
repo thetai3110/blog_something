@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react"
 import './blog_detail.css';
 import 'emoji-mart/css/emoji-mart.css';
-import Comments from '../../../components/comment/comment.component';
 import { connect } from "react-redux";
 import { setTagsBlog } from "../../../redux/blog/blog_actions";
 import { setLstComments } from '../../../redux/comment/comment.actions';
 import LstComments from "../components/lst-comments/lst-comment.component";
 import app from "../../../firebase";
 import { setLoading } from "../../../redux/common/common.actions";
+import ComposerEditText from "../components/composer-edittext/composer-edittext.component";
 const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading }) => {
     const TAG = "BlogDetail";
     const ref = useRef();
@@ -49,7 +49,7 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
                         return <li key={i}>{el}</li>
                     })}
                 </ul>
-                <Comments typeComment={true} id={match.params.id} />
+                <ComposerEditText typeComment={true} idBlog={match.params.id} />
                 <LstComments idBlog={match.params.id} />
             </div>
         )

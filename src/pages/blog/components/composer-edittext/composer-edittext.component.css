@@ -1,13 +1,13 @@
-.comment{
+.composer-edittext{
     display: flex;
     width: 100%;
 }
-.comment-avatar img{
+.composer-edittext-avatar img{
     max-width: 50px;
     max-height: 50px;
     margin-right: 1rem;
 }
-.comment-type{
+.composer-edittext-type{
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
     background-color: #fff;
     padding: 10px 0px 20px 0px;
 }
-.comment-type textarea{
+.composer-edittext-type textarea{
     flex-grow: 1;
     border: none;
     padding: 5px 10px;
@@ -24,21 +24,21 @@
     max-height: 200px;
     font-size: 13px;
 }
-.comment-type textarea:focus{
+.composer-edittext-type textarea:focus{
     outline: none;
 }
-.comment-type textarea:focus ~ .emoji-picker{
+.composer-edittext-type textarea:focus ~ .emoji-picker{
     display: none;
 }
-.comment-option{
+.composer-edittext-option{
     position: relative;
 }
-.comment-option span{
+.composer-edittext-option span{
     padding: 10px;
     font-size: 22px;
     color: rgb(121, 116, 116);
 }
-.comment-option span:hover{
+.composer-edittext-option span:hover{
     opacity: 0.8;
     cursor: pointer;
 }

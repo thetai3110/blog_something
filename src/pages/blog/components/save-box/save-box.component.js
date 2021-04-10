@@ -4,7 +4,8 @@ import { toast } from '../../../../components/toast/toast.component';
 import { useAuth } from '../../../../contexts/auth_context';
 import { setBlogInfo, setFilename, setTagsCreating, toggleSaveBox } from '../../../../redux/blog/blog_actions';
 import { BlogService } from '../../../../services/blog.service';
-import './save.component.css';
+import './save-box.component.css';
+
 const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, setFileName, toggleSaveBox, history }) => {
     const TAG = 'SaveBlogBox';
     const { currentUser } = useAuth();

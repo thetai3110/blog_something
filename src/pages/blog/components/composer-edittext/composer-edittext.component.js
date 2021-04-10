@@ -1,13 +1,13 @@
-import "./comment.component.css";
+import "./composer-edittext.component.css";
 import { Picker } from 'emoji-mart';
-import avatar from '../../assests/avatar.jpg';
+import avatar from '../../../../assests/avatar.jpg';
 import { useEffect, useRef } from "react";
-import { CommentService } from "../../services/comment.service";
-import { useAuth } from "../../contexts/auth_context";
-import { setHiddenEmoji } from "../../redux/comment/comment.actions";
+import { CommentService } from "../../../../services/comment.service";
+import { useAuth } from "../../../../contexts/auth_context";
+import { setHiddenEmoji } from "../../../../redux/comment/comment.actions";
 import { connect } from "react-redux";
-import $ from 'jquery';
-const Comments = (props) => {
+
+const ComposerEditText = (props) => {
     const TAG = 'Comments';
     const commentRef = useRef(null)
     const emojiRef = useRef(null);
@@ -15,19 +15,18 @@ const Comments = (props) => {
     const handleShowEmoji = (e) => {
         props.setHiddenEmoji();
     }
-    const handleComment = async (typeComment, e) => {
+    const handleComment = async (typeComment) => {
         try {
             let comment = commentRef.current.value;
             if (typeComment) {
                 if (comment !== '') {
-                    await CommentService.newComment(currentUser.displayName, comment, currentUser.photoURL, props.id);
+                    await CommentService.newComment(currentUser.displayName, comment, currentUser.photoURL, props.idBlog);
                     commentRef.current.value = '';
                 }
             } else {
                 if (comment !== '') {
-                    await CommentService.newFeedback(props.keyBlog, props.keyComment, currentUser.displayName, comment, currentUser.photoURL);
+                    await CommentService.newFeedback(props.idBlog, props.idComment, currentUser.displayName, comment, currentUser.photoURL);
                     commentRef.current.value = '';
-                    e.target.closest('.feedback').previousSibling.checked = false
                 }
             }
         } catch (error) {
@@ -47,19 +46,19 @@ const Comments = (props) => {
     }
     return (
         <>
-            <div className="comment">
-                <div className="comment-avatar">
+            <div className="composer-edittext">
+                <div className="composer-edittext-avatar">
                     <img src={currentUser !== null ? currentUser.photoURL : avatar} alt={currentUser !== null ? currentUser.photoURL : ''}></img>
                 </div>
-                <div className="comment-type">
-                    <textarea ref={commentRef} placeholder="Thêm bình luận" id="comment-input" onInput={() => {
+                <div className="composer-edittext-type">
+                    <textarea ref={commentRef} placeholder="Thêm bình luận" id="composer-edittext-input" onInput={() => {
                         commentRef.current.style.height = 'auto';
                         commentRef.current.style.height = commentRef.current.scrollHeight + "px";
                     }} name="nowrap" rows="2" wrap="soft"></textarea>
-                    <div className="comment-option">
+                    <div className="composer-edittext-option">
                         <span onClick={handleShowEmoji}><i className="fa fa-smile-o" aria-hidden="true"></i></span>
                         <div className="emoji-picker" ref={emojiRef} style={{display: props.hiddenEmoji ? 'none' : 'block'}}>
-                            <Picker onSelect={(emoji, e) => {
+                            <Picker onSelect={(emoji) => {
                                 commentRef.current.value = commentRef.current.value + emoji.native;
                             }} />
                         </div>
@@ -81,4 +80,4 @@ const mapStateToProps = ({ comment }) => ({
 const mapDispatchToProps = (dispatch) => ({
     setHiddenEmoji: () => dispatch(setHiddenEmoji())
 })
-export default connect(mapStateToProps, mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(ComposerEditText);

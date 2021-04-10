@@ -7,11 +7,11 @@ const HeaderComponent = () => {
     const { currentUser } = useAuth()
     const login = currentUser ? { id: '7', title: 'logout', title_en: 'logout' } : { id: '6', title: 'login', title_en: 'login' }
     const menus = [
-        { id: '1', title: 'học tập', title_en: 'learn' },
+        // { id: '1', title: 'học tập', title_en: 'learn' },
         { id: '2', title: 'thảo luận', title_en: 'discuss' },
         { id: '3', title: 'blog', title_en: 'blog' },
         { id: '4', title: 'code online', title_en: 'code-online' },
-        { id: '5', title: 'admin', title_en: 'admin' },
+        // { id: '5', title: 'admin', title_en: 'admin' },
         { ...login }
     ]
     return (
