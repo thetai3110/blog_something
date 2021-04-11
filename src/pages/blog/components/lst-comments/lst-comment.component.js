@@ -36,16 +36,16 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
                                     return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
                                         <div className="cmt">
                                             <Comment comment={el.value.feedback[elm]} showWithId={elm} />
-                                            <div id={elm} className="feedback-feedback">
-                                                <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
+                                            <div id={`feedback${elm}`} className="feedback-feedback">
+                                                <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} showWithId={elm}/>
                                             </div>
                                         </div>
                                     </LazyLoad>
                                 }) : <div></div>
                             }
                         </div>
-                        <div id={el.idCmt} className="feedback-feedback">
-                            <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} />
+                        <div id={`feedback${el.idCmt}`} className="feedback-feedback">
+                            <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} showWithId={el.idCmt}/>
                         </div>
                     </div>
                 }) : null}

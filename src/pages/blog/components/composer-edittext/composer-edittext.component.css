@@ -45,8 +45,10 @@
 .emoji-picker{
     position: absolute;
     right: 0;
-    bottom: 100%;
-    z-index: 999999;
+    top: 100%;
+    z-index: 99999999;
+    display: none;
+    min-height: 420px;
 }
 .send{
     text-align: right;

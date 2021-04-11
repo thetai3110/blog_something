@@ -3,6 +3,7 @@ import { blogReducer } from "./blog/blog.reducer";
 import { commentReducer } from "./comment/comment.reducer";
 import { commonReducer } from "./common/common.reducer";
 import { loginReducer } from "./login/login.reducer";
+import { themesReducer } from "./themes/themes.reducer";
 import { userReducer } from "./user/user.reducer";
 
 export const rootReducer = combineReducers({
@@ -10,5 +11,6 @@ export const rootReducer = combineReducers({
     comment: commentReducer,
     login: loginReducer,
     user: userReducer,
-    common: commonReducer
+    common: commonReducer,
+    themes: themesReducer
 })

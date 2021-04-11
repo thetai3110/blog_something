@@ -45,7 +45,7 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
                         return <li key={i}>{el}</li>
                     })}
                 </ul>
-                <ComposerEditText typeComment={true} idBlog={match.params.id} />
+                <ComposerEditText typeComment={true} idBlog={match.params.id} showWithId="default" />
                 <LstComments idBlog={match.params.id} />
             </div>
         )

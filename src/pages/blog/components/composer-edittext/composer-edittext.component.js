@@ -6,15 +6,13 @@ import { CommentService } from "../../../../services/comment.service";
 import { useAuth } from "../../../../contexts/auth_context";
 import { setHiddenEmoji } from "../../../../redux/comment/comment.actions";
 import { connect } from "react-redux";
+import $ from 'jquery';
 
 const ComposerEditText = (props) => {
     const TAG = 'Comments';
     const commentRef = useRef(null)
     const emojiRef = useRef(null);
     const { currentUser } = useAuth();
-    const handleShowEmoji = (e) => {
-        props.setHiddenEmoji();
-    }
     const handleComment = async (typeComment) => {
         try {
             let comment = commentRef.current.value;
@@ -33,17 +31,47 @@ const ComposerEditText = (props) => {
             console.log(TAG + ": " + error)
         }
     }
-    const handleCancel = (e) => {
-        e.target.closest('.feedback').previousSibling.checked = false
-    }
-    useEffect(()=>{
-        window.addEventListener('scroll', handleScroll);
-        return function clean(){
-            window.removeEventListener('scroll', handleScroll);
+    const handleShowEmoji = (e) => {
+        const id = "#emoji" + props.showWithId;
+        if ($(id).css("display") === "none") {
+            $('.emoji-picker').css("display", "none");
+            $(id).css("display", "block");
         }
-    })
-    const handleScroll = () => {
+        else
+            $(id).css("display", "none");
+        // if ($(id)[0].getBoundingClientRect().top < 0) {
+        //     $(id).css('top', '100%');
+        // } else if ($(id)[0].getBoundingClientRect().top >= $(id)[0].offsetHeight) {
+        //     $(id).css('bottom', '100%');
+        // }
     }
+    const handleCancel = (e) => {
+        $('.feedback-feedback').css("display", "none");
+    }
+    useEffect(() => {
+        // window.addEventListener('scroll', handleScroll);
+        // // $('#list-comments').on("scroll", handleScroll1)
+        // return function clean() {
+        //     window.removeEventListener('scroll', handleScroll);
+        // }
+    })
+    // const handleScroll = () => {
+    //     const id = "#emoji" + props.showWithId;
+    //     console.log(($(id)[0].getBoundingClientRect().top + $(id)[0].offsetHeight) + " - " + window.innerHeight)
+    //     if ($(id)[0].getBoundingClientRect().top < 0) {
+    //         $(id).css('top', '100%');
+    //     } else if (($(id)[0].getBoundingClientRect().top + $(id)[0].offsetHeight) > window.innerHeight) {
+    //         $(id).css('bottom', '100%');
+    //     }
+    // }
+    // const handleScroll1 = () => {
+    //     const id = "#emoji" + props.showWithId;
+    //     if (($(id)[0].offsetTop - $("#list-comments")[0].offsetTop) < 0) {
+    //         $(id).css('top', '100%');
+    //     } else if (($(id)[0].offsetTop - $("#list-comments")[0].offsetTop) >= $("#list-comments")[0].scrollHeight) {
+    //         $(id).css('bottom', '100%');
+    //     }
+    // }
     return (
         <>
             <div className="composer-edittext">
@@ -57,7 +85,7 @@ const ComposerEditText = (props) => {
                     }} name="nowrap" rows="2" wrap="soft"></textarea>
                     <div className="composer-edittext-option">
                         <span onClick={handleShowEmoji}><i className="fa fa-smile-o" aria-hidden="true"></i></span>
-                        <div className="emoji-picker" ref={emojiRef} style={{display: props.hiddenEmoji ? 'none' : 'block'}}>
+                        <div className="emoji-picker" ref={emojiRef} id={`emoji${props.showWithId}`}>
                             <Picker onSelect={(emoji) => {
                                 commentRef.current.value = commentRef.current.value + emoji.native;
                             }} />

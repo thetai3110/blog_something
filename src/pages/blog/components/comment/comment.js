@@ -7,7 +7,7 @@ const Comment = ({ comment, showWithId }) => {
         $(window).scrollTop($("#list-comments")[0].offsetTop);
 
         // Scroll comment
-        const id = "#" + showWithId;
+        const id = "#feedback" + showWithId;
         $('.feedback-feedback').css("display", "none");
         $(id).css("display", "block");
         $('#list-comments').animate({

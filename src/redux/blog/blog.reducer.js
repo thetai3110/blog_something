@@ -1,17 +1,17 @@
 import { BlogTypes } from "./blog.types"
 
 const INITIAL_STATE = {
-    // Load blog
+    // blog page
     lstBlogs: [],
     countBlogs: 0,
     tagsBlog: [],
-    // Create blog
+    // blog creating
     tagsCreating: [],
     blogInfo: {
         title: '',
         summary: '',
         content: '',
-        image: ''
+        image: '' 
     },
     fileName: '',
     // Save

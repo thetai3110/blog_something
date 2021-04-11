@@ -9,6 +9,7 @@ import FooterComponent from './components/footer/footer.component';
 import React from 'react';
 import { Suspense } from 'react';
 import { connect } from 'react-redux';
+import { themes } from './themes/themes';
 
 const BlogPage = React.lazy(() => import('./pages/blog/blog_page'));
 const HomePage = React.lazy(() => import('./pages/home/home_page'));
@@ -20,12 +21,12 @@ const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot_page'))
 const BlogCreate = React.lazy(() => import('./pages/blog/create/blog_create'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup_page'));
 
-function App({ currentUser, location }) {
+function App({ currentUser, location, curentTheme }) {
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')
     return (
       <AuthProvider>
-        <HeaderComponent />
-        <div style={{ backgroundColor: '#f8f9fb'}}>
+        <HeaderComponent theme={curentTheme}/>
+        <div style={themes[curentTheme].body}>
           <div className="grid wide">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
@@ -40,7 +41,7 @@ function App({ currentUser, location }) {
             </Suspense>
           </div>
         </div>
-        {location.pathname !== '/create-blog' ? <div style={{ borderTop: '1px solid rgb(220, 228, 198)' }}><FooterComponent /></div> : null}
+        {location.pathname !== '/create-blog' ? <div style={themes[curentTheme].footer}><FooterComponent theme={curentTheme}/></div> : null}
       </AuthProvider>
     );
   else return (
@@ -74,7 +75,8 @@ const Logout = ({ history }) => {
   return (<div>Logout...</div>)
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
+const mapStateToProps = ({ user, themes }) => ({
+  currentUser: user.currentUser,
+  curentTheme: themes.curentTheme
 })
 export default withRouter(connect(mapStateToProps)(App));
