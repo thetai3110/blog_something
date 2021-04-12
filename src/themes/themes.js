@@ -11,12 +11,13 @@ export const themes = {
       color: '#333'
     },
     body: {
-      backgroundColor: '#f8f9fb'
+      backgroundColor: '#f8f9fb',
+      flexGrow: 1
     },
     footer: {
       backgroundColor: '#fff',
       color: '#333',
-      borderTop: '1px solid rgb(220, 228, 198)'
+      borderTop: '1px solid rgb(220, 228, 198)',
     }
   },
   dark: {
@@ -28,12 +29,13 @@ export const themes = {
       color: '#fff'
     },
     body: {
-      backgroundColor: '#18191A'
+      backgroundColor: '#18191A',
+      flexGrow: 1
     },
     footer: {
       backgroundColor: '#242526',
       color: '#fff',
-      borderTop: '1px solid gray'
+      borderTop: '1px solid gray',
     }
   },
 }
