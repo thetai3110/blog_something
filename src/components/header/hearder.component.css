@@ -1,8 +1,10 @@
 .navbar{
     width: 100%;
     box-shadow: 0 2px 2px rgba(0, 0, 0 , 0.07);
+}
+.nav-content{
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
 /* PC */
 .navbar-pc{
@@ -88,6 +90,7 @@
 .navbar-btn-menu{
     display: none;
     margin: 0;
+    font-size: 22px;
 }
 .navbar-mb{
     position: fixed;
@@ -217,7 +220,7 @@
     .navbar-btn-menu{
         display: block;
     }
-    .navbar-list, .navbar-search, .social{
+    .navbar-list, .navbar-search{
         display: none;
     }
     .navbar-checked:checked ~ .navbar-overlap{
@@ -228,7 +231,7 @@
     }
 }
 @media (min-width: 740px) and (max-width: 1113px) {
-    .navbar-btn-menu, .navbar-search, .social{
+    .navbar-btn-menu, .navbar-search{
         display: block;
     }
     .navbar-list, .navbar-mb-search{
