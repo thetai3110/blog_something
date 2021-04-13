@@ -1,3 +1,6 @@
+.person-actions{
+    position: relative;
+}
 button.btn-person{
     width: 35px;
     height: 35px;

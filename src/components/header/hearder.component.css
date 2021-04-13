@@ -28,7 +28,7 @@
 }
 .navbar-list{
     padding: 0px 15px;
-    margin: 15px 0px;
+    margin: 0;
 }
 .navbar-list li{
     display: inline-block;
@@ -45,9 +45,6 @@
 .navbar-items{
     display: flex;
     align-items: center;
-}
-.navbar-items div{
-    padding: 0px 2px;
 }
 .navbar-search{
     display: flex;

@@ -1,0 +1,75 @@
+.person-menu{
+    position: absolute;
+    top: 100%;
+    z-index: 9999;
+    min-width: 215px;
+    right: 0;
+    margin-top: 1rem;
+    border-radius: 4px;
+    border: 1px solid #d3d3d3;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+}
+.person-menu .person-info{
+    width: 100%;
+    background-color: rgb(219, 217, 217);
+}
+.person-edit{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0.7rem;
+}
+.person-edit-action{
+    vertical-align: bottom;
+    margin-left: 1rem;
+    text-align: center;
+}
+.person-edit-action a{
+    display: block;
+    font-weight: bold;
+}
+.person-edit-action button{
+    border: none;
+    background-color: rgb(10, 83, 126);
+    color: #fff;
+    padding: 2px 12px;
+    border-radius: 4px;
+}
+.person-info img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+.person-menu::after{
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-right: 12px;
+    border-width: 5px;
+    border-style: solid;
+    border-color:  transparent transparent rgb(219, 217, 217) transparent;
+    z-index: 999;
+}
+.log{
+    list-style: none;
+    background-color: #fff;
+    border-top: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+    margin: 0;
+}
+.person-menu .log li{
+    padding: 9px 15px;
+}
+.person-menu .log li a{
+    color: #606266;
+}
+.person-logout{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 9px 15px;
+}
+.person-logout a{
+    color: #606266;
+}

@@ -12,14 +12,14 @@ const HeaderComponent = ({ changeTheme, theme }) => {
     const login = currentUser ? { id: '7', title: 'logout', title_en: 'logout' } : { id: '6', title: 'login', title_en: 'login' }
     const menus = [
         // { id: '1', title: 'học tập', title_en: 'learn' },
-        { id: '2', title: 'thảo luận', title_en: 'discuss' },
+        // { id: '2', title: 'thảo luận', title_en: 'discuss' },
         { id: '3', title: 'blog', title_en: 'blog' },
         // { id: '5', title: 'admin', title_en: 'admin' },
         { ...login }
     ]
     return (
-        <div className="navbar">
-            <nav className="grid wide" style={themes[theme].nav} >
+        <div className="navbar" style={themes[theme].nav}>
+            <nav className="grid wide">
                 <div className="nav-content">
                     <label htmlFor="navbar-checked" className="navbar-btn-menu"><i className="fa fa-bars"></i></label>
                     <div className="navbar-pc">

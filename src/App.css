@@ -10,6 +10,10 @@
   height: 40vmin;
   pointer-events: none;
 }
+.body-app{
+  min-height: 600px;
+  position: relative;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

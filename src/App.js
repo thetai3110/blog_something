@@ -25,7 +25,7 @@ function App({ currentUser, location, curentTheme }) {
     return (
       <AuthProvider>
         <HeaderComponent theme={curentTheme}/>
-        <div style={themes[curentTheme].body}>
+        <div className="body-app" style={themes[curentTheme].body}>
           <div className="grid wide">
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
