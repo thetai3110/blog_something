@@ -14,7 +14,6 @@ import { themes } from './themes/themes';
 const BlogPage = React.lazy(() => import('./pages/blog/blog_page'));
 const HomePage = React.lazy(() => import('./pages/home/home_page'));
 const DiscussPage = React.lazy(() => import('./pages/discuss/discuss_page'));
-const CodeOnlinePage = React.lazy(() => import('./pages/code_online_page/code_online_page'));
 const BlogDetailPage = React.lazy(() => import('./pages/blog/detail/blog_detail'));
 const LoginPage = React.lazy(() => import('./pages/login/login_page'));
 const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot_page'));
@@ -35,7 +34,6 @@ function App({ currentUser, location, curentTheme }) {
                 <Route path="/blog/:page" component={BlogPage} exact></Route>
                 <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
                 <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
-                <Route path="/code-online" render={() => <CodeOnlinePage />} exact></Route>
                 <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
               </Switch>
             </Suspense>
