@@ -1,7 +1,7 @@
-import './discuss_page.css';
+import './discuss.page.css';
 import Search from "../../components/search/search.component";
 import { Link } from 'react-router-dom';
-import Topic from './topic_component/topic.component';
+import Topic from './topic-component/topic.component';
 import { Pagination } from '../../components/pagination/pagination.component';
 import firebase from 'firebase';
 const DiscussPage = () => {

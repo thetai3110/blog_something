@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/auth_context"
 import { auth } from "../../firebase"
 import { setError, setMessage } from "../../redux/login/login.actions"
 import OthersLogin from "./components/others-login.component"
-import './login_page.css';
+import './login.page.css';
 
 const SignUpPage = ({ error, message, setError, setMessage }) => {
     const emailRef = useRef()

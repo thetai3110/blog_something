@@ -1,7 +1,7 @@
 .person-menu{
     position: absolute;
     top: 100%;
-    z-index: 9999;
+    z-index: 999;
     min-width: 215px;
     right: 0;
     margin-top: 1rem;
@@ -9,33 +9,33 @@
     border: 1px solid #d3d3d3;
     box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
 }
-.person-menu .person-info{
+.person-menu .person-wrap{
     width: 100%;
     background-color: rgb(219, 217, 217);
 }
-.person-edit{
+.person-avatar{
     width: 100%;
     display: flex;
     align-items: center;
     margin: 0.7rem;
 }
-.person-edit-action{
+.person-avatar-action{
     vertical-align: bottom;
     margin-left: 1rem;
     text-align: center;
 }
-.person-edit-action a{
+.person-avatar-action a{
     display: block;
     font-weight: bold;
 }
-.person-edit-action button{
+.person-avatar-action button{
     border: none;
     background-color: rgb(10, 83, 126);
     color: #fff;
     padding: 2px 12px;
     border-radius: 4px;
 }
-.person-info img{
+.person-wrap img{
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -51,18 +51,23 @@
     border-color:  transparent transparent rgb(219, 217, 217) transparent;
     z-index: 999;
 }
-.log{
+.person-links{
     list-style: none;
     background-color: #fff;
     border-top: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
     margin: 0;
 }
-.person-menu .log li{
+.person-menu .person-links li{
     padding: 9px 15px;
 }
-.person-menu .log li a{
+.person-menu .person-links li:hover, .person-logout:hover{
+    background-color: #F0F0F0;
+    text-decoration: none;
+}
+.person-menu .person-links li a, .person-logout a{
     color: #606266;
+    text-decoration: none;
 }
 .person-logout{
     width: 100%;
@@ -70,6 +75,7 @@
     background-color: #fff;
     padding: 9px 15px;
 }
-.person-logout a{
+.person-logout a:hover{
+    text-decoration: none;
     color: #606266;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import './blog_detail.css';
+import './blog-detail.page.css';
 import 'emoji-mart/css/emoji-mart.css';
 import { connect } from "react-redux";
 import { setTagsBlog } from "../../../redux/blog/blog_actions";

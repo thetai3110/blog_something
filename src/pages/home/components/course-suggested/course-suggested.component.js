@@ -1,5 +1,5 @@
-import CourseItemComponent from '../course_item/courseitem.component';
-import './course_suggested.component.css';
+import CourseItemComponent from '../course-item/course-item.component';
+import './course-suggested.component.css';
 
 const CourseSuggestedComponent = () => {
 

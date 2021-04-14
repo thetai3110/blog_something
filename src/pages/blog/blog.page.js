@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Pagination } from "../../components/pagination/pagination.component";
 import { setCountBlogs, setLstBlogs } from "../../redux/blog/blog_actions";
-import "./blog_page.css";
+import "./blog.page.css";
 import placeholder_img from '../../assests/placeholder_img.png'
 import app from "../../firebase";
 import { setLoading } from "../../redux/common/common.actions";

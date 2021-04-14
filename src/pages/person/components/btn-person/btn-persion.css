@@ -1,5 +1,6 @@
 .person-actions{
     position: relative;
+    z-index: 999;
 }
 button.btn-person{
     width: 35px;
@@ -17,4 +18,12 @@ button.btn-person:focus{
 }
 .btn-person:hover{
     opacity: 0.8;
+}
+#overlap-when-show-personmenu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 998;
 }

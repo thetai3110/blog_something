@@ -1,5 +1,5 @@
 import React from 'react';
-import './blog_create.css';
+import './blog-create.page.css';
 import { connect } from 'react-redux';
 import { toggleSaveBox } from '../../../redux/blog/blog_actions';
 import TagsInput from '../components/tags-input/tags-input.component';

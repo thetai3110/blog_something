@@ -11,14 +11,14 @@ import { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { themes } from './themes/themes';
 
-const BlogPage = React.lazy(() => import('./pages/blog/blog_page'));
-const HomePage = React.lazy(() => import('./pages/home/home_page'));
-const DiscussPage = React.lazy(() => import('./pages/discuss/discuss_page'));
-const BlogDetailPage = React.lazy(() => import('./pages/blog/detail/blog_detail'));
-const LoginPage = React.lazy(() => import('./pages/login/login_page'));
-const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot_page'));
-const BlogCreate = React.lazy(() => import('./pages/blog/create/blog_create'));
-const SignUpPage = React.lazy(() => import('./pages/login/signup_page'));
+const BlogPage = React.lazy(() => import('./pages/blog/blog.page'));
+const HomePage = React.lazy(() => import('./pages/home/home.page'));
+const DiscussPage = React.lazy(() => import('./pages/discuss/discuss.page'));
+const BlogDetailPage = React.lazy(() => import('./pages/blog/detail/blog-detail.page'));
+const LoginPage = React.lazy(() => import('./pages/login/login.page'));
+const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot.page'));
+const BlogCreate = React.lazy(() => import('./pages/blog/create/blog-create.page'));
+const SignUpPage = React.lazy(() => import('./pages/login/signup.page'));
 
 function App({ currentUser, location, curentTheme }) {
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')

@@ -1,4 +1,4 @@
-import CourseSuggestedComponent from "./components/course_suggested_component/course_suggested.component";
+import CourseSuggestedComponent from "./components/course-suggested/course-suggested.component";
 
 const HomePage = (props) => {
     return (

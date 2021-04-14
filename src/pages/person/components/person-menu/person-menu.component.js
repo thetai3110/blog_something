@@ -6,17 +6,17 @@ const PersonMenu = () => {
     const { currentUser } = useAuth();
     return (
         <div className="person-menu">
-            <div className="person-info">
-                <div className="person-edit">
+            <div className="person-wrap">
+                <div className="person-avatar">
                     <div><img src={currentUser.photoURL} alt=""></img></div>
-                    <div className="person-edit-action">
+                    <div className="person-avatar-action">
                         <Link to='/'>{currentUser.displayName}</Link>
                         <Link to='/'>
                             <button>Sửa</button>
                         </Link>
                     </div>
                 </div>
-                <ul className="log">
+                <ul className="person-links">
                     <li><Link to="/">Hồ sơ</Link></li>
                     <li><Link to="/">Bài đăng</Link></li>
                     <li><Link to="/">Hoạt động</Link></li>

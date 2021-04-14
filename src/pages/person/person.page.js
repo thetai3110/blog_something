@@ -1,4 +1,4 @@
-import './person_page.css';
+import './person.page.css';
 
 const PersonPage = () => {
     return (
