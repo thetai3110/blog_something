@@ -1,25 +1,25 @@
-.person-actions{
+.myself-actions{
     position: relative;
     z-index: 999;
 }
-button.btn-person{
+button.btn-myself{
     width: 35px;
     height: 35px;
     border: none;
     border-radius: 50%;
 }
-.btn-person img{
+.btn-myself img{
     width: 100%;
     height: 100%;
     border-radius: 50%;
 }
-button.btn-person:focus{
+button.btn-myself:focus{
     outline: none;
 }
-.btn-person:hover{
+.btn-myself:hover{
     opacity: 0.8;
 }
-#overlap-when-show-personmenu{
+#overlap-when-show-myselfmenu{
     position: fixed;
     top: 0;
     left: 0;

@@ -1,0 +1,16 @@
+.link-item{
+    padding: 10px;
+    color: #333;
+}
+.link-item i{
+    margin-right: 0.3rem;
+}
+.link-item a{
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+.link-item:hover{
+    cursor: pointer;
+    background-color: #E7ECF3;
+}

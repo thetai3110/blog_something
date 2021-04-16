@@ -1,4 +1,3 @@
-import { themes } from "../../themes/themes";
 import { ThemesTypes } from "./themes.types";
 
 const INITIAL_STATE = {

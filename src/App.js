@@ -10,6 +10,7 @@ import React from 'react';
 import { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { themes } from './themes/themes';
+import Loading from './components/loading/loading';
 
 const BlogPage = React.lazy(() => import('./pages/blog/blog.page'));
 const HomePage = React.lazy(() => import('./pages/home/home.page'));
@@ -19,15 +20,16 @@ const LoginPage = React.lazy(() => import('./pages/login/login.page'));
 const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot.page'));
 const BlogCreate = React.lazy(() => import('./pages/blog/create/blog-create.page'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup.page'));
+const MyPostsPage = React.lazy(() => import('./pages/myself/pages/posts/posts.page'));
 
 function App({ currentUser, location, curentTheme }) {
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')
     return (
       <AuthProvider>
-        <HeaderComponent theme={curentTheme}/>
-        <div className="body-app" style={themes[curentTheme].body}>
-          <div className="grid wide">
-            <Suspense fallback={<div>Loading...</div>}>
+        <HeaderComponent theme={curentTheme} />
+        <div style={themes[curentTheme].body}>
+          <div className="grid wide" style={{height: '100%'}}>
+            <Suspense fallback={<Loading />}>
               <Switch>
                 <Route path="/" component={HomePage} exact></Route>
                 <Route path="/blog" component={BlogPage} exact></Route>
@@ -35,16 +37,17 @@ function App({ currentUser, location, curentTheme }) {
                 <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
                 <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
                 <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
+                <Route path="/myself" render={(props) => <MyPostsPage {...props} />}></Route>
               </Switch>
             </Suspense>
           </div>
         </div>
-        {location.pathname !== '/create-blog' ? <div style={themes[curentTheme].footer}><FooterComponent theme={curentTheme}/></div> : null}
+        {location.pathname !== '/create-blog' ? <FooterComponent theme={curentTheme} /> : null}
       </AuthProvider>
     );
   else return (
     <AuthProvider>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Switch>
           <Route path="/login" component={LoginPage}></Route>
           <Route path="/signup" component={SignUpPage}></Route>

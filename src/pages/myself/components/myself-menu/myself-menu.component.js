@@ -1,30 +1,30 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../../contexts/auth_context';
-import './person-menu.component.css';
+import './myself-menu.component.css';
 
-const PersonMenu = () => {
+const MyselfMenu = () => {
     const { currentUser } = useAuth();
     return (
-        <div className="person-menu">
-            <div className="person-wrap">
-                <div className="person-avatar">
+        <div className="myself-wrap">
+            <div className="myself-menu">
+                <div className="avatar">
                     <div><img src={currentUser.photoURL} alt=""></img></div>
-                    <div className="person-avatar-action">
+                    <div className="action">
                         <Link to='/'>{currentUser.displayName}</Link>
                         <Link to='/'>
                             <button>Sửa</button>
                         </Link>
                     </div>
                 </div>
-                <ul className="person-links">
+                <ul className="options">
                     <li><Link to="/">Hồ sơ</Link></li>
-                    <li><Link to="/">Bài đăng</Link></li>
+                    <li><Link to="/myself">Bài đăng</Link></li>
                     <li><Link to="/">Hoạt động</Link></li>
                 </ul>
-                <div className="person-logout"><Link to="/">Đăng xuất</Link></div>
+                <div className="option-logout"><Link to="/logout">Đăng xuất</Link></div>
             </div>
         </div>
     )
 }
 
-export default PersonMenu;
+export default MyselfMenu;

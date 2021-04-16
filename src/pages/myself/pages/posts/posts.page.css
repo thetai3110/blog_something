@@ -1,0 +1,17 @@
+.my-posts{
+    height: 100%;    
+}
+.my-posts .content-main{
+    height: 100%;
+    padding: 2rem 0;
+}
+.my-posts .my-posts-sidebar{
+    background: #f5f7fa;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%);
+    overflow: auto;
+    height: 100%;
+}
+.my-posts .content-sub{
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+}

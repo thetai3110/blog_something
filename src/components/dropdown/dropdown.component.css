@@ -1,0 +1,37 @@
+.dropdown .dropdown-title, .dropdown .dropdown-sub li{
+    padding: 10px;
+    color: #333;
+}
+.dropdown .dropdown-sub li{
+    padding-left: 32px;
+    width: 100%;
+    height: 100%;
+}
+.dropdown .dropdown-title{
+    display: flex;
+    font-size: 16px;
+}
+.dropdown .dropdown-title span{
+    flex-grow: 1;
+}
+.dropdown .dropdown-title span i, .dropdown .dropdown-sub li i{
+    margin-right: 0.3rem;
+}
+.dropdown .dropdown-sub{
+    list-style: none;
+    display: none;
+}
+.dropdown .dropdown-sub li a{
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    display: block;
+}
+.dropdown .dropdown-sub li a:hover{
+    text-decoration: none;
+    color: #333;
+}
+.dropdown .dropdown-title:hover, .dropdown .dropdown-sub li:hover{
+    cursor: pointer;
+    background-color: #E7ECF3;
+}
