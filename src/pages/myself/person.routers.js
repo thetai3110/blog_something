@@ -6,7 +6,6 @@ import Loading from "../../components/loading/loading";
 const DraftPage = React.lazy(() => import('./pages/draft/draft.page'));
 
 const PersonRouters = ({ match }) => {
-    console.log(match)
     return <Suspense fallback={<Loading />}>
         <Switch>
             <Route path={`${match.path}/draft`} component={DraftPage} exact></Route>

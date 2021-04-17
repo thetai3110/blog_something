@@ -1,6 +1,6 @@
 import './hearder.component.css';
 import logo from '../../logo.svg';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { useAuth } from '../../contexts/auth_context';
 import { connect } from 'react-redux';
 import { changeTheme } from '../../redux/themes/themes.action';
@@ -90,4 +90,4 @@ const HeaderComponent = ({ changeTheme, theme }) => {
 const mapDispatchToProps = (dispatch) => ({
     changeTheme: (theme) => dispatch(changeTheme(theme))
 })
-export default connect(null, mapDispatchToProps)(HeaderComponent);
+export default withRouter(connect(null, mapDispatchToProps)(HeaderComponent));

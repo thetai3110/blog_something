@@ -14,7 +14,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
     const currentPage = typeof match.params.page === 'undefined' ? 1 : match.params.page;
     const imgRef = useRef(null);
     useEffect(() => {
-        setLoading(true);
+        setLoading(true); 
         (async function () {
             try {
                 setLstBlogs([]);
@@ -50,7 +50,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
                                 <div className="col l-10 md-9 c-12 blog-content">
                                     <h4><Link to={`/blog/detail/${blog.id}`}>{blog.value.title}</Link></h4>
                                     <p>{blog.value.summary}</p>
-                                    <p>Tác giả: {blog.value.author}</p>
+                                    <p>Tác giả: {blog.value.author.email}</p>
                                 </div>
                             </div>);
                     }) :

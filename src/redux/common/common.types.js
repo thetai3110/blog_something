@@ -1,3 +1,4 @@
 export const CommonTypes = {
     SET_LOADING: 'SET_LOADING',
+    HIDDEN_MYSELF_BUTTON: 'HIDDEN_MYSELF_BUTTON' 
 }

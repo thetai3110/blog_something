@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import { useAuth } from '../../../../contexts/auth_context';
+import { setHideMyselfButton } from '../../../../redux/common/common.actions';
 import './myself-menu.component.css';
 
-const MyselfMenu = () => {
+const MyselfMenu = ({ history, dispatch }) => {
     const { currentUser } = useAuth();
     return (
         <div className="myself-wrap">
@@ -18,7 +20,10 @@ const MyselfMenu = () => {
                 </div>
                 <ul className="options">
                     <li><Link to="/">Hồ sơ</Link></li>
-                    <li><Link to="/myself">Bài đăng</Link></li>
+                    <li><a href="#" onClick={()=> {
+                        history.push('/myself');
+                        dispatch(setHideMyselfButton(true))
+                    }} >Bài đăng</a></li>
                     <li><Link to="/">Hoạt động</Link></li>
                 </ul>
                 <div className="option-logout"><Link to="/logout">Đăng xuất</Link></div>
@@ -27,4 +32,8 @@ const MyselfMenu = () => {
     )
 }
 
-export default MyselfMenu;
+const mapStateToProps = ({ common }) => ({
+    hiddenMyselfButton: common.hiddenMyselfButton
+})
+
+export default withRouter(connect(mapStateToProps)(MyselfMenu));

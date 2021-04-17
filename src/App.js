@@ -18,11 +18,12 @@ const DiscussPage = React.lazy(() => import('./pages/discuss/discuss.page'));
 const BlogDetailPage = React.lazy(() => import('./pages/blog/detail/blog-detail.page'));
 const LoginPage = React.lazy(() => import('./pages/login/login.page'));
 const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot.page'));
-const BlogCreate = React.lazy(() => import('./pages/blog/create/blog-create.page'));
+const BlogCreate = React.lazy(() => import('./pages/blog/create-or-modify/blog-create.page'));
+const BlogModify = React.lazy(() => import('./pages/blog/create-or-modify/blog-modify.page'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup.page'));
 const MyPostsPage = React.lazy(() => import('./pages/myself/pages/posts/posts.page'));
 
-function App({ currentUser, location, curentTheme }) {
+function App({ location, curentTheme }) {
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')
     return (
       <AuthProvider>
@@ -37,6 +38,7 @@ function App({ currentUser, location, curentTheme }) {
                 <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
                 <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
                 <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
+                <Route path="/modify-blog/:id" render={(props) => <BlogCreate {...props} />}></Route>
                 <Route path="/myself" render={(props) => <MyPostsPage {...props} />}></Route>
               </Switch>
             </Suspense>

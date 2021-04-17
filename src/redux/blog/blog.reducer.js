@@ -5,6 +5,8 @@ const INITIAL_STATE = {
     lstBlogs: [],
     countBlogs: 0,
     tagsBlog: [],
+    // draft
+    lstDrafts: [],
     // blog creating
     tagsCreating: [],
     blogInfo: {
@@ -25,6 +27,9 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case BlogTypes.SET_LST_BLOGS: {
             return { ...state, lstBlogs: action.payload }
+        }
+        case BlogTypes.SET_LST_DRAFTS: {
+            return { ...state, lstDrafts: action.payload }
         }
         case BlogTypes.SET_COUNT_BLOGS: {
             return { ...state, countBlogs: action.payload }

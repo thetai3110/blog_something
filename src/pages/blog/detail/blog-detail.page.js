@@ -41,9 +41,9 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
                     <div ref={ref}></div>
                 </div>
                 <ul className="blog-tags-list">
-                    {tagsBlog.map((el, i) => {
+                    {tagsBlog ? tagsBlog.map((el, i) => {
                         return <li key={i}>{el}</li>
-                    })}
+                    }) : null}
                 </ul>
                 <ComposerEditText typeComment={true} idBlog={match.params.id} showWithId="default" />
                 <LstComments idBlog={match.params.id} />

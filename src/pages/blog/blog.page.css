@@ -1,5 +1,7 @@
 .blog-page{
+    height: 100%;
     padding: 2rem 0;
+    position: relative;
 }
 .blog-list{
     margin-bottom: 25px;

@@ -26,16 +26,21 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
     const handleCreate = (publish) => {
         if (validate()) {
             (async function () {
-                console.log(currentUser.displayName)
+                const now = new Date();
                 const data = {
-                    author: currentUser.displayName,
+                    author: {
+                        name: currentUser.displayName,
+                        email: currentUser.email,
+                        uid: currentUser.uid
+                    },
                     title: title,
                     summary: summary,
                     content: content,
                     image: image,
                     tags: tagsCreating,
                     published: publish,
-                    comments: []
+                    lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
+                    comments: [],
                 }
                 try {
                     await BlogService.create(data)

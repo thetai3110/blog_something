@@ -5,6 +5,11 @@ export const setLstBlogs = blogs => ({
     payload: blogs
 })
 
+export const setLstDrafts = drafts => ({
+    type: BlogTypes.SET_LST_DRAFTS,
+    payload: drafts
+})
+
 export const setCountBlogs = count => ({
     type: BlogTypes.SET_COUNT_BLOGS,
     payload: count

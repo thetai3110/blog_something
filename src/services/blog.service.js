@@ -17,8 +17,8 @@ export const BlogService = {
     //     return fetch(`${process.env.REACT_APP_SERVER}/blog/total`);
     // },
     create: function (data) {
-        const { author, title, summary, content, image, tags, published, comments } = data;
-        app.database().ref('Blogs').push({ author, title, summary, content, image, tags, published, comments })
+        const { author, title, summary, content, image, tags, published, lastModify, comments } = data;
+        app.database().ref('Blogs').push({ author, title, summary, content, image, tags, published, lastModify, comments })
     },
     // modify: function (id, data) {
     //     return fetch(`${process.env.REACT_APP_SERVER}/blog/modify/${id}`, {

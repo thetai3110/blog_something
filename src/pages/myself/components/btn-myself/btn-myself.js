@@ -1,24 +1,30 @@
-import { useState } from 'react';
 import { useAuth } from '../../../../contexts/auth_context';
 import MyselfMenu from '../myself-menu/myself-menu.component';
 import './btn-myself.css';
-const BtnMyself = () => {
+import { setHideMyselfButton } from '../../../../redux/common/common.actions';
+import { connect } from 'react-redux';
+const BtnMyself = ({hiddenMyselfButton, setHiddenMyselfButton}) => {
     const { currentUser } = useAuth();
-    const [hiddenPersonMenu, setHiddenPersonMenu] = useState(true);
-
     return (
         <>
-            {!hiddenPersonMenu ? <div id="overlap-when-show-myselfmenu" onClick={() => setHiddenPersonMenu(!hiddenPersonMenu)}></div> : null}
+            {!hiddenMyselfButton ? <div id="overlap-when-show-myselfmenu" onClick={() => setHiddenMyselfButton(!hiddenMyselfButton)}></div> : null}
             {currentUser ?
                 <div className="myself-actions">
-                    <button className="btn-myself" onClick={() => setHiddenPersonMenu(!hiddenPersonMenu)}>
+                    <button className="btn-myself" onClick={() => setHiddenMyselfButton(!hiddenMyselfButton)}>
                         <img src={currentUser.photoURL} alt="avatar"></img>
                     </button>
-                    {!hiddenPersonMenu ? <MyselfMenu /> : null}
+                    {!hiddenMyselfButton ? <MyselfMenu /> : null}
                 </div>
                 : null}
         </>
     )
 }
 
-export default BtnMyself;
+const mapStateToProps = ({ common }) => ({
+    hiddenMyselfButton: common.hiddenMyselfButton
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    setHiddenMyselfButton: (hidden) => dispatch(setHideMyselfButton(hidden))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(BtnMyself);
