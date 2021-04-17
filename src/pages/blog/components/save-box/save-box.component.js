@@ -2,14 +2,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { toast } from '../../../../components/toast/toast.component';
 import { useAuth } from '../../../../contexts/auth_context';
-import { setBlogInfo, setFilename, setTagsCreating, toggleSaveBox } from '../../../../redux/blog/blog_actions';
+import { setBlogInfo, setFilename, toggleSaveBox } from '../../../../redux/blog/blog_actions';
 import { BlogService } from '../../../../services/blog.service';
 import './save-box.component.css';
 
-const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, setFileName, toggleSaveBox, history }) => {
+const SaveBlogBox = ({ blogInfo, setBlogInfo, setFileName, toggleSaveBox, history, location, id }) => {
     const TAG = 'SaveBlogBox';
     const { currentUser } = useAuth();
-    const { title, summary, image, content } = blogInfo;
+    const { title, summary, image, content, tags } = blogInfo;
     // Validate
     const validate = () => {
         if (title !== '&nbsp;' && content !== '' && summary !== '' && image !== '') return true;
@@ -17,8 +17,7 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
     }
     // Clear
     const clearAll = () => {
-        setBlogInfo({ summary: '', content: '', image: '', title: '' })
-        setTagsCreating([]);
+        setBlogInfo({ summary: '', content: '', image: '', title: '', tags: [] });
         setFileName('');
         toggleSaveBox(true);
     }
@@ -26,24 +25,38 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
     const handleCreate = (publish) => {
         if (validate()) {
             (async function () {
-                const now = new Date();
-                const data = {
-                    author: {
-                        name: currentUser.displayName,
-                        email: currentUser.email,
-                        uid: currentUser.uid
-                    },
-                    title: title,
-                    summary: summary,
-                    content: content,
-                    image: image,
-                    tags: tagsCreating,
-                    published: publish,
-                    lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
-                    comments: [],
-                }
                 try {
-                    await BlogService.create(data)
+                    if (location.pathname === "/create-blog") {
+                        const now = new Date();
+                        const data = {
+                            author: {
+                                name: currentUser.displayName,
+                                email: currentUser.email,
+                                uid: currentUser.uid
+                            },
+                            title: title,
+                            summary: summary,
+                            content: content,
+                            image: image,
+                            tags: tags,
+                            published: publish,
+                            lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
+                            comments: [],
+                        }
+                        await BlogService.create(data)
+                    } else {
+                        const now = new Date();
+                        const data = {
+                            title: title,
+                            summary: summary,
+                            content: content,
+                            image: image,
+                            tags: tags,
+                            published: publish,
+                            lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
+                        }
+                        await BlogService.modify(data, id);
+                    }
                     clearAll();
                     toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
                     setTimeout(() => {
@@ -91,11 +104,9 @@ const SaveBlogBox = ({ blogInfo, tagsCreating, setBlogInfo, setTagsCreating, set
 
 const mapStateToProps = ({ blog }) => ({
     blogInfo: blog.blogInfo,
-    tagsCreating: blog.tagsCreating
 })
 
 const mapDispatchToProps = dispatch => ({
-    setTagsCreating: tags => dispatch(setTagsCreating(tags)),
     setBlogInfo: blogInfo => dispatch(setBlogInfo(blogInfo)),
     setFileName: name => dispatch(setFilename(name)),
     toggleSaveBox: () => dispatch(toggleSaveBox())

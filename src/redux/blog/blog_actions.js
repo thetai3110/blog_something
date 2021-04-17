@@ -20,11 +20,6 @@ export const setTagsBlog = tags => ({
     payload: tags
 })
 
-export const setTagsCreating = tags => ({
-    type: BlogTypes.SET_TAGS_CREATING,
-    payload: tags
-})
-
 export const setBlogInfo = blogInfo => ({
     type: BlogTypes.SET_BLOG_INFO,
     payload: blogInfo

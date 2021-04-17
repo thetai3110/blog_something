@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleSaveBox } from '../../../redux/blog/blog_actions';
+import { setBlogInfo, toggleSaveBox } from '../../../redux/blog/blog_actions';
 import TagsInput from '../components/tags-input/tags-input.component';
 import ActionsBlog from '../components/actions/actions.component';
 import ModelPreview from '../components/model/model.component';

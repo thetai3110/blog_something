@@ -1,26 +1,36 @@
-import { useRef } from 'react';
-import { connect } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { connect } from 'react-redux'; 
 import { toast } from '../../../../components/toast/toast.component';
-import { setTagsCreating } from '../../../../redux/blog/blog_actions';
+import { setBlogInfo } from '../../../../redux/blog/blog_actions';
 import './tags-input.component.css';
 
-const TagsInput = ({ tagsCreating, setTagsCreating }) => {
+const TagsInput = ({ blogInfo, setBlogInfo }) => {
     const inputRef = useRef(null);
     const tagsRef = useRef(null);
+    useEffect(()=>{
+        if(blogInfo.tags.length > 0){
+            blogInfo.tags.forEach(el => {
+                let item = document.createElement('span');
+                item.innerHTML = `${el} <i class="fa fa-close close-tag"></i>`;
+                tagsRef.current.appendChild(item);
+                inputRef.current.value = '';
+            });
+        }
+    }, [])
     // Tags
     const handleKeyDown = (event) => {
         if (event.keyCode === 13) {
             let val = event.target.value;
-            if (val !== '' && !tagsCreating.includes(val)) {
-                if (tagsCreating.length < 5) {
-                    let currentTags = tagsCreating;
-                    let item = document.createElement('span')
-                    item.innerHTML = `${val} <i class="fa fa-close close-tag"></i>`
-                    tagsRef.current.appendChild(item)
-                    inputRef.current.value = ''
+            if (val !== '' && !blogInfo.tags.includes(val)) {
+                if (blogInfo.tags.length < 5) {
+                    let currentTags = blogInfo.tags;
+                    let item = document.createElement('span');
+                    item.innerHTML = `${val} <i class="fa fa-close close-tag"></i>`;
+                    tagsRef.current.appendChild(item);
+                    inputRef.current.value = '';
 
                     currentTags.push(val);
-                    setTagsCreating(currentTags);
+                    setBlogInfo({...blogInfo, tag: currentTags});
                 } else {
                     toast({ title: "Warning!", message: 'Cannot create too 5 tags', type: "warning", duration: 3000 });
                 }
@@ -30,21 +40,21 @@ const TagsInput = ({ tagsCreating, setTagsCreating }) => {
             let val = event.target.value;
             if (val === '' && tagsRef.current.children.length > 0) {
                 tagsRef.current.removeChild(tagsRef.current.children[tagsRef.current.children.length - 1]);
-                let currentTags = tagsCreating;
+                let currentTags = blogInfo.tags;
                 currentTags.pop();
-                setTagsCreating(currentTags);
+                setBlogInfo({...blogInfo, tag: currentTags});
             }
         }
     }
     const handleRemoveTag = (event) => {
         if (event.target.closest('.close-tag')) {
             const val = event.target.closest('span').innerText.trim();
-            tagsCreating.forEach((el, i) => {
+            blogInfo.tags.forEach((el, i) => {
                 if (val === el) {
                     tagsRef.current.removeChild(tagsRef.current.children[i]);
-                    let currentTags = tagsCreating;
+                    let currentTags = blogInfo.tags;
                     currentTags.splice(i, 1);
-                    setTagsCreating(currentTags);
+                    setBlogInfo({...blogInfo, tag: currentTags});
                 }
             })
         }
@@ -60,11 +70,11 @@ const TagsInput = ({ tagsCreating, setTagsCreating }) => {
 }
 
 const mapStateToProps = ({ blog }) => ({
-    tagsCreating: blog.tagsCreating
+    blogInfo: blog.blogInfo,
 })
 
 const mapDispatchToProps = dispatch => ({
-    setTagsCreating: tags => dispatch(setTagsCreating(tags))
+    setBlogInfo: blogInfo => dispatch(setBlogInfo(blogInfo)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagsInput);

@@ -4,7 +4,10 @@ import './summary.component.css';
 
 const SummaryBlog = ({blogInfo, setBlogInfo}) => {
     return (
-        <textarea className="summary-blog" placeholder="Tóm tắt" onChange={(e) => setBlogInfo({ ...blogInfo, summary: e.target.value })}></textarea>
+        <textarea className="summary-blog" 
+            placeholder="Tóm tắt" 
+            defaultValue={blogInfo.summary} 
+            onChange={(e) => setBlogInfo({ ...blogInfo, summary: e.target.value })}></textarea>
     )
 }
 

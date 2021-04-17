@@ -10,6 +10,7 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
     return (
         <div className="editor-blog">
             <CKEditor
+                data={blogInfo.content}
                 editor={Editor}
                 config={{
                     toolbar: {

@@ -8,12 +8,12 @@ const INITIAL_STATE = {
     // draft
     lstDrafts: [],
     // blog creating
-    tagsCreating: [],
     blogInfo: {
         title: '',
         summary: '',
         content: '',
-        image: '' 
+        image: '',
+        tags: []
     },
     fileName: '',
     // Save
@@ -36,9 +36,6 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.SET_TAGS_BLOG: {
             return { ...state, tagsBlog: action.payload }
-        }
-        case BlogTypes.SET_TAGS_CREATING: {
-            return { ...state, tagsCreating: action.payload }
         }
         case BlogTypes.SET_BLOG_INFO: {
             return { ...state, blogInfo: action.payload }

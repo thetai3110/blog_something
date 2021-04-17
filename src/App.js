@@ -38,7 +38,7 @@ function App({ location, curentTheme }) {
                 <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
                 <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
                 <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
-                <Route path="/modify-blog/:id" render={(props) => <BlogCreate {...props} />}></Route>
+                <Route path="/modify-blog/:id" render={(props) => <BlogModify {...props} />}></Route>
                 <Route path="/myself" render={(props) => <MyPostsPage {...props} />}></Route>
               </Switch>
             </Suspense>
