@@ -2,18 +2,22 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useAuth } from "../../../../../contexts/auth_context";
 import app from "../../../../../firebase";
-import { setLstDrafts } from "../../../../../redux/blog/blog_actions";
+import { setCountDrafts, setLstDrafts } from "../../../../../redux/blog/blog_actions";
 import { BlogService } from "../../../../../services/blog.service";
 import { toast } from "../../../../../components/toast/toast.component";
 import { DropdownButton } from "../../../components/dropdown-button/dropdown-button.component";
 import Loading from "../../../../../components/loading/loading";
 import { Date, Item, Icon, NotFound, Title } from "../../../components/style-items/style-items.component";
+import { Pagination } from "../../../../../components/pagination/pagination.component";
 
-const DraftPage = ({ lstDrafts, setLstDrafts }) => {
+const DraftPage = ({ lstDrafts, setLstDrafts, match, countDrafts, setCountDrafts }) => {
     const TAG = 'DraftPage';
     const { currentUser } = useAuth();
     const [loading, setLoading] = useState(true);
+    const currentPage = typeof match.params.page === 'undefined' ? 1 : match.params.page;
+
     useEffect(() => {
+        console.log(match)
         if (currentUser) {
             (async function () {
                 try {
@@ -24,7 +28,9 @@ const DraftPage = ({ lstDrafts, setLstDrafts }) => {
                             let lst = Object.keys(snap.val()).map(id => {
                                 return { id: id, value: snap.val()[id] }
                             })
-                            setLstDrafts(lst.filter(el => { return el.value.published === 0 && currentUser.uid === el.value.author.uid }))
+                            let drafts = lst.filter(el => { return el.value.published === 0 && currentUser.uid === el.value.author.uid })
+                            setCountDrafts(drafts.length);
+                            setLstDrafts(drafts.slice((currentPage - 1) * 6, (currentPage - 1) * 6 + 6));
                             setLoading(false);
                         }
                     });
@@ -33,7 +39,7 @@ const DraftPage = ({ lstDrafts, setLstDrafts }) => {
                 }
             })();
         }
-    }, [currentUser]);
+    }, [currentUser, match]);
     const handleDelete = async (id, title) => {
         try {
             await BlogService.remove(id);
@@ -48,23 +54,26 @@ const DraftPage = ({ lstDrafts, setLstDrafts }) => {
         return (
             <>
                 {lstDrafts ? lstDrafts.length > 0 ? lstDrafts.map((el, i) => {
-                    return <Item className="draft-item" key={i}>
-                        <Title className="title"><Icon><i className="fa fa-lock" aria-hidden="true"></i></Icon> {el.value.title}</Title>
+                    return <Item key={i}>
+                        <Title><Icon><i className="fa fa-lock" aria-hidden="true"></i></Icon> {el.value.title}</Title>
                         <Date>Cập nhập cuối: {el.value.lastModify}
                             <DropdownButton data={{ id: el.id, title: el.value.title }} handleEvent={() => handleDelete(el.id, el.value.title)} />
                         </Date>
                     </Item>
                 }) : <NotFound>Không có bài nào!</NotFound> : null}
+                <Pagination {...{ total: countDrafts % 6 === 0 ? parseInt(countDrafts / 6) : parseInt(countDrafts / 6) + 1, link: '/myself/draft', currentPage: currentPage }} />
             </>
         )
 }
 
 const mapStateToProps = ({ blog }) => ({
-    lstDrafts: blog.lstDrafts
+    lstDrafts: blog.lstDrafts,
+    countDrafts: blog.countDrafts
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    setLstDrafts: (drafts) => dispatch(setLstDrafts(drafts))
+    setLstDrafts: (drafts) => dispatch(setLstDrafts(drafts)),
+    setCountDrafts: (count) => dispatch(setCountDrafts(count))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DraftPage);

@@ -5,12 +5,22 @@ const INITIAL_STATE = {
     lstBlogs: [],
     countBlogs: 0,
     tagsBlog: [],
-    // draft
+    // posts
     lstDrafts: [],
+    countDrafts: 0,
     lstPublics: [],
+    countPublics: 0,
     lstPrivates: [],
+    countPrivates: 0,
     // blog creating
     blogInfo: {
+        title: '',
+        summary: '',
+        content: '',
+        image: '',
+        tags: []
+    },
+    blogEdit: {
         title: '',
         summary: '',
         content: '',
@@ -22,7 +32,8 @@ const INITIAL_STATE = {
     hiddenSave: true,
     // Progress upload
     progress: 0,
-    hidenProgress: true
+    hidenProgress: true,
+    allTags: []
 }
 
 export const blogReducer = (state = INITIAL_STATE, action) => {
@@ -42,11 +53,23 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         case BlogTypes.SET_COUNT_BLOGS: {
             return { ...state, countBlogs: action.payload }
         }
+        case BlogTypes.SET_COUNT_DRAFTS: {
+            return { ...state, countDrafts: action.payload }
+        }
+        case BlogTypes.SET_COUNT_PUBLICS: {
+            return { ...state, countPublics: action.payload }
+        }
+        case BlogTypes.SET_COUNT_PRIVATES: {
+            return { ...state, countPrivates: action.payload }
+        }
         case BlogTypes.SET_TAGS_BLOG: {
             return { ...state, tagsBlog: action.payload }
         }
         case BlogTypes.SET_BLOG_INFO: {
             return { ...state, blogInfo: action.payload }
+        }
+        case BlogTypes.SET_BLOG_EDIT: {
+            return { ...state, blogEdit: action.payload }
         }
         case BlogTypes.SET_FILENAME: {
             return { ...state, fileName: action.payload }
@@ -59,6 +82,9 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.HIDDEN_PROGRESS: {
             return { ...state, hiddenProgress: action.payload }
+        }
+        case BlogTypes.SET_ALL_TAG: {
+            return { ...state, allTags: action.payload }
         }
         default:
             return state;

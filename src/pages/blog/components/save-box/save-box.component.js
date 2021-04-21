@@ -17,7 +17,7 @@ const SaveBlogBox = ({ blogInfo, setBlogInfo, setFileName, toggleSaveBox, histor
     }
     // Clear
     const clearAll = () => {
-        setBlogInfo({ summary: '', content: '', image: '', title: '', tags: [] });
+        setBlogInfo({ ...blogInfo, summary: '', content: '', image: '', title: '', tags: [] });
         setFileName('');
         toggleSaveBox(true);
     }
@@ -27,21 +27,21 @@ const SaveBlogBox = ({ blogInfo, setBlogInfo, setFileName, toggleSaveBox, histor
             (async function () {
                 try {
                     const now = new Date();
-                        const data = {
-                            author: {
-                                name: currentUser.displayName,
-                                email: currentUser.email,
-                                uid: currentUser.uid
-                            },
-                            title: title,
-                            summary: summary,
-                            content: content,
-                            image: image,
-                            tags: tags,
-                            published: publish,
-                            lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
-                            comments: [],
-                        }
+                    const data = {
+                        author: {
+                            name: currentUser.displayName,
+                            email: currentUser.email,
+                            uid: currentUser.uid
+                        },
+                        title: title,
+                        summary: summary,
+                        content: content,
+                        image: image,
+                        tags: tags,
+                        published: publish,
+                        lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
+                        comments: [],
+                    }
                     if (location.pathname === "/blog/create") {
                         await BlogService.create(data)
                     } else {

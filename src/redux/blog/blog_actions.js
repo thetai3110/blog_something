@@ -25,6 +25,21 @@ export const setCountBlogs = count => ({
     payload: count
 })
 
+export const setCountDrafts = count => ({
+    type: BlogTypes.SET_COUNT_DRAFTS,
+    payload: count
+})
+
+export const setCountPublics = count => ({
+    type: BlogTypes.SET_COUNT_PUBLICS,
+    payload: count
+})
+
+export const setCountPrivates = count => ({
+    type: BlogTypes.SET_COUNT_PRIVATES,
+    payload: count
+})
+
 export const setTagsBlog = tags => ({
     type: BlogTypes.SET_TAGS_BLOG,
     payload: tags
@@ -33,6 +48,11 @@ export const setTagsBlog = tags => ({
 export const setBlogInfo = blogInfo => ({
     type: BlogTypes.SET_BLOG_INFO,
     payload: blogInfo
+})
+
+export const setBlogEdit = blogEdit => ({
+    type: BlogTypes.SET_BLOG_EDIT,
+    payload: blogEdit
 })
 
 export const setFilename = name => ({
@@ -52,4 +72,9 @@ export const setProgressUpload = (progress) => ({
 export const setHiddenProgressUpload = (status) => ({
     type: BlogTypes.HIDDEN_PROGRESS,
     payload: status
+})
+
+export const setAllTags = (tags) => ({
+    type: BlogTypes.SET_ALL_TAG,
+    payload: tags
 })

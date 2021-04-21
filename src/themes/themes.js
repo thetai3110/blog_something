@@ -12,7 +12,8 @@ export const themes = {
     },
     body: {
       backgroundColor: '#f8f9fb',
-      flexGrow: 1
+      flexGrow: 1,
+      position: 'relative'
     },
     footer: {
       backgroundColor: '#fff',
@@ -30,7 +31,8 @@ export const themes = {
     },
     body: {
       backgroundColor: '#18191A',
-      flexGrow: 1
+      flexGrow: 1,
+      position: 'relative'
     },
     footer: {
       backgroundColor: '#242526',

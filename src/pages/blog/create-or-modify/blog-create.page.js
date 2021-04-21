@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setBlogInfo, toggleSaveBox } from '../../../redux/blog/blog_actions';
 import TagsInput from '../components/tags-input/tags-input.component';
@@ -28,7 +28,10 @@ const OverLoad = styled.div`
     z-index: 998;
 `
 
-const BlogCreate = ({ hiddenSave, toggleSaveBox }) => {
+const BlogCreate = ({ hiddenSave, toggleSaveBox, blogInfo, setBlogInfo }) => {
+    useEffect(() => {
+        setBlogInfo({ ...blogInfo, summary: '', content: '', image: '', title: '', tags: [] });
+    }, [])
     return (
         <PageWrap>
             <div id="toast-custom"></div>
@@ -54,11 +57,13 @@ const BlogCreate = ({ hiddenSave, toggleSaveBox }) => {
 }
 
 const mapStateToProps = ({ blog }) => ({
-    hiddenSave: blog.hiddenSave
+    hiddenSave: blog.hiddenSave,
+    blogInfo: blog.blogInfo
 })
 
 const mapDispatchToProps = dispatch => ({
-    toggleSaveBox: () => dispatch(toggleSaveBox())
+    toggleSaveBox: () => dispatch(toggleSaveBox()),
+    setBlogInfo: (blogInfo) => dispatch(setBlogInfo(blogInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogCreate);

@@ -11,8 +11,11 @@ const PersonRouters = ({ match }) => {
     return <Suspense fallback={<Loading />}>
         <Switch>
             <Route path={`${match.path}/draft`} component={DraftPage} exact></Route>
+            <Route path={`${match.path}/draft/:page`} component={DraftPage} exact></Route>
             <Route path={`${match.path}/public`} component={PublicsPage} exact></Route>
+            <Route path={`${match.path}/public/:page`} component={PublicsPage} exact></Route>
             <Route path={`${match.path}/private`} component={PrivatesPage} exact></Route>
+            <Route path={`${match.path}/private/:page`} component={PrivatesPage} exact></Route>
         </Switch>
     </Suspense>
 }
