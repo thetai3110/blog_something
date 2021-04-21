@@ -21,31 +21,31 @@ const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot.page'))
 const BlogCreate = React.lazy(() => import('./pages/blog/create-or-modify/blog-create.page'));
 const BlogModify = React.lazy(() => import('./pages/blog/create-or-modify/blog-modify.page'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup.page'));
-const MyPostsPage = React.lazy(() => import('./pages/myself/pages/posts/posts.page'));
+const MyPostsPage = React.lazy(() => import('./pages/myself/posts/posts.page'));
 
-function App({ location, curentTheme }) {
+function App({ location, currentTheme }) {
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')
     return (
       <AuthProvider>
-        <HeaderComponent theme={curentTheme} />
-        <div style={themes[curentTheme].body}>
-          <div className="grid wide" style={{height: '100%'}}>
+        <HeaderComponent theme={currentTheme} />
+        <div style={{ ...themes[currentTheme].background_body, flexGrow: 1, position: 'relative' }}>
+          <div className="grid wide" style={{ height: '100%' }}>
             <Suspense fallback={<Loading />}>
               <Switch>
-                <Route path="/" component={HomePage} exact></Route>
-                <Route path="/blog" component={BlogPage} exact></Route>
-                <Route path="/blog/:page" component={BlogPage} exact></Route>
-                <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
-                <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
-                <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
-                <Route path="/modify-blog/:id" render={(props) => <BlogModify {...props} />}></Route>
-                <Route path="/myself" render={(props) => <MyPostsPage {...props} />}></Route>
+                <Route path="/" render={(props) => <HomePage {...props} theme={currentTheme}/>} exact></Route>
+                <Route path="/blogs" render={(props) => <BlogPage {...props} theme={currentTheme} />} exact></Route>
+                <Route path="/blogs/:page" render={(props) => <BlogPage {...props} theme={currentTheme} />} exact></Route>
+                <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} theme={currentTheme}/>} exact></Route>
+                <Route path="/discuss" render={() => <DiscussPage theme={currentTheme}/>} exact></Route>
+                <Route path="/blog/create" render={(props) => <BlogCreate {...props} theme={currentTheme}/>} exact></Route>
+                <Route path="/blog/modify/:id" render={(props) => <BlogModify {...props} theme={currentTheme}/>}></Route>
+                <Route path="/myself" render={(props) => <MyPostsPage {...props} theme={currentTheme}/>}></Route>
               </Switch>
             </Suspense>
           </div>
         </div>
-        {location.pathname !== '/create-blog' ? <FooterComponent theme={curentTheme} /> : null}
-      </AuthProvider>
+        { location.pathname !== '/blog/create' ? <FooterComponent theme={currentTheme} /> : null}
+      </AuthProvider >
     );
   else return (
     <AuthProvider>
@@ -80,6 +80,6 @@ const Logout = ({ history }) => {
 
 const mapStateToProps = ({ user, themes }) => ({
   currentUser: user.currentUser,
-  curentTheme: themes.curentTheme
+  currentTheme: themes.currentTheme
 })
 export default withRouter(connect(mapStateToProps)(App));

@@ -63,11 +63,13 @@ const CustomEditor = ({ blogInfo, setBlogInfo }) => {
                     licenseKey: '',
                 }}
                 onChange={(event, editor) => {
-                    setBlogInfo({
-                        ...blogInfo,
-                        title: editor.getData().split('</h1>').shift().slice(4),
-                        content: editor.getData()
-                    })
+                    if (editor.getData() !== '') {
+                        setBlogInfo({
+                            ...blogInfo,
+                            title: editor.getData().split('</h1>').shift().slice(4),
+                            content: editor.getData()
+                        })
+                    }
                 }}
                 onReady={editor => {
                     editor.plugins.get("FileRepository").createUploadAdapter = loader => {

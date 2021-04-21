@@ -5,8 +5,9 @@
 }
 .ck-content{
     flex-grow: 1;
-    padding-bottom: -200px;
+    /* padding-bottom: -200px; */
 }
 .editor-blog{
     height: 100%;
+    max-height: 825px;
 }

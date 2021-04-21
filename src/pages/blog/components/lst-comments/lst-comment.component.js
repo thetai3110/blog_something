@@ -23,34 +23,36 @@ const LstComments = ({ lstComments, setLstComments, idBlog }) => {
         });
     }, [])
     return (
-        <div id="list-comments">
-            <div className="cmt-content">
-                {lstComments ? lstComments.map((el, i) => {
-                    return <div key={i}>
-                        <LazyLoad className="cmt" placeholder={<Loading />}>
-                            <Comment comment={el.value} showWithId={el.idCmt} />
-                        </LazyLoad>
-                        <div className="feedback">
-                            {typeof el.value.feedback !== 'undefined' ?
-                                Object.keys(el.value.feedback).map((elm, i) => {
-                                    return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
-                                        <div className="cmt">
-                                            <Comment comment={el.value.feedback[elm]} showWithId={elm} />
-                                            <div id={`feedback${elm}`} className="feedback-feedback">
-                                                <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} showWithId={elm}/>
+        <>
+            {lstComments.length > 0 ? <div id="list-comments">
+                <div className="cmt-content">
+                    {lstComments.map((el, i) => {
+                        return <div key={i}>
+                            <LazyLoad className="cmt" placeholder={<Loading />}>
+                                <Comment comment={el.value} showWithId={el.idCmt} />
+                            </LazyLoad>
+                            <div className="feedback">
+                                {typeof el.value.feedback !== 'undefined' ?
+                                    Object.keys(el.value.feedback).map((elm, i) => {
+                                        return <LazyLoad key={i} className="cmt" placeholder={<Loading />}>
+                                            <div className="cmt">
+                                                <Comment comment={el.value.feedback[elm]} showWithId={elm} />
+                                                <div id={`feedback${elm}`} className="feedback-feedback">
+                                                    <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} showWithId={elm} />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </LazyLoad>
-                                }) : <div></div>
-                            }
+                                        </LazyLoad>
+                                    }) : <div></div>
+                                }
+                            </div>
+                            <div id={`feedback${el.idCmt}`} className="feedback-feedback">
+                                <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} showWithId={el.idCmt} />
+                            </div>
                         </div>
-                        <div id={`feedback${el.idCmt}`} className="feedback-feedback">
-                            <ComposerEditText typeComment={false} idComment={el.idCmt} idBlog={idBlog} showWithId={el.idCmt}/>
-                        </div>
-                    </div>
-                }) : null}
-            </div>
-        </div>
+                    })}
+                </div>
+            </div> : null}
+        </>
     )
 }
 

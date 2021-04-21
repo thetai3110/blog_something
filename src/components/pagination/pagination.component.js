@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import './pagination.component.css';
+import { StyledPagination } from "../common/common-styled.component";
 export const Pagination = (props) => {
     const pageInfo = [];
     for (let i = 0; i < props.total; i++) {
         pageInfo.push(props.link + '/' + (i + 1));
     }
     return (
-        <nav aria-label="Page navigation example" className="custom-pagination">
+        <StyledPagination aria-label="Page navigation example">
             <ul className="pagination">
                 <li className={parseInt(props.currentPage) === 1 ? 'page-item disabled' : 'page-item'}>
                     <Link className="page-link" to={`${props.link}/${parseInt(props.currentPage) - 1}`} aria-label="Previous">
@@ -24,6 +24,6 @@ export const Pagination = (props) => {
                     </Link>
                 </li>
             </ul>
-        </nav>
+        </StyledPagination>
     )
 }

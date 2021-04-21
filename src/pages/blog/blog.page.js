@@ -6,15 +6,19 @@ import { setCountBlogs, setLstBlogs } from "../../redux/blog/blog_actions";
 import "./blog.page.css";
 import placeholder_img from '../../assests/placeholder_img.png'
 import app from "../../firebase";
-import { setLoading } from "../../redux/common/common.actions";
 import Loading from "../../components/loading/loading";
+import $ from 'jquery';
+import { themes } from "../../themes/themes";
+import { useState } from "react";
 
-const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isLoading, setLoading }) => {
+const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, theme }) => {
     const TAG = "BlogComponent";
+    const [loading, setLoading] = useState(true);
     const currentPage = typeof match.params.page === 'undefined' ? 1 : match.params.page;
     const imgRef = useRef(null);
     useEffect(() => {
-        setLoading(true); 
+        $('.navbar-checked').prop('checked', false);
+        $('.navbar-overlap').prop('checked', false);
         (async function () {
             try {
                 setLstBlogs([]);
@@ -22,9 +26,10 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
                 const db = app.database().ref('Blogs');
                 db.on('value', (snap) => {
                     if (snap.val() !== null) {
-                        let lst = Object.keys(snap.val()).map(val => {
+                        let rs = Object.keys(snap.val()).map(val => {
                             return { id: val, value: snap.val()[val] }
                         })
+                        let lst = rs.filter(el => { return el.value.published === 1 })
                         setCountBlogs(lst.length);
                         setLstBlogs(lst.slice((currentPage - 1) * 3, (currentPage - 1) * 3 + 3));
                         setLoading(false);
@@ -35,7 +40,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
             }
         })()
     }, [match])
-    if (isLoading) {
+    if (loading) {
         return <Loading></Loading>
     } else
         return (
@@ -48,29 +53,27 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
                                     <Link to={`/blog/detail/${blog.id}`}><img ref={imgRef} onError={(e) => e.target.src = placeholder_img} src={blog.value.image} alt=""></img></Link>
                                 </div>
                                 <div className="col l-10 md-9 c-12 blog-content">
-                                    <h4><Link to={`/blog/detail/${blog.id}`}>{blog.value.title}</Link></h4>
-                                    <p>{blog.value.summary}</p>
-                                    <p>Tác giả: {blog.value.author.email}</p>
+                                    <h4><Link style={themes[theme].item_title} to={`/blog/detail/${blog.id}`}>{blog.value.title}</Link></h4>
+                                    <p style={themes[theme].item_info}>{blog.value.summary}</p>
+                                    <p style={themes[theme].item_info}>Tác giả: {blog.value.author.email}</p>
                                 </div>
                             </div>);
                     }) :
                     <div>Không tìm thấy bất kỳ bài viết nào</div>
                 }
-                <Pagination {...{ total: countBlogs % 3 === 0 ? parseInt(countBlogs / 3) : parseInt(countBlogs / 3) + 1, link: '/blog', currentPage: currentPage }} />
+                <Pagination {...{ total: countBlogs % 3 === 0 ? parseInt(countBlogs / 3) : parseInt(countBlogs / 3) + 1, link: '/blogs', currentPage: currentPage }} />
             </div>
         )
 }
 
-const mapStateToProps = ({ blog, common }) => ({
+const mapStateToProps = ({ blog }) => ({
     lstBlogs: blog.lstBlogs,
-    countBlogs: blog.countBlogs,
-    isLoading: common.isLoading
+    countBlogs: blog.countBlogs
 })
 
 const mapDispatchToProps = dispatch => ({
     setLstBlogs: blogs => dispatch(setLstBlogs(blogs)),
-    setCountBlogs: count => dispatch(setCountBlogs(count)),
-    setLoading: (isLoading) => dispatch(setLoading(isLoading))
+    setCountBlogs: count => dispatch(setCountBlogs(count))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPage);

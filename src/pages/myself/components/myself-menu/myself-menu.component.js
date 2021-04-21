@@ -21,7 +21,7 @@ const MyselfMenu = ({ history, dispatch }) => {
                 <ul className="options">
                     <li><Link to="/">Hồ sơ</Link></li>
                     <li><a href="#" onClick={()=> {
-                        history.push('/myself');
+                        history.push('/myself/draft');
                         dispatch(setHideMyselfButton(true))
                     }} >Bài đăng</a></li>
                     <li><Link to="/">Hoạt động</Link></li>

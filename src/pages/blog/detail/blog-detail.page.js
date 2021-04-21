@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import './blog-detail.page.css';
 import 'emoji-mart/css/emoji-mart.css';
 import { connect } from "react-redux";
@@ -6,15 +6,14 @@ import { setTagsBlog } from "../../../redux/blog/blog_actions";
 import { setLstComments } from '../../../redux/comment/comment.actions';
 import LstComments from "../components/lst-comments/lst-comment.component";
 import app from "../../../firebase";
-import { setLoading } from "../../../redux/common/common.actions";
 import ComposerEditText from "../components/composer-edittext/composer-edittext.component";
 import Loading from "../../../components/loading/loading";
-const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading }) => {
+const BlogDetailPage = ({ tagsBlog, setTagsBlog, match }) => {
     const TAG = "BlogDetail";
+    const [loading, setLoading] = useState(true);
     const ref = useRef();
     useEffect(() => {
         setTagsBlog([]);
-        setLoading(true);
         (async function () {
             try {
                 const db = app.database().ref(`Blogs/${match.params.id}`);
@@ -32,7 +31,7 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
             }
         }())
     }, [])
-    if (isLoading) {
+    if (loading) {
         return <Loading></Loading>
     } else
         return (
@@ -51,15 +50,13 @@ const BlogDetailPage = ({ tagsBlog, setTagsBlog, match, isLoading, setLoading })
         )
 }
 
-const mapStateToProps = ({ blog, comment, common }) => ({
+const mapStateToProps = ({ blog, comment }) => ({
     tagsBlog: blog.tagsBlog,
     lstComments: comment.lstComments,
-    isLoading: common.isLoading
 })
 
 const mapDispatchToProps = dispatch => ({
     setTagsBlog: tags => dispatch(setTagsBlog(tags)),
-    setLstComments: comments => dispatch(setLstComments(comments)),
-    setLoading: (isLoading) => dispatch(setLoading(isLoading))
+    setLstComments: comments => dispatch(setLstComments(comments))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(BlogDetailPage);

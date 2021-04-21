@@ -36,3 +36,7 @@
     opacity: 0.8;
     cursor: pointer;
 }
+/* .tags-input > .input input:focus {
+    outline: none;
+    border: 1px solid #5488c7;
+} */

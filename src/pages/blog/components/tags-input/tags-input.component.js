@@ -1,14 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { toast } from '../../../../components/toast/toast.component';
 import { setBlogInfo } from '../../../../redux/blog/blog_actions';
+import $ from 'jquery';
 import './tags-input.component.css';
 
-const TagsInput = ({ blogInfo, setBlogInfo }) => {
+const TagsInput = ({ blogInfo, setBlogInfo, location }) => {
     const inputRef = useRef(null);
     const tagsRef = useRef(null);
-    useEffect(()=>{
-        if(blogInfo.tags.length > 0){
+    useEffect(() => {
+        if (blogInfo.tags && location.pathname !== '/blog/create') {
             blogInfo.tags.forEach(el => {
                 let item = document.createElement('span');
                 item.innerHTML = `${el} <i class="fa fa-close close-tag"></i>`;
@@ -30,7 +32,7 @@ const TagsInput = ({ blogInfo, setBlogInfo }) => {
                     inputRef.current.value = '';
 
                     currentTags.push(val);
-                    setBlogInfo({...blogInfo, tag: currentTags});
+                    setBlogInfo({ ...blogInfo, tag: currentTags });
                 } else {
                     toast({ title: "Warning!", message: 'Cannot create too 5 tags', type: "warning", duration: 3000 });
                 }
@@ -42,7 +44,7 @@ const TagsInput = ({ blogInfo, setBlogInfo }) => {
                 tagsRef.current.removeChild(tagsRef.current.children[tagsRef.current.children.length - 1]);
                 let currentTags = blogInfo.tags;
                 currentTags.pop();
-                setBlogInfo({...blogInfo, tag: currentTags});
+                setBlogInfo({ ...blogInfo, tag: currentTags });
             }
         }
     }
@@ -54,7 +56,7 @@ const TagsInput = ({ blogInfo, setBlogInfo }) => {
                     tagsRef.current.removeChild(tagsRef.current.children[i]);
                     let currentTags = blogInfo.tags;
                     currentTags.splice(i, 1);
-                    setBlogInfo({...blogInfo, tag: currentTags});
+                    setBlogInfo({ ...blogInfo, tag: currentTags });
                 }
             })
         }
@@ -63,7 +65,10 @@ const TagsInput = ({ blogInfo, setBlogInfo }) => {
         <div className="tags-input">
             <div ref={tagsRef} className="tags" onClick={handleRemoveTag}></div>
             <div className="input">
-                <input ref={inputRef} placeholder="Tạo không quá 5 tag" type="text" onKeyDown={handleKeyDown} onChange={() => { }}></input>
+                <input ref={inputRef} onFocus={() => { $('.tags-input').css('border', '1px solid #5488c7'); }}
+                    onBlur={() => { $('.tags-input').css('border', '1px solid #d4d4d8'); }}
+                    placeholder="Tạo không quá 5 tag" type="text" onKeyDown={handleKeyDown}
+                    onChange={() => { }}></input>
             </div>
         </div>
     )
@@ -77,4 +82,4 @@ const mapDispatchToProps = dispatch => ({
     setBlogInfo: blogInfo => dispatch(setBlogInfo(blogInfo)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TagsInput);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TagsInput));

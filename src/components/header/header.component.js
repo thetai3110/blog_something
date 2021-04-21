@@ -12,7 +12,7 @@ const HeaderComponent = ({ changeTheme, theme }) => {
     const menus = [
         // { id: '1', title: 'học tập', title_en: 'learn' },
         // { id: '2', title: 'thảo luận', title_en: 'discuss' },
-        { id: '3', title: 'blog', title_en: 'blog' },
+        { id: '3', title: 'blog', title_en: 'blogs' },
         // { id: '5', title: 'admin', title_en: 'admin' },
         { id: '6', title: 'đăng nhập', title_en: 'login' },
     ]
@@ -24,20 +24,20 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                     <div className="navbar-pc">
                         <div className="navbar-logo">
                             <Link to="/"><img src={logo} alt="log"></img></Link>
-                            <Link to="/" style={themes[theme].link}>Blog</Link>
+                            <Link to="/" style={themes[theme].link_navbar}>Blog</Link>
                         </div>
                         <ul className="navbar-list">
                             {menus.map((item) => {
                                 if (item.id === '6') {
-                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                                         : null
                                 } else
-                                    return <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                             })}
                         </ul>
                         <div className="navbar-items">
                             <span className="edit">
-                                <Link to="/create-blog" style={themes[theme].link}>{currentUser ? <i style={{ fontSize: '22px' }} className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link>
+                                <Link to="/blog/create" style={themes[theme].link_navbar}>{currentUser ? <i style={{ fontSize: '22px' }} className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link>
                                 <ThemesToggler
                                     theme={theme}
                                     onClick={(nextTheme) => changeTheme(nextTheme)} />
@@ -61,7 +61,7 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                         </label>
                         <div className="navbar-mb-logo">
                             <Link to="/"><img src={logo} alt="log"></img></Link>
-                            <Link to="/">Blog</Link>
+                            <Link style={themes[theme].link_navbar} to="/">Blog</Link>
                         </div>
                         <form className="navbar-mb-search">
                             <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
@@ -70,10 +70,10 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                         <ul className="navbar-mb-list">
                             {menus.map((item) => {
                                 if (item.id === '6') {
-                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                                         : null
                                 } else
-                                    return <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                             })}
                         </ul>
                         <div className="navbar-mb-items">

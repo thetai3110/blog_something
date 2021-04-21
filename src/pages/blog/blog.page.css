@@ -1,7 +1,6 @@
 .blog-page{
     height: 100%;
     padding: 2rem 0;
-    position: relative;
 }
 .blog-list{
     margin-bottom: 25px;
@@ -18,7 +17,6 @@
 }
 .blog-content h4 a{
     text-decoration: none;
-    color: #333;
     font-size: 22px;
 }
 .blog-content h4:hover{
