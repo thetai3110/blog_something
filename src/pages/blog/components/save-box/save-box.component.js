@@ -26,8 +26,7 @@ const SaveBlogBox = ({ blogInfo, setBlogInfo, setFileName, toggleSaveBox, histor
         if (validate()) {
             (async function () {
                 try {
-                    if (location.pathname === "/create-blog") {
-                        const now = new Date();
+                    const now = new Date();
                         const data = {
                             author: {
                                 name: currentUser.displayName,
@@ -43,24 +42,15 @@ const SaveBlogBox = ({ blogInfo, setBlogInfo, setFileName, toggleSaveBox, histor
                             lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
                             comments: [],
                         }
+                    if (location.pathname === "/blog/create") {
                         await BlogService.create(data)
                     } else {
-                        const now = new Date();
-                        const data = {
-                            title: title,
-                            summary: summary,
-                            content: content,
-                            image: image,
-                            tags: tags,
-                            published: publish,
-                            lastModify: now.toLocaleDateString() + ", " + now.toLocaleTimeString(),
-                        }
                         await BlogService.modify(data, id);
                     }
                     clearAll();
                     toast({ title: "Success!", message: "A new blog added.", type: "success", duration: 2000 });
                     setTimeout(() => {
-                        history.replace('/blog');
+                        history.replace('/blogs');
                     }, 2000)
                 } catch (err) {
                     toast({ title: "Failed!", message: `Failed at: ${err}`, type: "error", duration: 3000 });

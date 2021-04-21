@@ -7,6 +7,8 @@ const INITIAL_STATE = {
     tagsBlog: [],
     // draft
     lstDrafts: [],
+    lstPublics: [],
+    lstPrivates: [],
     // blog creating
     blogInfo: {
         title: '',
@@ -30,6 +32,12 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.SET_LST_DRAFTS: {
             return { ...state, lstDrafts: action.payload }
+        }
+        case BlogTypes.SET_LST_PUBLICS: {
+            return { ...state, lstPublics: action.payload }
+        }
+        case BlogTypes.SET_LST_PRIVATES: {
+            return { ...state, lstPrivates: action.payload }
         }
         case BlogTypes.SET_COUNT_BLOGS: {
             return { ...state, countBlogs: action.payload }

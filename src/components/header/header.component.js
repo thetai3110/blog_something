@@ -12,7 +12,7 @@ const HeaderComponent = ({ changeTheme, theme }) => {
     const menus = [
         // { id: '1', title: 'học tập', title_en: 'learn' },
         // { id: '2', title: 'thảo luận', title_en: 'discuss' },
-        { id: '3', title: 'blog', title_en: 'blog' },
+        { id: '3', title: 'blog', title_en: 'blogs' },
         // { id: '5', title: 'admin', title_en: 'admin' },
         { id: '6', title: 'đăng nhập', title_en: 'login' },
     ]
@@ -37,7 +37,7 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                         </ul>
                         <div className="navbar-items">
                             <span className="edit">
-                                <Link to="/create-blog" style={themes[theme].link}>{currentUser ? <i style={{ fontSize: '22px' }} className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link>
+                                <Link to="/blog/create" style={themes[theme].link}>{currentUser ? <i style={{ fontSize: '22px' }} className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link>
                                 <ThemesToggler
                                     theme={theme}
                                     onClick={(nextTheme) => changeTheme(nextTheme)} />

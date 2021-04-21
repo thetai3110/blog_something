@@ -19,7 +19,6 @@
 }
 .dropdown .dropdown-sub{
     list-style: none;
-    display: none;
 }
 .dropdown .dropdown-sub li a{
     text-decoration: none;
@@ -33,5 +32,8 @@
 }
 .dropdown .dropdown-title:hover, .dropdown .dropdown-sub li:hover{
     cursor: pointer;
+    background-color: #E7ECF3;
+}
+.dropdown-sub li.active{
     background-color: #E7ECF3;
 }

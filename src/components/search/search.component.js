@@ -1,11 +1,11 @@
-import "./search.component.css";
+import { StyledButtonSearch, StyledInput, StyledSearch } from "../common/common-styled.component";
 
 const Search = () => {
     return (
-        <div className="search">
-            <input value="" onChange={()=>{}} placeholder="Nhập nội dung tìm kiếm"></input>
-            <button><i className="fa fa-search"></i></button>
-        </div>
+        <StyledSearch>
+            <StyledInput value="" onChange={()=>{}} placeholder="Nhập nội dung tìm kiếm"></StyledInput>
+            <StyledButtonSearch><i className="fa fa-search"></i></StyledButtonSearch>
+        </StyledSearch>
     )
 }
 

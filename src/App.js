@@ -33,18 +33,18 @@ function App({ location, curentTheme }) {
             <Suspense fallback={<Loading />}>
               <Switch>
                 <Route path="/" component={HomePage} exact></Route>
-                <Route path="/blog" component={BlogPage} exact></Route>
-                <Route path="/blog/:page" component={BlogPage} exact></Route>
+                <Route path="/blogs" component={BlogPage} exact></Route>
+                <Route path="/blogs/:page" component={BlogPage} exact></Route>
                 <Route path="/blog/detail/:id" render={(props) => <BlogDetailPage {...props} />} exact></Route>
                 <Route path="/discuss" render={() => <DiscussPage />} exact></Route>
-                <Route path="/create-blog" render={(props) => <BlogCreate {...props} />}></Route>
-                <Route path="/modify-blog/:id" render={(props) => <BlogModify {...props} />}></Route>
+                <Route path="/blog/create" render={(props) => <BlogCreate {...props} />} exact></Route>
+                <Route path="/blog/modify/:id" render={(props) => <BlogModify {...props} />}></Route>
                 <Route path="/myself" render={(props) => <MyPostsPage {...props} />}></Route>
               </Switch>
             </Suspense>
           </div>
         </div>
-        {location.pathname !== '/create-blog' ? <FooterComponent theme={curentTheme} /> : null}
+        {location.pathname !== '/blog/create' ? <FooterComponent theme={curentTheme} /> : null}
       </AuthProvider>
     );
   else return (

@@ -8,7 +8,7 @@ const TagsInput = ({ blogInfo, setBlogInfo }) => {
     const inputRef = useRef(null);
     const tagsRef = useRef(null);
     useEffect(()=>{
-        if(blogInfo.tags.length > 0){
+        if(blogInfo.tags){
             blogInfo.tags.forEach(el => {
                 let item = document.createElement('span');
                 item.innerHTML = `${el} <i class="fa fa-close close-tag"></i>`;

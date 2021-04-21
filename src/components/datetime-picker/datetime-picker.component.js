@@ -1,8 +1,8 @@
-const DateTimePicker = () => {
+import { StyledInput } from "../common/common-styled.component";
+
+const DateTimePicker = ({ type }) => {
     return (
-        <div className="time-picker">
-            
-        </div>
+        <StyledInput type="date" className="time-picker" placeholder={type}></StyledInput>
     )
 }
 

@@ -14,7 +14,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
     const currentPage = typeof match.params.page === 'undefined' ? 1 : match.params.page;
     const imgRef = useRef(null);
     useEffect(() => {
-        setLoading(true); 
+        setLoading(true);
         (async function () {
             try {
                 setLstBlogs([]);
@@ -22,9 +22,10 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
                 const db = app.database().ref('Blogs');
                 db.on('value', (snap) => {
                     if (snap.val() !== null) {
-                        let lst = Object.keys(snap.val()).map(val => {
+                        let rs = Object.keys(snap.val()).map(val => {
                             return { id: val, value: snap.val()[val] }
                         })
+                        let lst = rs.filter(el => { return el.value.published === 1 })
                         setCountBlogs(lst.length);
                         setLstBlogs(lst.slice((currentPage - 1) * 3, (currentPage - 1) * 3 + 3));
                         setLoading(false);
@@ -56,7 +57,7 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
                     }) :
                     <div>Không tìm thấy bất kỳ bài viết nào</div>
                 }
-                <Pagination {...{ total: countBlogs % 3 === 0 ? parseInt(countBlogs / 3) : parseInt(countBlogs / 3) + 1, link: '/blog', currentPage: currentPage }} />
+                <Pagination {...{ total: countBlogs % 3 === 0 ? parseInt(countBlogs / 3) : parseInt(countBlogs / 3) + 1, link: '/blogs', currentPage: currentPage }} />
             </div>
         )
 }

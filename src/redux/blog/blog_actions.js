@@ -10,6 +10,16 @@ export const setLstDrafts = drafts => ({
     payload: drafts
 })
 
+export const setLstPublics = publics => ({
+    type: BlogTypes.SET_LST_PUBLICS,
+    payload: publics
+})
+
+export const setLstPrivates = privates => ({
+    type: BlogTypes.SET_LST_PRIVATES,
+    payload: privates
+})
+
 export const setCountBlogs = count => ({
     type: BlogTypes.SET_COUNT_BLOGS,
     payload: count

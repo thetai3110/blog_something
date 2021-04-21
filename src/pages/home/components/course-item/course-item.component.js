@@ -9,7 +9,7 @@ const CourseItemComponent = () => {
             <div className="hoverimg"><Link to="/"><img src={java} alt=""></img></Link></div>
             <div className="title"><h2><Link to=",">Lập trình hướng đối tượng trong Java</Link></h2></div>
             <div className="detail"><p>Java là một ngôn ngữ lập trình được lập trình viên (nhà phát triển) sử dụng để viết ứng dụng dành cho máy tính mà chúng ta sử dụng hàng ngày. Nếu chỉ đơn thuần là một ngôn ngữ lập trình thì chúng ta không cần quan tâm tới nó nhưng vấn đề là đôi khi chúng ta tải một ứng dụng, một phần mềm nào đó mà máy tính yêu cầu thực thi Java...</p></div>
-            <div className="footer">
+            {/* <div className="footer">
                 <table>
                     <tbody>
                         <tr>
@@ -19,7 +19,7 @@ const CourseItemComponent = () => {
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div> */}
         </div>
     )
 }

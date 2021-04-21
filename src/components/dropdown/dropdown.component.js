@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import './dropdown.component.css';
 
-const Dropdown = ({ options, title }) => {
-    const [hidden, setHidden] = useState(true);
+const Dropdown = ({ options, title, location }) => {
+    const [hidden, setHidden] = useState(false);
     const toggle = () => {
         $('.dropdown-sub').fadeToggle();
         setHidden(!hidden);
@@ -20,11 +20,11 @@ const Dropdown = ({ options, title }) => {
             </div>
             <ul className="dropdown-sub">
                 {options.map((el, i) => {
-                    return <li key={i}><Link to={el.link}><i className={el.icon} aria-hidden="true"></i> {el.name}</Link></li>
+                    return <li className={el.link === location.pathname ? 'active' : ''} key={i}><Link to={el.link}><i className={el.icon} aria-hidden="true"></i> {el.name}</Link></li>
                 })}
             </ul>
         </li>
     )
 }
 
-export default Dropdown;
+export default withRouter(Dropdown);

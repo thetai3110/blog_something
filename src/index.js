@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/js/bootstrap.js';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 import './style.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';

@@ -276,7 +276,7 @@
 }
 
 /* PC medium resolution > */
-@media (min-width: 1023px) {
+@media (min-width: 1113px) {
     .row {
         margin-left: -12px;
         margin-right: -12px;

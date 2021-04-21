@@ -24,7 +24,7 @@ const DiscussPage = () => {
                 <Topic />
             </div>
             <div className="pagination">
-                <Pagination />
+                {/* <Pagination /> */}
             </div>
         </div>
     )
