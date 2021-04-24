@@ -71,13 +71,13 @@ const MyPostsPage = ({ match, allTags, setAllTags, hiddenSidebar, setHiddenSideb
                         </h2>
                         <hr />
                     </div>
-                    <div className="row" style={{ marginBottom: '15px' }}>
-                        <div className="col l-6 md-12 c-12 date-wrap">
+                    <div className="row">
+                        <div className="col l-6 md-12 c-12 date-wrap" style={{ marginBottom: '15px' }}>
                             <DateTimePicker type="Ngày bắt đầu" />
                             <span className="split">-</span>
                             <DateTimePicker type="Ngày kết thúc" />
                         </div>
-                        <div className="col l-6 md-12 c-12">
+                        <div className="col l-6 md-12 c-12" style={{ marginBottom: '15px' }}>
                             <Datalists data={allTags} type='tags' name="Thẻ" />
                         </div>
                     </div>
