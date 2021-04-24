@@ -3,11 +3,11 @@ import { Suspense } from "react";
 import { Route, Switch, withRouter } from "react-router"
 import Loading from "../../components/loading/loading";
 
-const DraftPage = React.lazy(() => import('../myself/pages/posts/draft/draft.page'));
-const PublicsPage = React.lazy(() => import('../myself/pages/posts/public/public.page'));
-const PrivatesPage = React.lazy(() => import('../myself/pages/posts/private/private.page'));
+const DraftPage = React.lazy(() => import('../myself/posts/draft/draft.page'));
+const PublicsPage = React.lazy(() => import('../myself/posts/public/public.page'));
+const PrivatesPage = React.lazy(() => import('../myself/posts/private/private.page'));
 
-const PersonRouters = ({ match }) => {
+const MySelfRouters = ({ match }) => {
     return <Suspense fallback={<Loading />}>
         <Switch>
             <Route path={`${match.path}/draft`} component={DraftPage} exact></Route>
@@ -20,4 +20,4 @@ const PersonRouters = ({ match }) => {
     </Suspense>
 }
 
-export default withRouter(PersonRouters);
+export default withRouter(MySelfRouters);

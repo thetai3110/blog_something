@@ -21,7 +21,7 @@ const ForgotPasswordPage = React.lazy(() => import('./pages/login/forgot.page'))
 const BlogCreate = React.lazy(() => import('./pages/blog/create-or-modify/blog-create.page'));
 const BlogModify = React.lazy(() => import('./pages/blog/create-or-modify/blog-modify.page'));
 const SignUpPage = React.lazy(() => import('./pages/login/signup.page'));
-const MyPostsPage = React.lazy(() => import('./pages/myself/pages/posts/posts.page'));
+const MyPostsPage = React.lazy(() => import('./pages/myself/posts/posts.page'));
 
 function App({ location, curentTheme }) {
   if (location.pathname !== '/login' && location.pathname !== '/logout' && location.pathname !== '/signup' && location.pathname !== '/forgot-password')

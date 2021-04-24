@@ -1,13 +1,13 @@
-import Dropdown from '../../../../components/dropdown/dropdown.component';
-import LinkItem from '../../../../components/link-item/link-item.component';
-import PersonRouters from '../../person.routers';
+import Dropdown from '../../../components/dropdown/dropdown.component';
+import LinkItem from '../../../components/link-item/link-item.component';
+import MyselfRouters from '../../myself/myself.routers';
 import styled from 'styled-components';
-import DateTimePicker from '../../../../components/datetime-picker/datetime-picker.component';
-import Datalists from '../../../../components/datalists/datalists.component';
-import Search from '../../../../components/search/search.component';
+import DateTimePicker from '../../../components/datetime-picker/datetime-picker.component';
+import Datalists from '../../../components/datalists/datalists.component';
+import Search from '../../../components/search/search.component';
 import { useEffect } from 'react';
-import app from '../../../../firebase';
-import { setAllTags } from '../../../../redux/blog/blog_actions';
+import app from '../../../firebase';
+import { setAllTags } from '../../../redux/blog/blog_actions';
 import { connect } from 'react-redux';
 
 const Post = styled.div`
@@ -92,7 +92,7 @@ const MyPostsPage = ({ match, allTags, setAllTags }) => {
                     </div>
                     <Search />
                     <Redirect>
-                        <PersonRouters />
+                        <MyselfRouters />
                     </Redirect>
                 </ContainSub>
             </ContainMain>
