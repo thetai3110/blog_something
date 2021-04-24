@@ -8,7 +8,6 @@ export const Item = styled.div`
 export const Title = styled.h5`
     font-size: 22px;
     font-weight: 500;
-    color: #333;
 `
 export const Icon = styled.span`
     color: green;

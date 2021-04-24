@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { toast } from '../../../../components/toast/toast.component';
 import { setBlogInfo } from '../../../../redux/blog/blog_actions';
+import $ from 'jquery';
 import './tags-input.component.css';
 
 const TagsInput = ({ blogInfo, setBlogInfo, location }) => {
@@ -64,7 +65,10 @@ const TagsInput = ({ blogInfo, setBlogInfo, location }) => {
         <div className="tags-input">
             <div ref={tagsRef} className="tags" onClick={handleRemoveTag}></div>
             <div className="input">
-                <input ref={inputRef} placeholder="Tạo không quá 5 tag" type="text" onKeyDown={handleKeyDown} onChange={() => { }}></input>
+                <input ref={inputRef} onFocus={() => { $('.tags-input').css('border', '1px solid #5488c7'); }}
+                    onBlur={() => { $('.tags-input').css('border', '1px solid #d4d4d8'); }}
+                    placeholder="Tạo không quá 5 tag" type="text" onKeyDown={handleKeyDown}
+                    onChange={() => { }}></input>
             </div>
         </div>
     )

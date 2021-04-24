@@ -1,9 +1,9 @@
 import CourseSuggestedComponent from "./components/course-suggested/course-suggested.component";
 
-const HomePage = (props) => {
+const HomePage = ({theme}) => {
     return (
         <div className="home-page">
-            <CourseSuggestedComponent />
+            <CourseSuggestedComponent theme={theme}/>
         </div>
     )
 }

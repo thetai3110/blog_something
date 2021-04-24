@@ -1,0 +1,58 @@
+.datetime-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #dcdfe6;
+    background-color: #fff;
+    padding: 7px 15px;
+    color: #777;
+    position: relative;
+    z-index: 889;
+}
+.datetime-wrap .clear{
+    color: rgb(168, 168, 168);
+}
+.datetime-wrap i.clear:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+.datetime-range-choose{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.datetime-range-choose input{
+    outline: none;
+    border: none;
+    text-align: center;
+    max-width: 150px;
+}
+.datetime-range{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    z-index: 889;
+    animation: moveToBottom .3s ease-out;
+}
+#overlap-date{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 888;
+}
+
+@keyframes moveToBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

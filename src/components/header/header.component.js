@@ -24,20 +24,20 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                     <div className="navbar-pc">
                         <div className="navbar-logo">
                             <Link to="/"><img src={logo} alt="log"></img></Link>
-                            <Link to="/" style={themes[theme].link}>Blog</Link>
+                            <Link to="/" style={themes[theme].link_navbar}>Blog</Link>
                         </div>
                         <ul className="navbar-list">
                             {menus.map((item) => {
                                 if (item.id === '6') {
-                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                                         : null
                                 } else
-                                    return <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                             })}
                         </ul>
                         <div className="navbar-items">
                             <span className="edit">
-                                <Link to="/blog/create" style={themes[theme].link}>{currentUser ? <i style={{ fontSize: '22px' }} className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link>
+                                <Link to="/blog/create" style={themes[theme].link_navbar}>{currentUser ? <i style={{ fontSize: '22px' }} className="fa fa-pencil" aria-hidden="true"></i> : ''}</Link>
                                 <ThemesToggler
                                     theme={theme}
                                     onClick={(nextTheme) => changeTheme(nextTheme)} />
@@ -61,7 +61,7 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                         </label>
                         <div className="navbar-mb-logo">
                             <Link to="/"><img src={logo} alt="log"></img></Link>
-                            <Link to="/">Blog</Link>
+                            <Link style={themes[theme].link_navbar} to="/">Blog</Link>
                         </div>
                         <form className="navbar-mb-search">
                             <input value="" onChange={() => { }} placeholder="Nhập nội dung tìm kiếm"></input>
@@ -70,10 +70,10 @@ const HeaderComponent = ({ changeTheme, theme }) => {
                         <ul className="navbar-mb-list">
                             {menus.map((item) => {
                                 if (item.id === '6') {
-                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return !currentUser ? <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                                         : null
                                 } else
-                                    return <li key={item.id}><Link style={themes[theme].link} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
+                                    return <li key={item.id}><Link style={themes[theme].link_navbar} to={"/" + item.title_en} className="navbar-link">{item.title.charAt(0).toLocaleUpperCase() + item.title.slice(1)}</Link></li>
                             })}
                         </ul>
                         <div className="navbar-mb-items">

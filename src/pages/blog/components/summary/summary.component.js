@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { StyledTextarea } from '../../../../components/common/common-styled.component';
 import { setBlogInfo } from '../../../../redux/blog/blog_actions';
-import './summary.component.css';
 
 const SummaryBlog = ({ blogInfo, setBlogInfo, location }) => {
     return (
-        <textarea className="summary-blog"
+        <StyledTextarea
             placeholder="Tóm tắt"
             defaultValue={location.pathname === '/blog/create' ? '' : blogInfo.summary}
-            onChange={(e) => setBlogInfo({ ...blogInfo, summary: e.target.value })}></textarea>
+            onChange={(e) => setBlogInfo({ ...blogInfo, summary: e.target.value })}></StyledTextarea>
     )
 }
 

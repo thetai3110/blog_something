@@ -50,11 +50,6 @@ export const setBlogInfo = blogInfo => ({
     payload: blogInfo
 })
 
-export const setBlogEdit = blogEdit => ({
-    type: BlogTypes.SET_BLOG_EDIT,
-    payload: blogEdit
-})
-
 export const setFilename = name => ({
     type: BlogTypes.SET_FILENAME,
     payload: name
@@ -74,7 +69,22 @@ export const setHiddenProgressUpload = (status) => ({
     payload: status
 })
 
+export const setHiddenSidebar = (hidden) => ({
+    type: BlogTypes.HIDDEN_SIDEBAR,
+    payload: hidden
+})
+
 export const setAllTags = (tags) => ({
     type: BlogTypes.SET_ALL_TAG,
     payload: tags
+})
+
+export const setSearchInfo = (info) => ({
+    type: BlogTypes.SEARCH_INFO,
+    payload: info
+})
+
+export const setSelectionRange = (selectionRange) => ({
+    type: BlogTypes.SET_SELECTION_RANGE,
+    payload: selectionRange
 })

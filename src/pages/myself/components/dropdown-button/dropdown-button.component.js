@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Model from '../../../../components/model/model.component';
-import { DropdownIcon } from '../style-items/style-items.component';
+import { DropdownIcon } from '../myself/myself-styled.component';
 
 export const DropdownButton = ({ data, handleEvent }) => {
     return (

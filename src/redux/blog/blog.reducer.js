@@ -20,20 +20,25 @@ const INITIAL_STATE = {
         image: '',
         tags: []
     },
-    blogEdit: {
-        title: '',
-        summary: '',
-        content: '',
-        image: '',
-        tags: []
-    },
     fileName: '',
     // Save
     hiddenSave: true,
     // Progress upload
     progress: 0,
     hidenProgress: true,
-    allTags: []
+    allTags: [],
+    hiddenSidebar: true,
+    // Search
+    searchInfo : {
+        tags : '',
+        content : ''
+    },
+    selectionRange: {
+        startDate: new Date(),
+        endDate: new Date(),
+        isSearch: false,
+        key: 'selection',
+    }
 }
 
 export const blogReducer = (state = INITIAL_STATE, action) => {
@@ -68,9 +73,6 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         case BlogTypes.SET_BLOG_INFO: {
             return { ...state, blogInfo: action.payload }
         }
-        case BlogTypes.SET_BLOG_EDIT: {
-            return { ...state, blogEdit: action.payload }
-        }
         case BlogTypes.SET_FILENAME: {
             return { ...state, fileName: action.payload }
         }
@@ -83,8 +85,17 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         case BlogTypes.HIDDEN_PROGRESS: {
             return { ...state, hiddenProgress: action.payload }
         }
+        case BlogTypes.HIDDEN_SIDEBAR: {
+            return { ...state, hiddenSidebar: action.payload }
+        }
         case BlogTypes.SET_ALL_TAG: {
             return { ...state, allTags: action.payload }
+        }
+        case BlogTypes.SEARCH_INFO: {
+            return { ...state, searchInfo: action.payload }
+        }
+        case BlogTypes.SET_SELECTION_RANGE: {
+            return { ...state, selectionRange: action.payload }
         }
         default:
             return state;

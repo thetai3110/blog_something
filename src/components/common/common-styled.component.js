@@ -47,3 +47,17 @@ export const StyledButtonSearch = styled.button`
         outline: none;
     }
 `
+export const StyledTextarea = styled.textarea`
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #d4d4d8;
+    resize: none;
+    max-height: 200px;
+    min-height: 175px;
+    font-size: 15px;
+    padding: 1rem;
+    &:focus{
+        outline: none;
+        border: 1px solid #5488c7;
+    }
+`

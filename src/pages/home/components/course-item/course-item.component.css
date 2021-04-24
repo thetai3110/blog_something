@@ -1,8 +1,5 @@
 .item {
-    border: 1px solid #e2dfdf;
     height: auto;
-    box-shadow: 0px 0px 5px 3px #e2dfdf;
-    -webkit-transition: transformY ease-in 5s;
     transition: transformY ease-in 5s;
 }
 
@@ -29,7 +26,6 @@
 }
 
 .title a {
-    color: #004283;
     font-size: 18px;
     font-weight: 500;
     line-height: 22px;
@@ -42,7 +38,7 @@
 .detail {
     max-height: 66px;
     height: 70px;
-    color: #000;
+    /* color: #000; */
     font-size: 14px;
     line-height: 22px;
     overflow: hidden;
