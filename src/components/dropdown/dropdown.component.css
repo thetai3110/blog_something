@@ -2,6 +2,9 @@
     padding: 10px;
     color: #333;
 }
+li.dropdown{
+    list-style: none;
+}
 .dropdown .dropdown-sub li{
     padding-left: 32px;
     width: 100%;

@@ -74,6 +74,11 @@ export const setHiddenProgressUpload = (status) => ({
     payload: status
 })
 
+export const setHiddenSidebar = (hidden) => ({
+    type: BlogTypes.HIDDEN_SIDEBAR,
+    payload: hidden
+})
+
 export const setAllTags = (tags) => ({
     type: BlogTypes.SET_ALL_TAG,
     payload: tags

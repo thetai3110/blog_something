@@ -1,9 +1,11 @@
 import $ from 'jquery';
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import { setHiddenSidebar } from '../../redux/blog/blog_actions';
 import './dropdown.component.css';
 
-const Dropdown = ({ options, title, location }) => {
+const Dropdown = ({ options, title, location, dispatch, history }) => {
     const [hidden, setHidden] = useState(false);
     const toggle = () => {
         $('.dropdown-sub').fadeToggle();
@@ -20,11 +22,19 @@ const Dropdown = ({ options, title, location }) => {
             </div>
             <ul className="dropdown-sub">
                 {options.map((el, i) => {
-                    return <li className={el.link === location.pathname ? 'active' : ''} key={i}><Link to={el.link}><i className={el.icon} aria-hidden="true"></i> {el.name}</Link></li>
+                    return <li className={el.link === location.pathname ? 'active' : ''} key={i}>
+                        <a href="#" onClick={()=> { 
+                            history.push(el.link);
+                            dispatch(setHiddenSidebar(true));
+                        }}><i className={el.icon} aria-hidden="true"></i> {el.name}</a>
+                    </li>
                 })}
             </ul>
         </li>
     )
 }
 
-export default withRouter(Dropdown);
+const mapStateToProps = ({ blog }) => ({
+    hiddenSidebar: blog.hiddenSidebar
+})
+export default withRouter(connect(mapStateToProps)(Dropdown));

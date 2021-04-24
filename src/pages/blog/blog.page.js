@@ -8,6 +8,7 @@ import placeholder_img from '../../assests/placeholder_img.png'
 import app from "../../firebase";
 import { setLoading } from "../../redux/common/common.actions";
 import Loading from "../../components/loading/loading";
+import $ from 'jquery';
 
 const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isLoading, setLoading }) => {
     const TAG = "BlogComponent";
@@ -15,6 +16,8 @@ const BlogPage = ({ lstBlogs, countBlogs, setLstBlogs, setCountBlogs, match, isL
     const imgRef = useRef(null);
     useEffect(() => {
         setLoading(true);
+        $('.navbar-checked').prop('checked', false);
+        $('.navbar-overlap').prop('checked', false);
         (async function () {
             try {
                 setLstBlogs([]);

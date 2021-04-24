@@ -1,0 +1,18 @@
+.btn-posts-redirect{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 19px;
+    color: rgb(59, 59, 59);
+    display: none;
+    margin-right: 10px;
+}
+button.btn-posts-redirect{
+    cursor: pointer;
+    opacity: 0.8;
+}
+@media (max-width: 1023px) {
+    .btn-posts-redirect {
+        display: block;
+    }
+}

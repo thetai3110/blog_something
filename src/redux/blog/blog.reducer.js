@@ -33,7 +33,8 @@ const INITIAL_STATE = {
     // Progress upload
     progress: 0,
     hidenProgress: true,
-    allTags: []
+    allTags: [],
+    hiddenSidebar: true
 }
 
 export const blogReducer = (state = INITIAL_STATE, action) => {
@@ -82,6 +83,9 @@ export const blogReducer = (state = INITIAL_STATE, action) => {
         }
         case BlogTypes.HIDDEN_PROGRESS: {
             return { ...state, hiddenProgress: action.payload }
+        }
+        case BlogTypes.HIDDEN_SIDEBAR: {
+            return { ...state, hiddenSidebar: action.payload }
         }
         case BlogTypes.SET_ALL_TAG: {
             return { ...state, allTags: action.payload }
